@@ -5,7 +5,9 @@
  */
 package src;
 
+import Interfaces.BuscarProductoEmpleado;
 import Interfaces.HomeInicio;
+import java.io.IOException;
 
 /**
  *
@@ -16,9 +18,14 @@ public class NewMain {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    
+    private static BuscarProductoEmpleado ejecucion;
+    
+    
+    public static void main(String[] args) throws IOException, InterruptedException {
         System.out.println("Funciona"); 
-        HomeInicio ejecucion = new HomeInicio();
+        
+        ejecucion = new BuscarProductoEmpleado();
         ejecucion.setVisible(true);
     }
     
