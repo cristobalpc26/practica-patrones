@@ -24,7 +24,6 @@ public class Home {
     
     public static void main(String[] args) throws IOException, InterruptedException {
         System.out.println("Funciona"); 
-        
         ejecucion = new BuscarProductoEmpleado();
         ejecucion.setVisible(true);
     }

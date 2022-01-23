@@ -22,4 +22,6 @@ public interface ServicioBD {
     public void eliminarEmpleado(String dni);
 
     public void modificarEmpleado(Empleado e);
+    
+    public void getEmpleado(String login, String passwd);
 }
