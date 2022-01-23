@@ -5,15 +5,15 @@
  */
 package src;
 
-import Interfaces.BuscarProductoEmpleado;
-import Interfaces.HomeInicio;
+import src.interfaces_graficas.BuscarProductoEmpleado;
+import src.interfaces_graficas.HomeInicio;
 import java.io.IOException;
 
 /**
  *
  * @author Carlos
  */
-public class NewMain {
+public class Home {
 
     /**
      * @param args the command line arguments
