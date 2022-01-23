@@ -8,6 +8,10 @@ package src.users;
  *
  * @author cris
  */
-public class Empleado {
+public class Empleado extends Persona{
+    
+    public Empleado(String dni, String nombre, String apellidos, String correo, String contraseña, String horario, String telefono, String categoria) {
+        super(dni, nombre, apellidos, correo, contraseña, horario, telefono, categoria);
+    }
     
 }

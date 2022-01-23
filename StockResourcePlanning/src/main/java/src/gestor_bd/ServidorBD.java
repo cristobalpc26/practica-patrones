@@ -38,11 +38,9 @@ public class ServidorBD implements ServicioBD {
         }
     }
 
-    
-    
     @Override
     public void insertarEmpleado(Empleado e) {
-        
+
     }
 
     @Override
@@ -53,8 +51,24 @@ public class ServidorBD implements ServicioBD {
     public void modificarEmpleado(Empleado e) {
     }
 
+    
     @Override
-    public void getEmpleado(String login, String passwd) {
-    }
+    public void getDniEmpleado(String login, String passwd) {
+        String dni;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT * FROM EMPLEADO WHERE CORREO='" + login + "'AND CONTRASEÑA='" + passwd + "'");
+            while (rs.next()) {
+                dni = rs.getString("DNI");
+                dni = dni.trim(); 
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("El método existeUsuario no se ejecuta correctamente");
 
+        }
+
+    }
 }

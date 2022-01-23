@@ -23,5 +23,5 @@ public interface ServicioBD {
 
     public void modificarEmpleado(Empleado e);
     
-    public void getEmpleado(String login, String passwd);
+    public void getDniEmpleado(String login, String passwd);
 }
