@@ -4,23 +4,28 @@
  */
 package src.users;
 
+import java.util.ArrayList;
+import src.patron_iterator.AgregadoEmpleados;
+import src.patron_iterator.IteradorEmpleados;
+import src.patron_proxy.ProxyGestorBD;
+
 /**
  *
  * @author cris
  */
-public class Administrador {
+public class Administrador extends Persona{
     // Patron Singleton
     private static Administrador instancia = new Administrador();
+    private ProxyGestorBD proxy;
+    public ArrayList<Empleado> empleados;
     private String login;
     private String password;
     
     private Administrador() {
+        this.proxy = ProxyGestorBD.getInstancia();
+        this.empleados = proxy.getEmpleados();
     }
 
-    public Administrador(String login, String password) {
-        this.login = login;
-        this.password = password;
-    }
 
     public String getLogin() {
         return login;
@@ -42,17 +47,22 @@ public class Administrador {
         return instancia;
     }
     
-    public void registrarEmpleado () {
-        
+    @Override
+    public void registrarEmpleado (Empleado e) {
+        this.proxy.insertarEmpleado(e);
     }
     
-    public String eliminarEmpleado (String dni) {
-        return dni;
+    @Override
+    public void eliminarEmpleado (String dni) {
+        this.proxy.eliminarEmpleado(dni);
     }
     
-    public void modificarEmpleado (String dni) {
-        
+    @Override
+    public void modificarEmpleado (Empleado e) {
+        this.proxy.modificarEmpleado(e);
     }
     
     //TODO: Metodos de administrador
+    
+    
 }

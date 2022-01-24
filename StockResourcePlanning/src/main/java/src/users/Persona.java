@@ -10,24 +10,29 @@ package src.users;
  * @author Carlos
  */
 public abstract class Persona {
+
     private String dni;
     private String nombre;
     private String apellidos;
     private String correo;
-    private String contraseña;
+    private String password;
     private String horario;
     private String telefono;
     private String categoria;
 
-    public Persona(String dni, String nombre, String apellidos, String correo, String contraseña, String horario, String telefono, String categoria) {
+    public Persona(String dni, String nombre, String apellidos, String correo, String password, String horario, String telefono, String categoria) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.correo = correo;
-        this.contraseña = contraseña;
+        this.password = password;
         this.horario = horario;
         this.telefono = telefono;
         this.categoria = categoria;
+    }
+    
+    public Persona () {
+        
     }
 
     public String getDni() {
@@ -62,12 +67,12 @@ public abstract class Persona {
         this.correo = correo;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getHorario() {
@@ -93,7 +98,9 @@ public abstract class Persona {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
-    
-    
+
     // TODO: Añadir producto, etc.
+    public abstract void registrarEmpleado(Empleado e);
+    public abstract void eliminarEmpleado(String dni);
+    public abstract void modificarEmpleado(Empleado e);
 }

@@ -9,6 +9,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import src.patron_iterator.AgregadoEmpleados;
+import src.patron_iterator.IteradorEmpleados;
 
 /**
  *
@@ -20,6 +23,9 @@ public class ServidorBD implements ServicioBD {
     private Statement set;
     private ResultSet rs;
 
+    public ServidorBD () {
+        this.abrirConexion();
+    }
     
     public void abrirConexion() {
         //String sURL = "jdbc:odbc:mvc";
@@ -42,25 +48,62 @@ public class ServidorBD implements ServicioBD {
 
     @Override
     public void insertarEmpleado(Empleado e) {
+        try {
+            set = con.createStatement();
+            int res = set.executeUpdate("INSERT INTO EMPLEADO VALUES ('"+ e.getDni() +"','" + e.getNombre() + "','" + e.getApellidos() + "','" +
+                    e.getCorreo() + "','" + e.getPassword() + "','" + e.getHorario() + "','" + e.getTelefono() + "','" + e.getCategoria() + ")");
+            if (res == -1) {
+                System.out.println("No se ha introducido el nuevo empleado");
+            }
 
+            set.close();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("El método existeUsuario no se ejecuta correctamente");
+
+        }
     }
 
     @Override
     public void eliminarEmpleado(String dni) {
+        try {
+            set = con.createStatement();
+            int res = set.executeUpdate("DELETE FROM EMPLEADO WHERE ID = '" + dni + "'");
+            if (res == -1) {
+                System.out.println("No se ha podido eliminar el empleado");
+            }
+            set.close();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("El método existeUsuario no se ejecuta correctamente");
+
+        }
     }
 
     @Override
     public void modificarEmpleado(Empleado e) {
+        try {
+            set = con.createStatement();
+            int res = set.executeUpdate("UPDATE EMPLEADO SET NOMBRE='" + e.getNombre() + "',APELLIDOS='" + e.getApellidos() + "',CORREO=" + e.getCorreo()+ ",PASSWORD=" 
+                    + e.getPassword() + ",HORARIO=" + e.getHorario() + ",TELEFONO='" + e.getTelefono() + "',CATEGORIA='" + e.getCategoria() + "'where DNI='" + e.getDni() + "'");
+            if (res == -1) {
+                System.out.println("No se ha podido modificar el empleado");
+            }
+            set.close();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("El método existeUsuario no se ejecuta correctamente");
+
+        }
     }
 
     
     @Override
     public String getDniEmpleado(String login, String passwd) {
-        this.abrirConexion();
         String dni = "";
         try {
             set = con.createStatement();
-            rs = set.executeQuery("SELECT * FROM EMPLEADO WHERE CORREO='" + login + "'AND CONTRASEÑA='" + passwd + "'");
+            rs = set.executeQuery("SELECT * FROM EMPLEADO WHERE CORREO='" + login + "'AND PASSWORD='" + passwd + "'");
             while (rs.next()) {
                 dni = rs.getString("DNI");
                 dni = dni.trim(); 
@@ -74,4 +117,29 @@ public class ServidorBD implements ServicioBD {
         }
         return dni;
     }
+
+    @Override
+    public ArrayList<Empleado> getEmpleados() {
+        ArrayList<Empleado> empleados = new ArrayList<>();
+        Empleado aux;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT * FROM EMPLEADO");
+            while (rs.next()) {
+                aux = new Empleado(rs.getString("DNI"), rs.getString("NOMBRE"), rs.getString("APELLIDOS"), rs.getString("CORREO")
+                        , rs.getString("PASSWORD"), rs.getString("HORARIO"), rs.getString("TELEFONO"), rs.getString("CATEGORIA"));
+                empleados.add(aux);
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("El método existeUsuario no se ejecuta correctamente");
+
+        }
+        
+        return empleados;
+    }
+    
+    
 }

@@ -4,6 +4,7 @@
  */
 package src.patron_proxy;
 
+import java.util.ArrayList;
 import src.users.Empleado;
 
 /**
@@ -24,4 +25,9 @@ public interface ServicioBD {
     public void modificarEmpleado(Empleado e);
     
     public String getDniEmpleado(String login, String passwd);
+    
+    // Admin 
+    
+    public ArrayList<Empleado> getEmpleados();
+    
 }

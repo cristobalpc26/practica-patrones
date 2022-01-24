@@ -14,6 +14,11 @@ import src.patron_iterator.AgregadoEmpleados;
 import src.patron_iterator.Iterador;
 import src.patron_proxy.ProxyGestorBD;
 import src.patron_proxy.ServidorBD;
+import src.patron_strategy_empleados.Contexto;
+import src.patron_strategy_empleados.Estrategia;
+import src.patron_strategy_empleados.EstrategiaOrdenarPorDni;
+import src.patron_strategy_empleados.EstrategiaOrdenarPorNombre;
+import src.users.Administrador;
 import src.users.Empleado;
 
 /**
@@ -30,8 +35,9 @@ public class Home {
     
     
     public static void main(String[] args) throws IOException, InterruptedException {
-        ProxyGestorBD proxy = new ProxyGestorBD(new ServidorBD());
-        System.out.println("DNI: " + proxy.getDniEmpleado("admincc@market.com", "admin"));
+        Administrador a = Administrador.getInstancia();
+        Contexto contexto = new Contexto(new EstrategiaOrdenarPorDni(), a.empleados);
+        contexto.ejecutaEstrategia();
         /*try {
             // Crea la lista. 
             ArrayList aux = new ArrayList();

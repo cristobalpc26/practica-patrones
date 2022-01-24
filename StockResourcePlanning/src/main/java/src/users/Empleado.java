@@ -10,8 +10,20 @@ package src.users;
  */
 public class Empleado extends Persona{
     
-    public Empleado(String dni, String nombre, String apellidos, String correo, String contraseña, String horario, String telefono, String categoria) {
-        super(dni, nombre, apellidos, correo, contraseña, horario, telefono, categoria);
+    public Empleado(String dni, String nombre, String apellidos, String correo, String password, String horario, String telefono, String categoria) {
+        super(dni, nombre, apellidos, correo, password, horario, telefono, categoria);
+    }
+
+    @Override
+    public void registrarEmpleado(Empleado e) {
+    }
+
+    @Override
+    public void eliminarEmpleado(String dni) {
+    }
+
+    @Override
+    public void modificarEmpleado(Empleado e) {
     }
     
 }
