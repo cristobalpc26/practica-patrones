@@ -25,7 +25,7 @@ public class ServidorBD implements ServicioBD {
         //String sURL = "jdbc:odbc:mvc";
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            con = DriverManager.getConnection("jdbc:derby://localhost:1527/stockManager", "", "");
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/stockManager", "app", "app");
             System.out.println("Se ha conectado a la base de datos");
         } catch (Exception e) {
             System.out.println("No se ha conectado a la base de datos");
