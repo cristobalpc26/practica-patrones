@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package src.gestor_bd;
+package src.patron_proxy;
 
 import src.users.Empleado;
 
@@ -23,5 +23,5 @@ public interface ServicioBD {
 
     public void modificarEmpleado(Empleado e);
     
-    public void getDniEmpleado(String login, String passwd);
+    public String getDniEmpleado(String login, String passwd);
 }

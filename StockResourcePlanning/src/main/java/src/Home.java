@@ -9,9 +9,11 @@ import src.interfaces_graficas.BuscarProductoEmpleado;
 import src.interfaces_graficas.HomeInicio;
 import java.io.IOException;
 import java.util.ArrayList;
-import src.gestor_bd.Agregado;
-import src.gestor_bd.AgregadoEmpleados;
-import src.gestor_bd.Iterador;
+import src.patron_iterator.Agregado;
+import src.patron_iterator.AgregadoEmpleados;
+import src.patron_iterator.Iterador;
+import src.patron_proxy.ProxyGestorBD;
+import src.patron_proxy.ServidorBD;
 import src.users.Empleado;
 
 /**
@@ -28,7 +30,9 @@ public class Home {
     
     
     public static void main(String[] args) throws IOException, InterruptedException {
-        try {
+        ProxyGestorBD proxy = new ProxyGestorBD(new ServidorBD());
+        System.out.println("DNI: " + proxy.getDniEmpleado("admincc@market.com", "admin"));
+        /*try {
             // Crea la lista. 
             ArrayList aux = new ArrayList();
             Empleado uni1 = new Empleado("12345678", "Pepe", "Informática", "Alcalá","a","a","a","a");
@@ -53,7 +57,7 @@ public class Home {
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Error: " + e.toString());
-        }
+        }*/
         
     }
     
