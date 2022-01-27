@@ -46,6 +46,14 @@ public class Administrador extends Persona{
     public static Administrador getInstancia() {
         return instancia;
     }
+
+    public ArrayList<Empleado> getEmpleados() {
+        return empleados;
+    }
+
+    public void setEmpleados(ArrayList<Empleado> empleados) {
+        this.empleados = empleados;
+    }
     
     @Override
     public void registrarEmpleado (Empleado e) {

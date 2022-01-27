@@ -5,6 +5,11 @@
  */
 package src.users;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import src.patron_factory_method_productos.Producto;
+import src.patron_proxy.ProxyGestorBD;
+
 /**
  *
  * @author Carlos
@@ -19,6 +24,8 @@ public abstract class Persona {
     private String horario;
     private String telefono;
     private String categoria;
+    
+    private ArrayList<Producto> productos;
 
     public Persona(String dni, String nombre, String apellidos, String correo, String password, String horario, String telefono, String categoria) {
         this.dni = dni;
@@ -29,6 +36,7 @@ public abstract class Persona {
         this.horario = horario;
         this.telefono = telefono;
         this.categoria = categoria;
+        //this.productos = ProxyGestorBD.getInstancia().getProductos();
     }
     
     public Persona () {

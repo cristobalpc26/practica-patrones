@@ -36,7 +36,7 @@ public class Home {
     
     public static void main(String[] args) throws IOException, InterruptedException {
         Administrador a = Administrador.getInstancia();
-        Contexto contexto = new Contexto(new EstrategiaOrdenarPorDni(), a.empleados);
+        Contexto contexto = new Contexto(new EstrategiaOrdenarPorDni(), a.getEmpleados());
         contexto.ejecutaEstrategia();
         /*try {
             // Crea la lista. 
