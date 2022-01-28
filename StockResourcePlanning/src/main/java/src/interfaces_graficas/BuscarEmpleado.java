@@ -5,6 +5,13 @@
  */
 package src.interfaces_graficas;
 
+import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import src.patron_proxy.ServidorBD;
+import src.users.Empleado;
+
 /**
  *
  * @author Carlos
@@ -14,8 +21,20 @@ public class BuscarEmpleado extends javax.swing.JFrame {
     /**
      * Creates new form BuscarEmpleado
      */
+    ServidorBD sbd = new ServidorBD();
+
     public BuscarEmpleado() {
         initComponents();
+    }
+
+    public String getDNIBusqueda() {
+
+        return jTextFieldDniIntroducido.getText();
+    }
+
+    public String getNombreBusqueda() {
+
+        return jTextFieldNombreIntroducido.getText();
     }
 
     /**
@@ -47,10 +66,20 @@ public class BuscarEmpleado extends javax.swing.JFrame {
         jButtonModificacionDatosEmpleado.setBackground(new java.awt.Color(255, 153, 0));
         jButtonModificacionDatosEmpleado.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jButtonModificacionDatosEmpleado.setText("Modificar");
+        jButtonModificacionDatosEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificacionDatosEmpleadoActionPerformed(evt);
+            }
+        });
 
         jButtonEliminarElementoSeleccionado.setBackground(new java.awt.Color(255, 0, 0));
         jButtonEliminarElementoSeleccionado.setFont(new java.awt.Font("Verdana", 3, 14)); // NOI18N
         jButtonEliminarElementoSeleccionado.setText("Eliminar");
+        jButtonEliminarElementoSeleccionado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarElementoSeleccionadoActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel1.setText("DNI");
@@ -65,74 +94,22 @@ public class BuscarEmpleado extends javax.swing.JFrame {
         jTableMuestraEmpleados.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTableMuestraEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "Dni", "Nombre", "Apellidos", "Correo", "Password", "Horario", "Telefono"
+                "Dni", "Nombre", "Apellidos", "Correo", "Password", "Horario", "Telefono", "Categoria"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jTableMuestraEmpleados.setColumnSelectionAllowed(true);
         jTableMuestraEmpleados.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTableMuestraEmpleados);
-        jTableMuestraEmpleados.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         jLabel24.setFont(new java.awt.Font("Verdana", 1, 22)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(0, 51, 255));
@@ -141,12 +118,22 @@ public class BuscarEmpleado extends javax.swing.JFrame {
         jButtonBusquedaDNI.setBackground(new java.awt.Color(0, 102, 255));
         jButtonBusquedaDNI.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jButtonBusquedaDNI.setText("Buscar ");
+        jButtonBusquedaDNI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBusquedaDNIActionPerformed(evt);
+            }
+        });
 
         jTextFieldDniIntroducido.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
         jButtonBusquedaNombre.setBackground(new java.awt.Color(0, 102, 255));
         jButtonBusquedaNombre.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jButtonBusquedaNombre.setText("Buscar ");
+        jButtonBusquedaNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBusquedaNombreActionPerformed(evt);
+            }
+        });
 
         jTextFieldNombreIntroducido.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
@@ -211,8 +198,8 @@ public class BuscarEmpleado extends javax.swing.JFrame {
                     .addComponent(jButtonBusquedaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonBusquedaDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonModificacionDatosEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEliminarElementoSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -241,6 +228,105 @@ public class BuscarEmpleado extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonBusquedaDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaDNIActionPerformed
+
+        ArrayList<Empleado> list = sbd.consultagetEmpleadosDNI(getDNIBusqueda());
+        DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraEmpleados.getModel();
+        tablaMuestra.setRowCount(0); // para que no se repita los resultados al pulsar al buscar
+
+        Object[] row = new Object[8];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getDni();
+            row[1] = list.get(i).getNombre();
+            row[2] = list.get(i).getApellidos();
+            row[3] = list.get(i).getCorreo();
+            row[4] = list.get(i).getPassword();
+            row[5] = list.get(i).getHorario();
+            row[6] = list.get(i).getTelefono();
+            row[7] = list.get(i).getCategoria();
+
+            tablaMuestra.addRow(row);
+        }
+
+
+    }//GEN-LAST:event_jButtonBusquedaDNIActionPerformed
+
+    private void jButtonModificacionDatosEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificacionDatosEmpleadoActionPerformed
+        DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraEmpleados.getModel();
+        int indiceFilaSeleccionada = jTableMuestraEmpleados.getSelectedRow();
+
+        ModificacionDatosEmpleado mde = new ModificacionDatosEmpleado();
+
+        if (indiceFilaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(null, "Selecciona una fila", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String nuevoDniModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 0).toString();
+            String nuevoNombreModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 1).toString();
+            String nuevoApellidosModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 2).toString();
+            String nuevoCorreoModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 3).toString();
+            String nuevoPasswordModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 4).toString();
+            String nuevoHorarioModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 5).toString();
+            String nuevoTelefonoModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 6).toString();
+            String nuevaCategoriaModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 7).toString();
+
+            if (indiceFilaSeleccionada != -1) {
+                mde.jTextFieldDniAModificar.setText(nuevoDniModificar);
+                mde.jTextFieldNombreAModificar.setText(nuevoNombreModificar);
+                mde.jTextFieldApellidosAModificar.setText(nuevoApellidosModificar);
+                mde.jTextFieldCorreoAModificar.setText(nuevoCorreoModificar);
+                mde.jTextFieldContraseñaAModificar.setText(nuevoPasswordModificar);
+                mde.jTextFieldHorarioAModificar.setText(nuevoHorarioModificar);
+                mde.jTextFieldTelefonoAModificar.setText(nuevoTelefonoModificar);
+                mde.jTextFieldCategoriaAModificar.setText(nuevaCategoriaModificar);
+
+                mde.setVisible(true);
+                mde.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonModificacionDatosEmpleadoActionPerformed
+
+    private void jButtonBusquedaNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaNombreActionPerformed
+        // TODO add your handling code here:
+        ArrayList<Empleado> list = sbd.consultagetEmpleadosNombre(getNombreBusqueda());
+        DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraEmpleados.getModel();
+        tablaMuestra.setRowCount(0);
+        Object[] row = new Object[8];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getDni();
+            row[1] = list.get(i).getNombre();
+            row[2] = list.get(i).getApellidos();
+            row[3] = list.get(i).getCorreo();
+            row[4] = list.get(i).getPassword();
+            row[5] = list.get(i).getHorario();
+            row[6] = list.get(i).getTelefono();
+            row[7] = list.get(i).getCategoria();
+            tablaMuestra.addRow(row);
+        }
+
+    }//GEN-LAST:event_jButtonBusquedaNombreActionPerformed
+
+    private void jButtonEliminarElementoSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarElementoSeleccionadoActionPerformed
+
+        ArrayList<Empleado> list = sbd.consultagetEmpleadosNombre(getNombreBusqueda());
+        DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraEmpleados.getModel();
+        int indiceFilaSeleccionada = jTableMuestraEmpleados.getSelectedRow();
+
+        if (indiceFilaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(null, "Selecciona una fila", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String dniEliminar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 0).toString();
+            System.out.println(dniEliminar);
+            sbd.eliminarEmpleado(dniEliminar);
+
+            tablaMuestra.removeRow(indiceFilaSeleccionada);
+        }
+
+
+    }//GEN-LAST:event_jButtonEliminarElementoSeleccionadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -258,13 +344,17 @@ public class BuscarEmpleado extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BuscarEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarEmpleado.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BuscarEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarEmpleado.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BuscarEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarEmpleado.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BuscarEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscarEmpleado.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

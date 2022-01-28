@@ -5,6 +5,14 @@
  */
 package src.interfaces_graficas;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import src.patron_iterator.AgregadoEmpleados;
+import src.patron_iterator.Iterador;
+import src.patron_iterator.IteradorEmpleados;
+import src.patron_proxy.ServidorBD;
+import src.users.Empleado;
+
 /**
  *
  * @author Carlos
@@ -14,10 +22,25 @@ public class HomeInicio extends javax.swing.JFrame {
     /**
      * Creates new form homeInicio
      */
+    private HomeAdmin ha;
+    private BuscarProductoEmpleado bpe;
+
+    public String getCorreoLogin() {
+        return jTextFieldCorreo.getText();
+    }
+
+    public String getPasswordLogin() {
+        return jTextFieldContraseña.getText();
+    }
+
     public HomeInicio() {
+
+        setTitle("Incio de sesión");
+        setLocationRelativeTo(null); // Coloca el JFrame en el centro de la pantalla
         initComponents();
     }
-      public static void main(String args[]) {
+
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -176,7 +199,37 @@ public class HomeInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldCorreoActionPerformed
 
     private void jButtonAccesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAccesoActionPerformed
-        // TODO add your handling code here:
+        ServidorBD serv = new ServidorBD();
+        ArrayList<Empleado> empleados = serv.getEmpleados();
+        AgregadoEmpleados ae = new AgregadoEmpleados(empleados);
+        Iterador ie = new IteradorEmpleados(ae);
+        boolean logueado = false;
+        Empleado e = (Empleado) ie.primero();
+        while (ie.hayMas()) {
+            System.out.println(e.getNombre());
+            String pass = e.getPassword();
+            String correo = e.getCorreo();
+
+            if (e.getCorreo().equals("admincc@market.com") && getCorreoLogin().equals("admincc@market.com")
+                    && e.getPassword().equals("admin") && getPasswordLogin().equals("admin")) {
+
+                JOptionPane.showMessageDialog(null,
+                        "Bienvenido a SRP " + e.getNombre(), "Correcto!", JOptionPane.DEFAULT_OPTION);
+                logueado = true;
+                ha = new HomeAdmin();
+                ha.setVisible(true);
+                break;
+
+            } else if (getCorreoLogin().equals(correo) && getPasswordLogin().equals(pass)) {
+                JOptionPane.showMessageDialog(null,
+                        "Bienvenido a SRP " + e.getNombre(), "Correcto!", JOptionPane.DEFAULT_OPTION);
+                logueado = true;
+                bpe = new BuscarProductoEmpleado();
+                bpe.setVisible(true);
+                break;
+            }
+            ie.siguiente();
+        }
     }//GEN-LAST:event_jButtonAccesoActionPerformed
 
     /**

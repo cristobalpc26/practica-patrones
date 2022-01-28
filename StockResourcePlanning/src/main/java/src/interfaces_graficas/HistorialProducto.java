@@ -5,6 +5,8 @@
  */
 package src.interfaces_graficas;
 
+import src.patron_proxy.ServidorBD;
+
 /**
  *
  * @author Carlos
@@ -14,6 +16,7 @@ public class HistorialProducto extends javax.swing.JFrame {
     /**
      * Creates new form HistorialProducto
      */
+    ServidorBD sbd = new ServidorBD();
     public HistorialProducto() {
         initComponents();
     }
@@ -33,6 +36,7 @@ public class HistorialProducto extends javax.swing.JFrame {
         jTableMuestraHistorialDeProductos = new javax.swing.JTable();
         jLabel26 = new javax.swing.JLabel();
         jButtonVolverAtrasHistorialProductos = new javax.swing.JButton();
+        jButtonBusquedaHistorial = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(700, 700));
@@ -124,35 +128,46 @@ public class HistorialProducto extends javax.swing.JFrame {
         jButtonVolverAtrasHistorialProductos.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jButtonVolverAtrasHistorialProductos.setText("Atrás");
 
+        jButtonBusquedaHistorial.setBackground(new java.awt.Color(0, 102, 255));
+        jButtonBusquedaHistorial.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jButtonBusquedaHistorial.setText("Buscar ");
+        jButtonBusquedaHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBusquedaHistorialActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButtonVolverAtrasHistorialProductos)
+                        .addGap(159, 159, 159)
+                        .addComponent(jButtonBusquedaHistorial))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(135, 135, 135)
-                                .addComponent(jLabel26))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jButtonVolverAtrasHistorialProductos)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(134, 134, 134)
+                        .addComponent(jLabel26)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel26)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addComponent(jButtonVolverAtrasHistorialProductos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonVolverAtrasHistorialProductos, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonBusquedaHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -179,6 +194,11 @@ public class HistorialProducto extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonBusquedaHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaHistorialActionPerformed
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonBusquedaHistorialActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,6 +236,7 @@ public class HistorialProducto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonBusquedaHistorial;
     private javax.swing.JButton jButtonVolverAtrasHistorialProductos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel26;

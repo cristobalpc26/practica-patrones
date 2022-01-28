@@ -5,6 +5,10 @@
  */
 package src.interfaces_graficas;
 
+import javax.swing.JOptionPane;
+import src.patron_proxy.ServidorBD;
+import src.users.Empleado;
+
 /**
  *
  * @author Carlos
@@ -14,8 +18,43 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
     /**
      * Creates new form ModificacionDatosEmpleado
      */
+
     public ModificacionDatosEmpleado() {
+
         initComponents();
+    }
+
+    public String getDNImodificar() {
+
+        return jTextFieldDniAModificar.getText();
+    }
+
+    public String getNombreModificar() {
+        return jTextFieldNombreAModificar.getText();
+    }
+
+    public String getApellidosModificar() {
+        return jTextFieldApellidosAModificar.getText();
+    }
+
+    public String getCorreoModificar() {
+        return jTextFieldCorreoAModificar.getText();
+    }
+
+    public String getContraseñaModificar() {
+        return jTextFieldContraseñaAModificar.getText();
+    }
+
+    public String getHorarioModificar() {
+        return jTextFieldHorarioAModificar.getText();
+    }
+
+    public String getTelefonoModificar() {
+        return jTextFieldTelefonoAModificar.getText();
+    }
+
+    public String getCategoriaAModificar() {
+        return jTextFieldCategoriaAModificar.getText();
     }
 
     /**
@@ -46,6 +85,8 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
         jButtonActualizarDatosEmpleado = new javax.swing.JButton();
         jTextFieldCorreoAModificar = new javax.swing.JTextField();
         jButtonVolverAtrasModificarProductoEmpleado = new javax.swing.JButton();
+        jLabel83 = new javax.swing.JLabel();
+        jTextFieldCategoriaAModificar = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,11 +116,6 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
         jLabel5.setText("Contraseña");
 
         jTextFieldDniAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jTextFieldDniAModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldDniAModificarActionPerformed(evt);
-            }
-        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setText("Correo");
@@ -94,12 +130,22 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
         jButtonActualizarDatosEmpleado.setBackground(new java.awt.Color(255, 153, 0));
         jButtonActualizarDatosEmpleado.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jButtonActualizarDatosEmpleado.setText("Actualizar");
+        jButtonActualizarDatosEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualizarDatosEmpleadoActionPerformed(evt);
+            }
+        });
 
         jTextFieldCorreoAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
         jButtonVolverAtrasModificarProductoEmpleado.setBackground(new java.awt.Color(255, 102, 102));
         jButtonVolverAtrasModificarProductoEmpleado.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jButtonVolverAtrasModificarProductoEmpleado.setText("Atrás");
+
+        jLabel83.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel83.setText("Categoria");
+
+        jTextFieldCategoriaAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -109,14 +155,18 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
                 .addContainerGap(32, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel83, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonActualizarDatosEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -127,11 +177,9 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
                                 .addComponent(jTextFieldDniAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jTextFieldNombreAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jTextFieldApellidosAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextFieldContraseñaAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(59, 59, 59))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))))
+                                .addComponent(jTextFieldContraseñaAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldCategoriaAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(59, 59, 59))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jButtonVolverAtrasModificarProductoEmpleado)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -168,10 +216,16 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldTelefonoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonActualizarDatosEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(jButtonVolverAtrasModificarProductoEmpleado))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldCategoriaAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel83, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonVolverAtrasModificarProductoEmpleado, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonActualizarDatosEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -188,15 +242,20 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldDniAModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDniAModificarActionPerformed
+    private void jButtonActualizarDatosEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarDatosEmpleadoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldDniAModificarActionPerformed
+        ServidorBD sbd = new ServidorBD();
+        Empleado e = new Empleado(getDNImodificar(), getNombreModificar(), getApellidosModificar(), getCorreoModificar(), getContraseñaModificar(), getHorarioModificar(), getTelefonoModificar(), getCategoriaAModificar());
+        sbd.modificarEmpleado(e);
+            JOptionPane.showMessageDialog(null, "Empleado modificado", "Correcto!", JOptionPane.DEFAULT_OPTION);
+        
+    }//GEN-LAST:event_jButtonActualizarDatosEmpleadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,13 +304,15 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel83;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextFieldApellidosAModificar;
-    private javax.swing.JTextField jTextFieldContraseñaAModificar;
-    private javax.swing.JTextField jTextFieldCorreoAModificar;
-    private javax.swing.JTextField jTextFieldDniAModificar;
-    private javax.swing.JTextField jTextFieldHorarioAModificar;
-    private javax.swing.JTextField jTextFieldNombreAModificar;
-    private javax.swing.JTextField jTextFieldTelefonoAModificar;
+    public javax.swing.JTextField jTextFieldApellidosAModificar;
+    public javax.swing.JTextField jTextFieldCategoriaAModificar;
+    public javax.swing.JTextField jTextFieldContraseñaAModificar;
+    public javax.swing.JTextField jTextFieldCorreoAModificar;
+    public javax.swing.JTextField jTextFieldDniAModificar;
+    public javax.swing.JTextField jTextFieldHorarioAModificar;
+    public javax.swing.JTextField jTextFieldNombreAModificar;
+    public javax.swing.JTextField jTextFieldTelefonoAModificar;
     // End of variables declaration//GEN-END:variables
 }

@@ -68,14 +68,14 @@ public class ServidorBD implements ServicioBD {
     public void eliminarEmpleado(String dni) {
         try {
             set = con.createStatement();
-            int res = set.executeUpdate("DELETE FROM EMPLEADO WHERE ID = '" + dni + "'");
+            int res = set.executeUpdate("DELETE FROM EMPLEADO WHERE DNI = '" + dni + "'");
             if (res == -1) {
                 System.out.println("No se ha podido eliminar el empleado");
             }
             set.close();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            System.out.println("El método existeUsuario no se ejecuta correctamente");
+            System.out.println("El método eliminarEmpleado no se ejecuta correctamente");
 
         }
     }
@@ -84,8 +84,8 @@ public class ServidorBD implements ServicioBD {
     public void modificarEmpleado(Empleado e) {
         try {
             set = con.createStatement();
-            int res = set.executeUpdate("UPDATE EMPLEADO SET NOMBRE='" + e.getNombre() + "',APELLIDOS='" + e.getApellidos() + "',CORREO=" + e.getCorreo()+ ",PASSWORD=" 
-                    + e.getPassword() + ",HORARIO=" + e.getHorario() + ",TELEFONO='" + e.getTelefono() + "',CATEGORIA='" + e.getCategoria() + "'where DNI='" + e.getDni() + "'");
+            int res = set.executeUpdate("UPDATE EMPLEADO SET NOMBRE='" + e.getNombre() + "',APELLIDOS='" + e.getApellidos() + "',CORREO='" + e.getCorreo()+ 
+                    "',PASSWORD='"+ e.getPassword() + "',HORARIO='" + e.getHorario() + "',TELEFONO='" + e.getTelefono() + "',CATEGORIA='" + e.getCategoria() + "'where DNI='" + e.getDni() + "'");
             if (res == -1) {
                 System.out.println("No se ha podido modificar el empleado");
             }
@@ -141,5 +141,49 @@ public class ServidorBD implements ServicioBD {
         return empleados;
     }
     
+       public ArrayList<Empleado> consultagetEmpleadosDNI(String dni) {
+        ArrayList<Empleado> empleados = new ArrayList<>();
+        Empleado aux;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT * FROM EMPLEADO where DNI='"+dni+"'");
+            
+            while (rs.next()) {
+                aux = new Empleado(rs.getString("DNI"), rs.getString("NOMBRE"), rs.getString("APELLIDOS"), rs.getString("CORREO")
+                        , rs.getString("PASSWORD"), rs.getString("HORARIO"), rs.getString("TELEFONO"), rs.getString("CATEGORIA"));
+                empleados.add(aux);
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("El método existeUsuario no se ejecuta correctamente");
+
+        }
+                return empleados;
+
+    }
+    public ArrayList<Empleado> consultagetEmpleadosNombre(String nombre) {
+        ArrayList<Empleado> empleados = new ArrayList<>();
+        Empleado aux;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT * FROM EMPLEADO where NOMBRE='"+nombre+"'");
+            
+            while (rs.next()) {
+                aux = new Empleado(rs.getString("DNI"), rs.getString("NOMBRE"), rs.getString("APELLIDOS"), rs.getString("CORREO")
+                        , rs.getString("PASSWORD"), rs.getString("HORARIO"), rs.getString("TELEFONO"), rs.getString("CATEGORIA"));
+                empleados.add(aux);
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("El método existeUsuario no se ejecuta correctamente");
+
+        }
+                return empleados;
+
+    }
     
 }
