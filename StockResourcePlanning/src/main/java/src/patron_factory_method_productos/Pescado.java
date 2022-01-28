@@ -11,7 +11,7 @@ package src.patron_factory_method_productos;
  */
 public class Pescado implements Categoria {
 
-  private String nombre="Pescado";
+  public String nombre;
 
     public Pescado(String nombre) {
         this.nombre = nombre;

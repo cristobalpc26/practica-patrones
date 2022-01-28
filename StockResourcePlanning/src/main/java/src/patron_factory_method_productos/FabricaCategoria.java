@@ -11,15 +11,20 @@ package src.patron_factory_method_productos;
  */
 public class FabricaCategoria {
 
-    public Categoria getCategoria(String nombre) { //Método de fabricación o creacion de objetos, cuarado o circulo a traves de clases concretas o subclases
+    public Categoria crearCategoria(String nombre) { //Método de creacion de categorias a traves de clases concretas o subclases
         Categoria p = null;
-        if (nombre.equals("Carne")) {
-            p = new Carne("Carne");
-        } else if (nombre.equals("Pescado")) {
-            p = new Pescado("Pescado");
-        } else if (nombre.equals("Bebidas")){
-            p = new Bebidas("Bebidas");
-
+        switch (nombre) {
+            case "Carne":
+                p = new Carne("Carne");
+                break;
+            case "Pescado":
+                p = new Pescado("Pescado");
+                break;
+            case "Bebidas":
+                p = new Bebidas("Bebidas");
+                break;
+            default:
+                break;
         }
         return p;
     }

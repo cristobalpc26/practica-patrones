@@ -17,10 +17,10 @@ public class main {
     public static void main(String[] args) {
 
         FabricaCategoria hf = new FabricaCategoria();
-        Categoria h1 = new Bebidas("kdjsadas");
+        Categoria h1 = hf.crearCategoria("Bebidas");
         System.out.println("Soy una coca cola de la categoria " +h1.getNombre());
-       Categoria po1 = new Pescado("ciljz´ca");
-        System.out.println("Soy una merluzaa de la categoria " +po1.getNombre());
+        Categoria h2 = hf.crearCategoria("ñPescado");
+        System.out.println("Soy una merluzaa de la categoria " +h2.getNombre());
     }
 
 }
