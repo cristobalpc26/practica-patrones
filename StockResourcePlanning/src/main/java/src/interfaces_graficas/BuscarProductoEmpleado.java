@@ -82,7 +82,7 @@ public class BuscarProductoEmpleado extends javax.swing.JFrame {
         jLabel24.setText("Búsqueda de producto");
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel1.setText("DNI");
+        jLabel1.setText("Nombre");
 
         jTextFieldNombreProducto.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jTextFieldNombreProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -206,8 +206,8 @@ public class BuscarProductoEmpleado extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(80, 80, 80)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(153, 153, 153)

@@ -13,7 +13,7 @@ INSERT INTO EMPLEADO VALUES
 ('22222222B', 'Pedro', 'Fernandez Ayuso', 'pedro.fernandez.ayuso@market.com', 'pedro', 'Tarde', '111111111', 'Empleado');
 
 INSERT INTO PRODUCTO VALUES
-('0', 'Bebida', 'Refrescos', 'Cola', 'Coca-Cola', 1.5, 40, 'EEUU', '2022-01-08', '2025-01-01', 'Pasillo 2');
+('0', 'Bebida', 'Refrescos', 'Coca-Cola', 1.5, 40, 'EEUU', '2022-01-08', '2025-01-01', 'Pasillo 2');
 
 INSERT INTO EMPLEADO_PRODUCTOS VALUES
 ('0', '22222222B', 20, '2022-01-08 12:30:15');

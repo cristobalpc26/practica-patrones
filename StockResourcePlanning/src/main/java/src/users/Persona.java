@@ -107,8 +107,4 @@ public abstract class Persona {
         this.categoria = categoria;
     }
 
-    // TODO: Añadir producto, etc.
-    public abstract void registrarEmpleado(Empleado e);
-    public abstract void eliminarEmpleado(String dni);
-    public abstract void modificarEmpleado(Empleado e);
 }

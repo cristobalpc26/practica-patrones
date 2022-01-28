@@ -34,12 +34,12 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jButtonBusquedaDNI = new javax.swing.JButton();
-        jTextFieldNombreProducto = new javax.swing.JTextField();
-        jTextFieldUnidadesProductoIntroducidas = new javax.swing.JTextField();
+        jTextFieldNombreProductoAdmin = new javax.swing.JTextField();
+        jTextFieldUnidadesProductoIntroducidasAdmin = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButtonBusquedaCriterios = new javax.swing.JButton();
-        jTextFieldFechaCaducidad = new javax.swing.JTextField();
+        jTextFieldFechaCaducidadAdmin = new javax.swing.JTextField();
         jButtonEliminarElementoSeleccionado = new javax.swing.JButton();
         jButtonModificacionDatosEmpleado = new javax.swing.JButton();
         jButtonVolverAtrasBuscarProductoAdmin = new javax.swing.JButton();
@@ -136,17 +136,17 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
         jButtonBusquedaDNI.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jButtonBusquedaDNI.setText("Buscar ");
 
-        jTextFieldNombreProducto.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jTextFieldNombreProducto.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldNombreProductoAdmin.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextFieldNombreProductoAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldNombreProductoActionPerformed(evt);
+                jTextFieldNombreProductoAdminActionPerformed(evt);
             }
         });
 
-        jTextFieldUnidadesProductoIntroducidas.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jTextFieldUnidadesProductoIntroducidas.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldUnidadesProductoIntroducidasAdmin.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextFieldUnidadesProductoIntroducidasAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldUnidadesProductoIntroducidasActionPerformed(evt);
+                jTextFieldUnidadesProductoIntroducidasAdminActionPerformed(evt);
             }
         });
 
@@ -160,7 +160,7 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
         jButtonBusquedaCriterios.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jButtonBusquedaCriterios.setText("Buscar");
 
-        jTextFieldFechaCaducidad.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextFieldFechaCaducidadAdmin.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
         jButtonEliminarElementoSeleccionado.setBackground(new java.awt.Color(255, 0, 0));
         jButtonEliminarElementoSeleccionado.setFont(new java.awt.Font("Verdana", 3, 14)); // NOI18N
@@ -181,27 +181,27 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(152, 152, 152)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(96, 96, 96)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(52, 52, 52)
                                 .addComponent(jButtonBusquedaDNI))
-                            .addComponent(jTextFieldNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jTextFieldNombreProductoAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(166, 166, 166)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextFieldFechaCaducidad, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldFechaCaducidadAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(120, 120, 120))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(151, 151, 151)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldUnidadesProductoIntroducidas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldUnidadesProductoIntroducidasAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(62, 62, 62)
                                 .addComponent(jLabel2)))
@@ -235,7 +235,7 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldNombreProductoAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
@@ -249,8 +249,8 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldFechaCaducidad, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldUnidadesProductoIntroducidas, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldFechaCaducidadAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldUnidadesProductoIntroducidasAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(54, 54, 54)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -287,16 +287,16 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldUnidadesProductoIntroducidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUnidadesProductoIntroducidasActionPerformed
+    private void jTextFieldUnidadesProductoIntroducidasAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUnidadesProductoIntroducidasAdminActionPerformed
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldUnidadesProductoIntroducidasActionPerformed
+    }//GEN-LAST:event_jTextFieldUnidadesProductoIntroducidasAdminActionPerformed
 
-    private void jTextFieldNombreProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreProductoActionPerformed
+    private void jTextFieldNombreProductoAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreProductoAdminActionPerformed
    
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldNombreProductoActionPerformed
+    }//GEN-LAST:event_jTextFieldNombreProductoAdminActionPerformed
 
     /**
      * @param args the command line arguments
@@ -354,8 +354,8 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableMuestraProductosAdmin;
-    private javax.swing.JTextField jTextFieldFechaCaducidad;
-    private javax.swing.JTextField jTextFieldNombreProducto;
-    private javax.swing.JTextField jTextFieldUnidadesProductoIntroducidas;
+    private javax.swing.JTextField jTextFieldFechaCaducidadAdmin;
+    private javax.swing.JTextField jTextFieldNombreProductoAdmin;
+    private javax.swing.JTextField jTextFieldUnidadesProductoIntroducidasAdmin;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,16 +14,5 @@ public class Empleado extends Persona{
         super(dni, nombre, apellidos, correo, password, horario, telefono, categoria);
     }
 
-    @Override
-    public void registrarEmpleado(Empleado e) {
-    }
-
-    @Override
-    public void eliminarEmpleado(String dni) {
-    }
-
-    @Override
-    public void modificarEmpleado(Empleado e) {
-    }
-    
+  
 }

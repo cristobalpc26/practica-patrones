@@ -318,7 +318,6 @@ public class BuscarEmpleado extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecciona una fila", "Error!", JOptionPane.ERROR_MESSAGE);
         } else {
             String dniEliminar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 0).toString();
-            System.out.println(dniEliminar);
             sbd.eliminarEmpleado(dniEliminar);
 
             tablaMuestra.removeRow(indiceFilaSeleccionada);

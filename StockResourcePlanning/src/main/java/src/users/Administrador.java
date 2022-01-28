@@ -54,23 +54,6 @@ public class Administrador extends Persona{
     public void setEmpleados(ArrayList<Empleado> empleados) {
         this.empleados = empleados;
     }
-    
-    @Override
-    public void registrarEmpleado (Empleado e) {
-        this.proxy.insertarEmpleado(e);
-    }
-    
-    @Override
-    public void eliminarEmpleado (String dni) {
-        this.proxy.eliminarEmpleado(dni);
-    }
-    
-    @Override
-    public void modificarEmpleado (Empleado e) {
-        this.proxy.modificarEmpleado(e);
-    }
-    
-    //TODO: Metodos de administrador
-    
+ 
     
 }

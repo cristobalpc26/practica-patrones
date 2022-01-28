@@ -5,6 +5,8 @@
 package src.patron_proxy;
 
 import java.util.ArrayList;
+import java.util.Date;
+import src.patron_factory_method_productos.Producto;
 import src.users.Empleado;
 
 /**
@@ -18,16 +20,37 @@ public interface ServicioBD {
      *
      * @param e Empleado a insertar
      */
+    // Empleados
     public void insertarEmpleado(Empleado e);
 
     public void eliminarEmpleado(String dni);
 
     public void modificarEmpleado(Empleado e);
-    
+
     public String getDniEmpleado(String login, String passwd);
-    
-    // Admin 
-    
+
+    public ArrayList<Empleado> consultagetEmpleadosNombre(String nombre);
+
+    public ArrayList<Empleado> consultagetEmpleadosDNI(String dni);
+
     public ArrayList<Empleado> getEmpleados();
+
+    
+    // Productos
+      public void insertarProducto(Producto p);
+
+    public void eliminarProducto(String id_producto);
+
+    public void modificarProducto(Producto p);
+
+ public ArrayList<Producto> consultagetProductoNombre(String nombre);
+
+    public ArrayList<Producto> consultagetProductosFechaCaducidad(Date Fecha);
+
+        public ArrayList<Producto> consultagetProductosUnidades(int unidades);
+
+    public ArrayList<Producto> getProductos();
+    
+    
     
 }

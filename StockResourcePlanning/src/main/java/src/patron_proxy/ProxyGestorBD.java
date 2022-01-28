@@ -5,6 +5,8 @@
 package src.patron_proxy;
 
 import java.util.ArrayList;
+import java.util.Date;
+import src.patron_factory_method_productos.Producto;
 import src.patron_iterator.IteradorEmpleados;
 import src.users.Empleado;
 
@@ -47,6 +49,51 @@ public class ProxyGestorBD implements ServicioBD{
     @Override
     public ArrayList<Empleado> getEmpleados() {
         return this.serv.getEmpleados();
+    }
+
+    @Override
+    public ArrayList<Empleado> consultagetEmpleadosNombre(String nombre) {
+        return this.serv.consultagetEmpleadosNombre(nombre);
+    }
+
+    @Override
+    public ArrayList<Empleado> consultagetEmpleadosDNI(String dni) {
+        return this.serv.consultagetEmpleadosDNI(dni);
+    }
+
+    @Override
+    public void insertarProducto(Producto p) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void eliminarProducto(String id_producto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void modificarProducto(Producto p) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Producto> consultagetProductoNombre(String nombre) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Producto> consultagetProductosFechaCaducidad(Date Fecha) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Producto> consultagetProductosUnidades(int unidades) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Producto> getProductos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
    
 }
