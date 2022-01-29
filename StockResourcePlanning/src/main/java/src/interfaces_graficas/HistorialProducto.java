@@ -5,6 +5,8 @@
  */
 package src.interfaces_graficas;
 
+import src.fachada.FachadaSRP;
+import src.patron_proxy.ProxyGestorBD;
 import src.patron_proxy.ServidorBD;
 
 /**
@@ -16,11 +18,17 @@ public class HistorialProducto extends javax.swing.JFrame {
     /**
      * Creates new form HistorialProducto
      */
-    ServidorBD sbd = new ServidorBD();
-    public HistorialProducto() {
-        initComponents();
-    }
+     private FachadaSRP fachada = new FachadaSRP();
+    private ProxyGestorBD sbd = ProxyGestorBD.getInstancia();
 
+    private HomeAdmin ha;
+
+    public HistorialProducto(HomeAdmin HA) {
+        initComponents();
+        setTitle("Busqueda de Productos");
+        this.ha = HA;
+        setLocationRelativeTo(null);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -127,6 +135,11 @@ public class HistorialProducto extends javax.swing.JFrame {
         jButtonVolverAtrasHistorialProductos.setBackground(new java.awt.Color(255, 102, 102));
         jButtonVolverAtrasHistorialProductos.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jButtonVolverAtrasHistorialProductos.setText("Atrás");
+        jButtonVolverAtrasHistorialProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVolverAtrasHistorialProductosActionPerformed(evt);
+            }
+        });
 
         jButtonBusquedaHistorial.setBackground(new java.awt.Color(0, 102, 255));
         jButtonBusquedaHistorial.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
@@ -200,41 +213,16 @@ public class HistorialProducto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonBusquedaHistorialActionPerformed
 
+    private void jButtonVolverAtrasHistorialProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverAtrasHistorialProductosActionPerformed
+       this.setVisible(false);
+       ha.setVisible(true);
+    }//GEN-LAST:event_jButtonVolverAtrasHistorialProductosActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HistorialProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HistorialProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HistorialProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HistorialProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new HistorialProducto().setVisible(true);
-            }
-        });
-    }
-
+   
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBusquedaHistorial;
     private javax.swing.JButton jButtonVolverAtrasHistorialProductos;

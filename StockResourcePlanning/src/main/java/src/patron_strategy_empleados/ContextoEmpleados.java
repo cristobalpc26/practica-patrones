@@ -5,37 +5,42 @@
 package src.patron_strategy_empleados;
 
 import java.util.ArrayList;
+import src.patron_factory_method_productos.Producto;
 import src.users.Empleado;
 
 /**
  *
  * @author cris
  */
-public class Contexto {
-    private Estrategia estrategia;
-    private ArrayList<Empleado> empleados; // Lista de alumnos.
+public class ContextoEmpleados {
+    private EstrategiaEmpleados estrategia;
+    private ArrayList<Empleado> empleados; // Lista de empleados.
 
-    public Contexto(Estrategia e, ArrayList<Empleado> empleados) {
+    public ContextoEmpleados(EstrategiaEmpleados e, ArrayList<Empleado> empleados) {
         this.estrategia = e;
         this.empleados = empleados;
     }
 
+   
+
+ 
     /**
      * Establece la estrategia a usar.
      *
      * @param e Estrategia a usar.
      */
-    public void setEstrategia(Estrategia e) {
+    public void setEstrategia(EstrategiaEmpleados e) {
         this.estrategia = e;
     }
 
     /**
      * Ejecuta la estrategia.
      */
-    public void ejecutaEstrategia() {
-        estrategia.ordena(empleados);
+    public void ejecutaEstrategiaEmpleados() {
+        estrategia.ordenaEmpleados(empleados);
         for (Empleado empleado : empleados) {
-            System.out.println(empleado.getDni());
+            System.out.println(empleado.toString());
         }
     }
+      
 }

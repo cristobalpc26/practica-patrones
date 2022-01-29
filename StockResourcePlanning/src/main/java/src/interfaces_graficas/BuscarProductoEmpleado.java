@@ -6,6 +6,20 @@
 package src.interfaces_graficas;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import src.patron_factory_method_productos.Producto;
+import src.patron_proxy.ProxyGestorBD;
+import src.patron_strategy_empleados.ContextoEmpleados;
+import src.patron_strategy_empleados.ContextoProductos;
+import src.patron_strategy_empleados.EstrategiaEmpleados;
+import src.patron_strategy_empleados.EstrategiaOrdenarPorFechaCaducidad;
+import src.patron_strategy_empleados.EstrategiaOrdenarPorIdentificador;
+import src.patron_strategy_empleados.EstrategiaOrdenarPorNombreProductos;
+import src.patron_strategy_empleados.EstrategiaProductos;
+import src.users.Empleado;
 
 /**
  *
@@ -13,40 +27,12 @@ import java.io.IOException;
  */
 public class BuscarProductoEmpleado extends javax.swing.JFrame {
 
-    public BuscarProductoEmpleado() {
+    private HomeInicio hi;
+    private ProxyGestorBD sbd = ProxyGestorBD.getInstancia();
+
+    public BuscarProductoEmpleado(HomeInicio HI) {
+        this.hi = HI;
         initComponents();
-    }
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HistorialProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HistorialProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HistorialProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HistorialProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BuscarProductoEmpleado().setVisible(true);
-            }
-        });
     }
 
     /**
@@ -56,7 +42,7 @@ public class BuscarProductoEmpleado extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
-    
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -74,6 +60,8 @@ public class BuscarProductoEmpleado extends javax.swing.JFrame {
         jTableMuestraProductosEmpleados = new javax.swing.JTable();
         jButtonModificacionDatosEmpleado = new javax.swing.JButton();
         jButtonVolverAtrasBuscarProductoEmpleado = new javax.swing.JButton();
+        jButtonOrdenarFechaCaducidadEmpleado = new javax.swing.JButton();
+        jButtonOrdenarNombreProductoEmpleado = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -196,79 +184,124 @@ public class BuscarProductoEmpleado extends javax.swing.JFrame {
         jButtonModificacionDatosEmpleado.setBackground(new java.awt.Color(255, 153, 0));
         jButtonModificacionDatosEmpleado.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jButtonModificacionDatosEmpleado.setText("Modificar");
+        jButtonModificacionDatosEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificacionDatosEmpleadoActionPerformed(evt);
+            }
+        });
 
         jButtonVolverAtrasBuscarProductoEmpleado.setBackground(new java.awt.Color(255, 102, 102));
         jButtonVolverAtrasBuscarProductoEmpleado.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jButtonVolverAtrasBuscarProductoEmpleado.setText("Atrás");
+        jButtonVolverAtrasBuscarProductoEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVolverAtrasBuscarProductoEmpleadoActionPerformed(evt);
+            }
+        });
+
+        jButtonOrdenarFechaCaducidadEmpleado.setBackground(new java.awt.Color(102, 102, 255));
+        jButtonOrdenarFechaCaducidadEmpleado.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButtonOrdenarFechaCaducidadEmpleado.setText("Busqueda global orden Caducidad");
+        jButtonOrdenarFechaCaducidadEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOrdenarFechaCaducidadEmpleadoActionPerformed(evt);
+            }
+        });
+
+        jButtonOrdenarNombreProductoEmpleado.setBackground(new java.awt.Color(102, 102, 255));
+        jButtonOrdenarNombreProductoEmpleado.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButtonOrdenarNombreProductoEmpleado.setText("Busqueda global orden Nombre");
+        jButtonOrdenarNombreProductoEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOrdenarNombreProductoEmpleadoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jTextFieldNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(jButtonBusquedaDNI)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(153, 153, 153)
-                .addComponent(jLabel2)
-                .addGap(85, 85, 85))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jTextFieldNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextFieldFechaCaducidad, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(jTextFieldUnidadesProductoIntroducidas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addComponent(jButtonBusquedaDNI)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonBusquedaCriterios, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(180, 180, 180))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jButtonVolverAtrasBuscarProductoEmpleado)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(495, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonOrdenarNombreProductoEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonOrdenarFechaCaducidadEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(60, 60, 60)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel24)
-                        .addGap(455, 455, 455))
+                        .addComponent(jLabel3)
+                        .addGap(153, 153, 153)
+                        .addComponent(jLabel2)
+                        .addGap(85, 85, 85))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextFieldFechaCaducidad, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(jTextFieldUnidadesProductoIntroducidas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonBusquedaCriterios, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(180, 180, 180))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 582, Short.MAX_VALUE)
                         .addComponent(jButtonModificacionDatosEmpleado)
                         .addGap(541, 541, 541))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonVolverAtrasBuscarProductoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(432, 432, 432)
+                        .addComponent(jLabel24)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jLabel24)
-                .addGap(43, 43, 43)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldFechaCaducidad, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldUnidadesProductoIntroducidas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonBusquedaDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonBusquedaCriterios, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldFechaCaducidad, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldUnidadesProductoIntroducidas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonBusquedaDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonBusquedaCriterios, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel24)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonOrdenarNombreProductoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonOrdenarFechaCaducidadEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonModificacionDatosEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
-                .addComponent(jButtonVolverAtrasBuscarProductoEmpleado))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addComponent(jButtonVolverAtrasBuscarProductoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -282,7 +315,7 @@ public class BuscarProductoEmpleado extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(283, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -298,11 +331,97 @@ public class BuscarProductoEmpleado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNombreProductoActionPerformed
 
+    private void jButtonVolverAtrasBuscarProductoEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverAtrasBuscarProductoEmpleadoActionPerformed
+        this.setVisible(false);
+        this.hi.setVisible(true);
+    }//GEN-LAST:event_jButtonVolverAtrasBuscarProductoEmpleadoActionPerformed
+
+    private void jButtonOrdenarFechaCaducidadEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdenarFechaCaducidadEmpleadoActionPerformed
+        ArrayList<Producto> aux = sbd.getProductos();
+        DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosEmpleados.getModel();
+        tablaMuestra.setRowCount(0);
+
+        EstrategiaProductos est = new EstrategiaOrdenarPorFechaCaducidad();
+        ContextoProductos contexto = new ContextoProductos(est, aux);
+        contexto.ejecutaEstrategiaProductos();
+        tablaMuestra.setRowCount(0);
+        Object[] row = new Object[10];
+        for (int i = 0; i < aux.size(); i++) {
+            row[0] = aux.get(i).getId();
+            row[1] = aux.get(i).getCategoria();
+            row[2] = aux.get(i).getNombre();
+            row[3] = aux.get(i).getMarca();
+            row[4] = aux.get(i).getPrecio();
+            row[5] = aux.get(i).getUnidades();
+            row[6] = aux.get(i).getProcedencia();
+            row[7] = aux.get(i).getFechaLlegada();
+            row[8] = aux.get(i).getFechaCaducidad();
+            row[9] = aux.get(i).getLocalizacion();
+
+            tablaMuestra.addRow(row);
+        }
+    }//GEN-LAST:event_jButtonOrdenarFechaCaducidadEmpleadoActionPerformed
+
+    private void jButtonOrdenarNombreProductoEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdenarNombreProductoEmpleadoActionPerformed
+          ArrayList<Producto> aux = sbd.getProductos();
+        DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosEmpleados.getModel();
+        tablaMuestra.setRowCount(0);
+
+        EstrategiaProductos est = new EstrategiaOrdenarPorNombreProductos();
+        ContextoProductos contexto = new ContextoProductos(est, aux);
+        contexto.ejecutaEstrategiaProductos();
+        tablaMuestra.setRowCount(0);
+        Object[] row = new Object[10];
+        for (int i = 0; i < aux.size(); i++) {
+            row[0] = aux.get(i).getId();
+            row[1] = aux.get(i).getCategoria();
+            row[2] = aux.get(i).getNombre();
+            row[3] = aux.get(i).getMarca();
+            row[4] = aux.get(i).getPrecio();
+            row[5] = aux.get(i).getUnidades();
+            row[6] = aux.get(i).getProcedencia();
+            row[7] = aux.get(i).getFechaLlegada();
+            row[8] = aux.get(i).getFechaCaducidad();
+
+            row[9] = aux.get(i).getLocalizacion();
+
+            tablaMuestra.addRow(row);
+        }
+    }//GEN-LAST:event_jButtonOrdenarNombreProductoEmpleadoActionPerformed
+
+    private void jButtonModificacionDatosEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificacionDatosEmpleadoActionPerformed
+        DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosEmpleados.getModel();
+        int indiceFilaSeleccionada = jTableMuestraProductosEmpleados.getSelectedRow();
+
+        ModificacionDatosProductoEmpleado mde = new ModificacionDatosProductoEmpleado(this);
+
+        if (indiceFilaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(null, "Selecciona una fila", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else {
+          
+            String nuevaUnidadesModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 5).toString();
+           
+            // Establcemos los valores de la fila seleccioanda en la nueva 
+            if (indiceFilaSeleccionada != -1) {
+              
+                mde.jTextFieldUnidadesAModificarEmpleado.setText(nuevaUnidadesModificar);
+              
+
+                mde.setVisible(true);
+                this.setVisible(false);
+                mde.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+
+        }
+    }//GEN-LAST:event_jButtonModificacionDatosEmpleadoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBusquedaCriterios;
     private javax.swing.JButton jButtonBusquedaDNI;
     private javax.swing.JButton jButtonModificacionDatosEmpleado;
+    private javax.swing.JButton jButtonOrdenarFechaCaducidadEmpleado;
+    private javax.swing.JButton jButtonOrdenarNombreProductoEmpleado;
     private javax.swing.JButton jButtonVolverAtrasBuscarProductoEmpleado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

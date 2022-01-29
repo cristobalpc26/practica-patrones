@@ -7,26 +7,30 @@ package src.patron_strategy_empleados;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import src.patron_factory_method_productos.Producto;
 import src.users.Empleado;
 
 /**
  *
  * @author cris
  */
-public class EstrategiaOrdenarPorNombre implements Estrategia{
-    
-    @Override
-    public void ordena(ArrayList<Empleado> empleados) {
-             //Comparador para ordenar los alumnos por su nombre
+public class EstrategiaOrdenarPorNombreProductos implements EstrategiaProductos {
+
+    public void ordenaProductos(ArrayList<Producto> productos) {
+        //Comparador para ordenar los alumnos por su nombre
         Comparator nombre = (Comparator) (Object o1, Object o2) -> {
-            Empleado e1 = (Empleado) o1;
-            Empleado e2 = (Empleado) o2;
-            
-            return e1.getNombre().compareTo(e2.getNombre());
+            Producto p1 = (Producto) o1;
+            Producto p2 = (Producto) o2;
+
+            return p1.getNombre().compareTo(p2.getNombre());
         };
 
         //Ordenamos los objetos del array por el atributo nombre
-        Collections.sort(empleados, nombre);
+        Collections.sort(productos, nombre);
     }
-    
+
+  
+
+   
+
 }

@@ -35,22 +35,25 @@ public interface ServicioBD {
 
     public ArrayList<Empleado> getEmpleados();
 
-    
+    public ArrayList<String> getDNIEmpleados();
+
     // Productos
-      public void insertarProducto(Producto p);
+    public void insertarProducto(Producto p);
 
     public void eliminarProducto(String id_producto);
 
     public void modificarProducto(Producto p);
 
- public ArrayList<Producto> consultagetProductoNombre(String nombre);
+    public void modificarUnidadesProducto(int unidades, Producto p);
 
-    public ArrayList<Producto> consultagetProductosFechaCaducidad(Date Fecha);
+    public ArrayList<Producto> consultagetProductoNombre(String nombre);
 
-        public ArrayList<Producto> consultagetProductosUnidades(int unidades);
+    public ArrayList<Producto> consultagetProductosFechaCaducidad(String Fecha);
+
+    public ArrayList<Producto> consultagetProductosUnidades(int unidades);
 
     public ArrayList<Producto> getProductos();
-    
-    
-    
+
+    public ArrayList<String> getIDSproductos();
+
 }

@@ -12,7 +12,7 @@ import src.patron_proxy.ProxyGestorBD;
  *
  * @author Carlos
  */
-public class GestionProductos {
+public class GestionAdminProductos {
      private ProxyGestorBD pbd = ProxyGestorBD.getInstancia();
     
     public void insertarProducto(Producto p){

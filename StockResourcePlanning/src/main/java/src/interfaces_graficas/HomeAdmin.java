@@ -14,40 +14,21 @@ public class HomeAdmin extends javax.swing.JFrame {
     /**
      * Creates new form homeEmpleado
      */
-    public HomeAdmin() {
-        initComponents();
-    }
-  public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ModificacionDatosEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ModificacionDatosEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ModificacionDatosEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ModificacionDatosEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private HomeInicio hi;
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new HomeAdmin().setVisible(true);
-            }
-        });
+    private BuscarEmpleado be = new BuscarEmpleado(this);
+    private RegistrarEmpleado re = new RegistrarEmpleado(this);
+    private BuscarProductoAdmin bp = new BuscarProductoAdmin(this);
+    private HistorialProducto hp = new HistorialProducto(this);
+    private RegistrarProducto rp = new RegistrarProducto(this);
+
+    public HomeAdmin(HomeInicio HI) {
+        initComponents();
+        this.hi = HI;
+        setTitle("Página Principal de Administrador");
+        setLocationRelativeTo(null);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,29 +40,34 @@ public class HomeAdmin extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jButtonRegistralProducto = new javax.swing.JButton();
+        jButtonRegistrarProducto = new javax.swing.JButton();
         jButtonCerrarSesion = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButtonVisualizarHistorialProducto = new javax.swing.JButton();
         jButtonBuscarEmpleados1 = new javax.swing.JButton();
-        jButtonBuscarProductos1 = new javax.swing.JButton();
+        jButtonBuscarProductos = new javax.swing.JButton();
         jButtonAltaEmpleado = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(619, 428));
 
-        jButtonRegistralProducto.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jButtonRegistralProducto.setForeground(new java.awt.Color(0, 153, 51));
-        jButtonRegistralProducto.setText("Registrar Producto");
-        jButtonRegistralProducto.addActionListener(new java.awt.event.ActionListener() {
+        jButtonRegistrarProducto.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jButtonRegistrarProducto.setForeground(new java.awt.Color(0, 153, 51));
+        jButtonRegistrarProducto.setText("Registrar Producto");
+        jButtonRegistrarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRegistralProductoActionPerformed(evt);
+                jButtonRegistrarProductoActionPerformed(evt);
             }
         });
 
         jButtonCerrarSesion.setBackground(new java.awt.Color(255, 51, 51));
         jButtonCerrarSesion.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jButtonCerrarSesion.setText("Cerrar Sesión");
+        jButtonCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCerrarSesionActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 22)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 255));
@@ -99,13 +85,18 @@ public class HomeAdmin extends javax.swing.JFrame {
 
         jButtonBuscarEmpleados1.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jButtonBuscarEmpleados1.setText("Buscar Empleado");
-
-        jButtonBuscarProductos1.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jButtonBuscarProductos1.setForeground(new java.awt.Color(0, 153, 51));
-        jButtonBuscarProductos1.setText("Buscar Producto");
-        jButtonBuscarProductos1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonBuscarEmpleados1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBuscarProductos1ActionPerformed(evt);
+                jButtonBuscarEmpleados1ActionPerformed(evt);
+            }
+        });
+
+        jButtonBuscarProductos.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jButtonBuscarProductos.setForeground(new java.awt.Color(0, 153, 51));
+        jButtonBuscarProductos.setText("Buscar Producto");
+        jButtonBuscarProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarProductosActionPerformed(evt);
             }
         });
 
@@ -123,21 +114,22 @@ public class HomeAdmin extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonBuscarProductos1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonRegistralProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonVisualizarHistorialProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(33, 33, 33))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonCerrarSesion)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonBuscarEmpleados1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
                             .addComponent(jButtonAltaEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonRegistrarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                    .addComponent(jButtonVisualizarHistorialProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonBuscarProductos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(46, 46, 46))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,12 +139,12 @@ public class HomeAdmin extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonBuscarEmpleados1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonBuscarProductos1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(jButtonVisualizarHistorialProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonBuscarProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(jButtonVisualizarHistorialProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonRegistralProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonRegistrarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonAltaEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                 .addComponent(jButtonCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -163,13 +155,13 @@ public class HomeAdmin extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(410, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(257, 257, 257))
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,32 +177,46 @@ public class HomeAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonVisualizarHistorialProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisualizarHistorialProductoActionPerformed
-        // TODO add your handling code here:
+       this.setVisible(false);
+        this.hp.setVisible(true);
     }//GEN-LAST:event_jButtonVisualizarHistorialProductoActionPerformed
 
-    private void jButtonBuscarProductos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarProductos1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonBuscarProductos1ActionPerformed
+    private void jButtonBuscarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarProductosActionPerformed
+        this.setVisible(false);
+        this.bp.setVisible(true);
+    }//GEN-LAST:event_jButtonBuscarProductosActionPerformed
 
     private void jButtonAltaEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAltaEmpleadoActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        this.re.setVisible(true);
     }//GEN-LAST:event_jButtonAltaEmpleadoActionPerformed
 
-    private void jButtonRegistralProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistralProductoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonRegistralProductoActionPerformed
+    private void jButtonRegistrarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarProductoActionPerformed
+        this.setVisible(false);
+        this.rp.setVisible(true);
+    }//GEN-LAST:event_jButtonRegistrarProductoActionPerformed
+
+    private void jButtonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarSesionActionPerformed
+        this.setVisible(false);
+        this.hi.setVisible(true);
+    }//GEN-LAST:event_jButtonCerrarSesionActionPerformed
+
+    private void jButtonBuscarEmpleados1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarEmpleados1ActionPerformed
+        this.setVisible(false);
+        this.be.setVisible(true);
+
+    }//GEN-LAST:event_jButtonBuscarEmpleados1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAltaEmpleado;
     private javax.swing.JButton jButtonBuscarEmpleados1;
-    private javax.swing.JButton jButtonBuscarProductos1;
+    private javax.swing.JButton jButtonBuscarProductos;
     private javax.swing.JButton jButtonCerrarSesion;
-    private javax.swing.JButton jButtonRegistralProducto;
+    private javax.swing.JButton jButtonRegistrarProducto;
     private javax.swing.JButton jButtonVisualizarHistorialProducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

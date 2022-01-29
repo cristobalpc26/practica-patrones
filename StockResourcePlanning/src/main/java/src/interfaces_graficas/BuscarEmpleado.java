@@ -8,9 +8,19 @@ package src.interfaces_graficas;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import src.fachada.FachadaSRP;
+import src.fachada.GestionEmpleados;
+import src.patron_proxy.ProxyGestorBD;
 import src.patron_proxy.ServidorBD;
+import src.patron_strategy_empleados.ContextoEmpleados;
+import src.patron_strategy_empleados.EstrategiaOrdenarPorIdentificador;
+import src.patron_strategy_empleados.EstrategiaOrdenarPorNombreEmpleados;
+import src.users.Administrador;
 import src.users.Empleado;
+import src.patron_strategy_empleados.EstrategiaEmpleados;
 
 /**
  *
@@ -21,10 +31,19 @@ public class BuscarEmpleado extends javax.swing.JFrame {
     /**
      * Creates new form BuscarEmpleado
      */
-    ServidorBD sbd = new ServidorBD();
+    private ProxyGestorBD sbd = ProxyGestorBD.getInstancia();
 
-    public BuscarEmpleado() {
+    private FachadaSRP fachada = new FachadaSRP();
+
+    // private Administrador admin = Administrador.getInstancia();
+    private HomeAdmin ha;
+
+    public BuscarEmpleado(HomeAdmin HA) {
+        this.ha = HA;
         initComponents();
+        setTitle("Busqueda de Empleado");
+        setLocationRelativeTo(null);
+
     }
 
     public String getDNIBusqueda() {
@@ -60,6 +79,8 @@ public class BuscarEmpleado extends javax.swing.JFrame {
         jTextFieldDniIntroducido = new javax.swing.JTextField();
         jButtonBusquedaNombre = new javax.swing.JButton();
         jTextFieldNombreIntroducido = new javax.swing.JTextField();
+        jButtonOrdenarDni = new javax.swing.JButton();
+        jButtonOrdenarNombre = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,6 +111,11 @@ public class BuscarEmpleado extends javax.swing.JFrame {
         jButtonVolverAtrasBuscarEmpleado.setBackground(new java.awt.Color(255, 102, 102));
         jButtonVolverAtrasBuscarEmpleado.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jButtonVolverAtrasBuscarEmpleado.setText("Atrás");
+        jButtonVolverAtrasBuscarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVolverAtrasBuscarEmpleadoActionPerformed(evt);
+            }
+        });
 
         jTableMuestraEmpleados.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTableMuestraEmpleados.setModel(new javax.swing.table.DefaultTableModel(
@@ -103,13 +129,22 @@ public class BuscarEmpleado extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
+        jTableMuestraEmpleados.setColumnSelectionAllowed(true);
         jTableMuestraEmpleados.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTableMuestraEmpleados);
+        jTableMuestraEmpleados.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         jLabel24.setFont(new java.awt.Font("Verdana", 1, 22)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(0, 51, 255));
@@ -137,48 +172,71 @@ public class BuscarEmpleado extends javax.swing.JFrame {
 
         jTextFieldNombreIntroducido.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
+        jButtonOrdenarDni.setBackground(new java.awt.Color(102, 102, 255));
+        jButtonOrdenarDni.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButtonOrdenarDni.setText("Busqueda global orden DNI");
+        jButtonOrdenarDni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOrdenarDniActionPerformed(evt);
+            }
+        });
+
+        jButtonOrdenarNombre.setBackground(new java.awt.Color(102, 102, 255));
+        jButtonOrdenarNombre.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButtonOrdenarNombre.setText("Busqueda global orden Nombre");
+        jButtonOrdenarNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOrdenarNombreActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTextFieldDniIntroducido, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(jButtonBusquedaDNI))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jTextFieldNombreIntroducido, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(36, 36, 36))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jButtonBusquedaNombre)
+                            .addGap(82, 82, 82)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(97, 97, 97))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(166, 166, 166))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jButtonVolverAtrasBuscarEmpleado)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane1)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldDniIntroducido, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jButtonBusquedaDNI))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(268, 268, 268)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(73, 73, 73)
-                                .addComponent(jLabel3))
-                            .addComponent(jTextFieldNombreIntroducido, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(44, 44, 44))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonBusquedaNombre)
-                        .addGap(99, 99, 99)))
-                .addGap(0, 20, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(166, 166, 166))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonModificacionDatosEmpleado)
-                        .addGap(182, 182, 182)
-                        .addComponent(jButtonEliminarElementoSeleccionado)
-                        .addGap(181, 181, 181))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonOrdenarNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
+                    .addComponent(jButtonOrdenarDni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(169, 169, 169)
+                .addComponent(jButtonModificacionDatosEmpleado)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
+                .addComponent(jButtonEliminarElementoSeleccionado)
+                .addGap(195, 195, 195))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,12 +256,16 @@ public class BuscarEmpleado extends javax.swing.JFrame {
                     .addComponent(jButtonBusquedaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonBusquedaDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonOrdenarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonOrdenarDni, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(66, 66, 66)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonModificacionDatosEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEliminarElementoSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(37, 37, 37)
                 .addComponent(jButtonVolverAtrasBuscarEmpleado))
         );
 
@@ -229,10 +291,13 @@ public class BuscarEmpleado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonBusquedaDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaDNIActionPerformed
+        //jTableMuestraEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         ArrayList<Empleado> list = sbd.consultagetEmpleadosDNI(getDNIBusqueda());
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraEmpleados.getModel();
         tablaMuestra.setRowCount(0); // para que no se repita los resultados al pulsar al buscar
+
+        jTableMuestraEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         Object[] row = new Object[8];
         for (int i = 0; i < list.size(); i++) {
@@ -252,10 +317,12 @@ public class BuscarEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBusquedaDNIActionPerformed
 
     private void jButtonModificacionDatosEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificacionDatosEmpleadoActionPerformed
+        //   jTableMuestraEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraEmpleados.getModel();
         int indiceFilaSeleccionada = jTableMuestraEmpleados.getSelectedRow();
 
-        ModificacionDatosEmpleado mde = new ModificacionDatosEmpleado();
+        ModificacionDatosEmpleado mde = new ModificacionDatosEmpleado(this);
 
         if (indiceFilaSeleccionada == -1) {
             JOptionPane.showMessageDialog(null, "Selecciona una fila", "Error!", JOptionPane.ERROR_MESSAGE);
@@ -269,17 +336,19 @@ public class BuscarEmpleado extends javax.swing.JFrame {
             String nuevoTelefonoModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 6).toString();
             String nuevaCategoriaModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 7).toString();
 
+            // Establcemos los valores de la fila seleccioanda en la nueva 
             if (indiceFilaSeleccionada != -1) {
                 mde.jTextFieldDniAModificar.setText(nuevoDniModificar);
                 mde.jTextFieldNombreAModificar.setText(nuevoNombreModificar);
                 mde.jTextFieldApellidosAModificar.setText(nuevoApellidosModificar);
                 mde.jTextFieldCorreoAModificar.setText(nuevoCorreoModificar);
                 mde.jTextFieldContraseñaAModificar.setText(nuevoPasswordModificar);
-                mde.jTextFieldHorarioAModificar.setText(nuevoHorarioModificar);
+                mde.jComboBoxHorario.setSelectedItem(nuevoHorarioModificar);
                 mde.jTextFieldTelefonoAModificar.setText(nuevoTelefonoModificar);
-                mde.jTextFieldCategoriaAModificar.setText(nuevaCategoriaModificar);
+                mde.jComboBoxCategoria.setSelectedItem(nuevaCategoriaModificar);
 
                 mde.setVisible(true);
+                this.setVisible(false);
                 mde.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
 
@@ -290,6 +359,8 @@ public class BuscarEmpleado extends javax.swing.JFrame {
 
     private void jButtonBusquedaNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaNombreActionPerformed
         // TODO add your handling code here:
+        // jTableMuestraEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         ArrayList<Empleado> list = sbd.consultagetEmpleadosNombre(getNombreBusqueda());
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraEmpleados.getModel();
         tablaMuestra.setRowCount(0);
@@ -309,6 +380,7 @@ public class BuscarEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBusquedaNombreActionPerformed
 
     private void jButtonEliminarElementoSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarElementoSeleccionadoActionPerformed
+        //jTableMuestraEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         ArrayList<Empleado> list = sbd.consultagetEmpleadosNombre(getNombreBusqueda());
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraEmpleados.getModel();
@@ -318,58 +390,83 @@ public class BuscarEmpleado extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecciona una fila", "Error!", JOptionPane.ERROR_MESSAGE);
         } else {
             String dniEliminar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 0).toString();
-            sbd.eliminarEmpleado(dniEliminar);
+            String nombreEliminado = tablaMuestra.getValueAt(indiceFilaSeleccionada, 1).toString();
+
+            fachada.eliminarEmpleado(dniEliminar);
 
             tablaMuestra.removeRow(indiceFilaSeleccionada);
+
+            JOptionPane.showMessageDialog(null, "Eliminado el empleado " + nombreEliminado + " cuyo DNI es " + dniEliminar, "Eliminacion", JOptionPane.INFORMATION_MESSAGE);
+
         }
 
 
     }//GEN-LAST:event_jButtonEliminarElementoSeleccionadoActionPerformed
 
+    private void jButtonVolverAtrasBuscarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverAtrasBuscarEmpleadoActionPerformed
+        this.setVisible(false);
+        this.ha.setVisible(true);
+    }//GEN-LAST:event_jButtonVolverAtrasBuscarEmpleadoActionPerformed
+
+    private void jButtonOrdenarDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdenarDniActionPerformed
+        ArrayList<Empleado> aux = sbd.getEmpleados();
+        DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraEmpleados.getModel();
+        tablaMuestra.setRowCount(0);
+
+        EstrategiaEmpleados est = new EstrategiaOrdenarPorIdentificador();
+        ContextoEmpleados contexto = new ContextoEmpleados(est, aux);
+        contexto.ejecutaEstrategiaEmpleados();
+            Object[] row = new Object[8];
+        for (int i = 0; i < aux.size(); i++) {
+            row[0] = aux.get(i).getDni();
+            row[1] = aux.get(i).getNombre();
+            row[2] = aux.get(i).getApellidos();
+            row[3] = aux.get(i).getCorreo();
+            row[4] = aux.get(i).getPassword();
+            row[5] = aux.get(i).getHorario();
+            row[6] = aux.get(i).getTelefono();
+            row[7] = aux.get(i).getCategoria();
+
+            tablaMuestra.addRow(row);
+        }
+        
+    }//GEN-LAST:event_jButtonOrdenarDniActionPerformed
+
+    private void jButtonOrdenarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdenarNombreActionPerformed
+        ArrayList<Empleado> aux = sbd.getEmpleados();
+        DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraEmpleados.getModel();
+        tablaMuestra.setRowCount(0);
+
+        EstrategiaEmpleados est = new EstrategiaOrdenarPorNombreEmpleados();
+        ContextoEmpleados contexto = new ContextoEmpleados(est, aux);
+        contexto.ejecutaEstrategiaEmpleados();
+            Object[] row = new Object[8];
+        for (int i = 0; i < aux.size(); i++) {
+            row[0] = aux.get(i).getDni();
+            row[1] = aux.get(i).getNombre();
+            row[2] = aux.get(i).getApellidos();
+            row[3] = aux.get(i).getCorreo();
+            row[4] = aux.get(i).getPassword();
+            row[5] = aux.get(i).getHorario();
+            row[6] = aux.get(i).getTelefono();
+            row[7] = aux.get(i).getCategoria();
+
+            tablaMuestra.addRow(row);
+        }
+        
+    }//GEN-LAST:event_jButtonOrdenarNombreActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BuscarEmpleado.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BuscarEmpleado.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BuscarEmpleado.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BuscarEmpleado.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BuscarEmpleado().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBusquedaDNI;
     private javax.swing.JButton jButtonBusquedaNombre;
     private javax.swing.JButton jButtonEliminarElementoSeleccionado;
     private javax.swing.JButton jButtonModificacionDatosEmpleado;
+    private javax.swing.JButton jButtonOrdenarDni;
+    private javax.swing.JButton jButtonOrdenarNombre;
     private javax.swing.JButton jButtonVolverAtrasBuscarEmpleado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel24;

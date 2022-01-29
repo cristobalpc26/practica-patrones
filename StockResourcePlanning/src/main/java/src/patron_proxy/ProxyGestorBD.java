@@ -63,37 +63,52 @@ public class ProxyGestorBD implements ServicioBD{
 
     @Override
     public void insertarProducto(Producto p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.serv.insertarProducto(p);
     }
 
     @Override
     public void eliminarProducto(String id_producto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.serv.eliminarProducto(id_producto);
     }
 
     @Override
     public void modificarProducto(Producto p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.serv.modificarProducto(p);
     }
 
     @Override
     public ArrayList<Producto> consultagetProductoNombre(String nombre) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.serv.consultagetProductoNombre(nombre);
     }
 
     @Override
-    public ArrayList<Producto> consultagetProductosFechaCaducidad(Date Fecha) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<Producto> consultagetProductosFechaCaducidad(String fecha) {
+        return this.serv.consultagetProductosFechaCaducidad(fecha);
     }
 
     @Override
     public ArrayList<Producto> consultagetProductosUnidades(int unidades) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.serv.consultagetProductosUnidades(unidades);
     }
 
     @Override
     public ArrayList<Producto> getProductos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.serv.getProductos();
+    }
+
+    @Override
+    public void modificarUnidadesProducto(int unidades, Producto p) {
+        this.serv.modificarUnidadesProducto(unidades, p);
+    }
+
+    @Override
+    public ArrayList<String> getDNIEmpleados() {
+        return this.serv.getDNIEmpleados();
+    }
+
+    @Override
+    public ArrayList<String> getIDSproductos() {
+        return this.serv.getIDSproductos();
     }
    
 }

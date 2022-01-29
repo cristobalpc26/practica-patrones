@@ -5,6 +5,8 @@
  */
 package src.interfaces_graficas;
 
+import src.fachada.FachadaSRP;
+
 /**
  *
  * @author Carlos
@@ -14,9 +16,13 @@ public class ModificacionDatosProductoEmpleado extends javax.swing.JFrame {
     /**
      * Creates new form ModificacionDatosEmpleado
      */
-    public ModificacionDatosProductoEmpleado() {
-     initComponents();
+    private FachadaSRP fachada = new FachadaSRP();
+    private BuscarProductoEmpleado bpe;
 
+    public ModificacionDatosProductoEmpleado(BuscarProductoEmpleado BPE) {
+        this.bpe = BPE;
+        initComponents();
+        setTitle("Modificación de Datos del Empleado");
         setLocationRelativeTo(null);
     }
 
@@ -116,36 +122,7 @@ public class ModificacionDatosProductoEmpleado extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ModificacionDatosProductoEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ModificacionDatosProductoEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ModificacionDatosProductoEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ModificacionDatosProductoEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-         ModificacionDatosProductoEmpleado rpp = new ModificacionDatosProductoEmpleado();
-        rpp.setVisible(true);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActualizarDatosEmpleado;
@@ -153,6 +130,6 @@ public class ModificacionDatosProductoEmpleado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextFieldUnidadesAModificarEmpleado;
+    public javax.swing.JTextField jTextFieldUnidadesAModificarEmpleado;
     // End of variables declaration//GEN-END:variables
 }

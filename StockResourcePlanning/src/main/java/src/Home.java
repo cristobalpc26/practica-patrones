@@ -14,12 +14,12 @@ import src.patron_iterator.AgregadoEmpleados;
 import src.patron_iterator.Iterador;
 import src.patron_proxy.ProxyGestorBD;
 import src.patron_proxy.ServidorBD;
-import src.patron_strategy_empleados.Contexto;
-import src.patron_strategy_empleados.Estrategia;
-import src.patron_strategy_empleados.EstrategiaOrdenarPorDni;
-import src.patron_strategy_empleados.EstrategiaOrdenarPorNombre;
+import src.patron_strategy_empleados.ContextoEmpleados;
+import src.patron_strategy_empleados.EstrategiaOrdenarPorIdentificador;
+import src.patron_strategy_empleados.EstrategiaOrdenarPorNombreEmpleados;
 import src.users.Administrador;
 import src.users.Empleado;
+import src.patron_strategy_empleados.EstrategiaEmpleados;
 
 /**
  *
@@ -31,14 +31,16 @@ public class Home {
      * @param args the command line arguments
      */
     
-    private static BuscarProductoEmpleado ejecucion;
+    private static HomeInicio ejecucion = new HomeInicio();
     
     
     public static void main(String[] args) throws IOException, InterruptedException {
-        Administrador a = Administrador.getInstancia();
+        
+        ejecucion.setVisible(true);
+        /*Administrador a = Administrador.getInstancia();
         Contexto contexto = new Contexto(new EstrategiaOrdenarPorDni(), a.getEmpleados());
         contexto.ejecutaEstrategia();
-        /*try {
+        try {
             // Crea la lista. 
             ArrayList aux = new ArrayList();
             Empleado uni1 = new Empleado("12345678", "Pepe", "Informática", "Alcalá","a","a","a","a");

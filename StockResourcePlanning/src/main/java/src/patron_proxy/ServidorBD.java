@@ -11,9 +11,12 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JOptionPane;
+import src.patron_factory_method_productos.Categoria;
 import src.patron_factory_method_productos.Producto;
 import src.patron_iterator.AgregadoEmpleados;
 import src.patron_iterator.IteradorEmpleados;
+import src.patron_state_productos.EstadoProducto;
 
 /**
  *
@@ -53,11 +56,10 @@ public class ServidorBD implements ServicioBD {
         try {
             set = con.createStatement();
             int res = set.executeUpdate("INSERT INTO EMPLEADO VALUES ('" + e.getDni() + "','" + e.getNombre() + "','" + e.getApellidos() + "','"
-                    + e.getCorreo() + "','" + e.getPassword() + "','" + e.getHorario() + "','" + e.getTelefono() + "','" + e.getCategoria() + ")");
+                    + e.getCorreo() + "','" + e.getPassword() + "','" + e.getHorario() + "','" + e.getTelefono() + "','" + e.getCategoria() + "')");
             if (res == -1) {
                 System.out.println("No se ha introducido el nuevo empleado");
             }
-
             set.close();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -118,6 +120,28 @@ public class ServidorBD implements ServicioBD {
 
         }
         return dni;
+    }
+
+    @Override
+    public ArrayList<String> getDNIEmpleados() {
+        ArrayList<String> dnis = new ArrayList<>();
+        String dni;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT DNI FROM EMPLEADO");
+            while (rs.next()) {
+                dni = rs.getString("DNI");
+                dni = dni.trim();
+                dnis.add(dni);
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("El método existeUsuario no se ejecuta correctamente");
+
+        }
+        return dnis;
     }
 
     @Override
@@ -199,7 +223,7 @@ public class ServidorBD implements ServicioBD {
             set = con.createStatement();
             int res = set.executeUpdate("INSERT INTO PRODUCTO VALUES ('" + p.getId() + "','" + p.getCategoria() + "','"
                     + p.getNombre() + "','" + p.getMarca() + "','" + p.getPrecio() + "','" + p.getUnidades() + "','" + p.getProcedencia() + "','"
-                    + p.getFechaLlegada() + "','" + p.getFechaCaducidad() + "','" + p.getLocalizacion() + ")");
+                    + p.getFechaLlegada() + "','" + p.getFechaCaducidad() + "','" + p.getLocalizacion() + "')");
             if (res == -1) {
                 System.out.println("No se ha introducido el nuevo producto");
             }
@@ -234,12 +258,51 @@ public class ServidorBD implements ServicioBD {
 
         try {
             set = con.createStatement();
-            int res = set.executeUpdate("UPDATE EMPLEADO SET CATEGORIA='" + p.getCategoria()
+            int res = set.executeUpdate("UPDATE PRODUCTO SET CATEGORIA='" + p.getCategoria()
                     + "',NOMBRE='" + p.getNombre() + "',MARCA='" + p.getMarca() + "',PRECIO='" + p.getPrecio() + "',UNIDADES='" + p.getUnidades()
                     + "',PROCEDENCIA='" + p.getProcedencia() + "',FECHA_LLEGADA='" + p.getFechaLlegada() + "',FECHA_CADUCIDAD='" + p.getFechaCaducidad()
                     + "'where ID_PRODUCTO='" + p.getId() + "'");
             if (res == -1) {
-                System.out.println("No se ha podido modificar el empleado");
+                System.out.println("No se ha podido modificar el PRODUCTO");
+            }
+            set.close();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("El método existeUsuario no se ejecuta correctamente");
+
+        }
+    }
+
+    @Override
+    public ArrayList<String> getIDSproductos() {
+        ArrayList<String> ids_productos = new ArrayList<>();
+        String id_p;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT ID_PRODUCTO FROM PRODUCTO");
+            while (rs.next()) {
+                id_p = rs.getString("ID_PRODUCTO");
+                id_p = id_p.trim();
+                ids_productos.add(id_p);
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("El método existeUsuario no se ejecuta correctamente");
+
+        }
+        return ids_productos;
+    }
+
+    //Posible modificacion posterior
+    public void modificarUnidadesProducto(int unidades, Producto p) {
+
+        try {
+            set = con.createStatement();
+            int res = set.executeUpdate("UPDATE PRODUCTO SET UNIDADES='" + unidades + "'where ID_PRODUCTO='" + p.getId() + "'");
+            if (res == -1) {
+                System.out.println("No se ha podido modificar unidades del PRODUCTO");
             }
             set.close();
         } catch (Exception ex) {
@@ -251,34 +314,99 @@ public class ServidorBD implements ServicioBD {
 
     @Override
     public ArrayList<Producto> consultagetProductoNombre(String nombre) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Producto> productos = new ArrayList<>();
+        Producto aux;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT * FROM PRODUCTO where NOMBRE='" + nombre + "'");
+
+            while (rs.next()) {
+                aux = new Producto(rs.getString("ID_PRODUCTO"), rs.getString("CATEGORIA"),
+                        rs.getString("NOMBRE"), rs.getString("MARCA"), rs.getDouble("PRECIO"),
+                        rs.getInt("UNIDADES"), rs.getString("PROCEDENCIA"), rs.getDate("FECHA_LLEGADA"),
+                        rs.getDate("FECHA_CADUCIDAD"),
+                        rs.getString("LOCALIZACION"));
+                productos.add(aux);
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("El método consultagetProductoNombre no se ejecuta correctamente");
+
+        }
+        return productos;
+
     }
 
     @Override
-    public ArrayList<Producto> consultagetProductosFechaCaducidad(Date Fecha) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<Producto> consultagetProductosFechaCaducidad(String fechaCaducidad) {
+        ArrayList<Producto> productos = new ArrayList<>();
+        Producto aux;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT * FROM PRODUCTO where FECHA_CADUCIDAD<='" + fechaCaducidad + "'");
+
+            while (rs.next()) {
+                aux = new Producto(rs.getString("ID_PRODUCTO"), rs.getString("CATEGORIA"),
+                        rs.getString("NOMBRE"), rs.getString("MARCA"), rs.getDouble("PRECIO"),
+                        rs.getInt("UNIDADES"), rs.getString("PROCEDENCIA"), rs.getDate("FECHA_LLEGADA"),
+                        rs.getDate("FECHA_CADUCIDAD"),
+                        rs.getString("LOCALIZACION"));
+                productos.add(aux);
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("El método consultagetProductoFecha no se ejecuta correctamente");
+
+        }
+        return productos;
+
     }
 
     @Override
     public ArrayList<Producto> consultagetProductosUnidades(int unidades) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Producto> productos = new ArrayList<>();
+        Producto aux;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT * FROM PRODUCTO WHERE UNIDADES=" + unidades);
+
+            while (rs.next()) {
+                aux = new Producto(rs.getString("ID_PRODUCTO"), rs.getString("CATEGORIA"),
+                        rs.getString("NOMBRE"), rs.getString("MARCA"), rs.getDouble("PRECIO"),
+                        rs.getInt("UNIDADES"), rs.getString("PROCEDENCIA"), rs.getDate("FECHA_LLEGADA"),
+                        rs.getDate("FECHA_CADUCIDAD"),
+                        rs.getString("LOCALIZACION"));
+                productos.add(aux);
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("El método consultagetProductosUnidades no se ejecuta correctamente");
+
+        }
+        return productos;
     }
 
     @Override
     public ArrayList<Producto> getProductos() {
-
         ArrayList<Producto> productos = new ArrayList<>();
-        /*
-        Producto auxP;
+        Producto aux;
         try {
             set = con.createStatement();
             rs = set.executeQuery("SELECT * FROM PRODUCTO");
-            while (rs.next()) {
-                if(rs.)
-                
-                auxP = new Producto(rs.getString("DNI"), rs.getString("NOMBRE"), rs.getString("APELLIDOS"), rs.getString("CORREO"),
-                        rs.getString("PASSWORD"), rs.getString("HORARIO"), rs.getString("TELEFONO"), rs.getString("CATEGORIA"));
-                productos.add(auxP);
+
+           while (rs.next()) {
+                aux = new Producto(rs.getString("ID_PRODUCTO"), rs.getString("CATEGORIA"),
+                        rs.getString("NOMBRE"), rs.getString("MARCA"), rs.getDouble("PRECIO"),
+                        rs.getInt("UNIDADES"), rs.getString("PROCEDENCIA"), rs.getDate("FECHA_LLEGADA"),
+                        rs.getDate("FECHA_CADUCIDAD"),
+                        rs.getString("LOCALIZACION"));
+                productos.add(aux);
             }
             rs.close();
             set.close();
@@ -287,7 +415,8 @@ public class ServidorBD implements ServicioBD {
             System.out.println("El método getProductos no se ejecuta correctamente");
 
         }
-         */
         return productos;
+
     }
+
 }

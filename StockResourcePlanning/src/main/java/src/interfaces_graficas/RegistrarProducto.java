@@ -7,6 +7,8 @@ package src.interfaces_graficas;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import src.fachada.FachadaSRP;
+import src.patron_proxy.ProxyGestorBD;
 
 /**
  *
@@ -17,12 +19,15 @@ public class RegistrarProducto extends javax.swing.JFrame {
     /**
      * Creates new form RegistrarEmpleado
      */
-    public RegistrarProducto() {
-      ImageIcon imagen = new ImageIcon("/imagenes/logo SRP (2).png");
+   private FachadaSRP fachada = new FachadaSRP();
+    private ProxyGestorBD sbd = ProxyGestorBD.getInstancia();
 
-        //logo.setIcon(imagen);
+    private HomeAdmin ha;
+
+    public RegistrarProducto(HomeAdmin HA) {
         initComponents();
-
+        setTitle("Busqueda de Productos");
+        this.ha = HA;
         setLocationRelativeTo(null);
     }
 
@@ -144,6 +149,11 @@ public class RegistrarProducto extends javax.swing.JFrame {
         jButtonVolverAtrasRegistrarEmpleado.setBackground(new java.awt.Color(255, 102, 102));
         jButtonVolverAtrasRegistrarEmpleado.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jButtonVolverAtrasRegistrarEmpleado.setText("Atrás");
+        jButtonVolverAtrasRegistrarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVolverAtrasRegistrarEmpleadoActionPerformed(evt);
+            }
+        });
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel23.setText("Localizacion");
@@ -334,15 +344,15 @@ public class RegistrarProducto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonVolverAtrasRegistrarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverAtrasRegistrarEmpleadoActionPerformed
+        this.setVisible(false);
+       ha.setVisible(true);
+    }//GEN-LAST:event_jButtonVolverAtrasRegistrarEmpleadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-
-        RegistrarProducto rpp = new RegistrarProducto();
-        rpp.setVisible(true);
-
-    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonRegistrarDatosProducto;
     private javax.swing.JButton jButtonVolverAtrasRegistrarEmpleado;

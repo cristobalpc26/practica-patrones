@@ -23,6 +23,42 @@ public class FabricaCategoria {
             case "Bebidas":
                 p = new Bebidas("Bebidas");
                 break;
+            case "Verduras":
+                p = new Verduras("Verduras");
+                break;
+            case "Frutas":
+                p = new Frutas("Frutas");
+                break;
+            case "Pollo":
+                p = new Pollo("Pollo");
+                break;
+            case "Embutidos":
+                p = new Embutidos("Embutidos");
+                break;
+            case "Lacteos":
+                p = new Lacteos("Lacteos");
+                break;
+            case "Dulces":
+                p = new Dulces("Dulces");
+                break;
+            case "Especias":
+                p = new Especias("Especias");
+                break;
+            case "Salsas":
+                p = new Salsas("Salsas");
+                break;
+            case "Pasta":
+                p = new Pasta("Pasta");
+                break;
+            case "Snacks":
+                p = new Snacks("Snacks");
+                break;
+            case "Postres":
+                p = new Postres("Postres");
+                break;
+            case "Otros":
+                p = new Otros("Otros");
+                break;
             default:
                 break;
         }

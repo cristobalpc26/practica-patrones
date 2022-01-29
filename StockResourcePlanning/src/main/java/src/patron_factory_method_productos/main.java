@@ -19,8 +19,11 @@ public class main {
         FabricaCategoria hf = new FabricaCategoria();
         Categoria h1 = hf.crearCategoria("Bebidas");
         System.out.println("Soy una coca cola de la categoria " +h1.getNombre());
-        Categoria h2 = hf.crearCategoria("ñPescado");
+           Categoria h3 = hf.crearCategoria("Pasta");
+        System.out.println("Soy una pipsa de la categoria " +h3.getNombre());
+        Categoria h2 = hf.crearCategoria("Pescado");
         System.out.println("Soy una merluzaa de la categoria " +h2.getNombre());
+     
     }
 
 }

@@ -5,15 +5,19 @@
 package src.patron_factory_method_productos;
 
 import java.util.Date;
+import src.patron_state_productos.EstadoLleno;
+import src.patron_state_productos.EstadoNeutro;
 import src.patron_state_productos.EstadoProducto;
+import src.patron_state_productos.EstadoVacio;
 
 /**
  *
  * @author cris
  */
 public class Producto {
+
     public String id;
-    public Categoria categoria;
+    public String categoria;
     public String nombre;
     public String marca;
     public double precio;
@@ -22,8 +26,52 @@ public class Producto {
     public Date fechaLlegada;
     public Date fechaCaducidad;
     public String localizacion;
+    public EstadoProducto estadoActual;
 
-    public Producto(String id, Categoria categoria, String nombre, String marca, double precio, int unidades, String procedencia, Date fechaLlegada, Date fechaCaducidad, String localizacion, EstadoProducto estado) {
+    private final int unidadesMaximas=100;
+
+    public Producto(int unidades) {
+        this.unidades = unidades;
+    }
+
+   
+
+    public void añadirUnidades(int unidadesRepuestas) {
+        unidades += unidadesRepuestas;
+
+        if (unidades < unidadesMaximas && unidades >= 0) {
+            estadoActual = new EstadoNeutro();
+
+        }
+        if (unidades > unidadesMaximas) {
+            unidades = unidadesMaximas;
+            estadoActual = new EstadoLleno();
+
+        }
+        estadoActual.ejecutarModificacionUnidades(this);
+        resultado();
+    }
+
+    public void quitarUnidades(int unidadesRepuestas) {
+        unidades -= unidadesRepuestas;
+
+        if (unidades < unidadesMaximas && unidades >= 0) {
+            estadoActual = new EstadoNeutro();
+        }
+        if (unidades < 0) {
+            unidades = 0;
+            estadoActual = new EstadoVacio();
+        }
+
+        estadoActual.ejecutarModificacionUnidades(this);
+        resultado();
+    }
+
+    public void resultado() {
+        estadoActual.ejecutarModificacionUnidades(this); //comprobamos el estado final
+    }
+
+    public Producto(String id, String categoria, String nombre, String marca, double precio, int unidades, String procedencia, Date fechaLlegada, Date fechaCaducidad, String localizacion) {
         this.id = id;
         this.categoria = categoria;
         this.nombre = nombre;
@@ -34,7 +82,6 @@ public class Producto {
         this.fechaLlegada = fechaLlegada;
         this.fechaCaducidad = fechaCaducidad;
         this.localizacion = localizacion;
-        //this.estado = estado;
     }
 
     public String getId() {
@@ -45,11 +92,11 @@ public class Producto {
         this.id = id;
     }
 
-    public Categoria getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 
@@ -116,8 +163,25 @@ public class Producto {
     public void setLocalizacion(String localizacion) {
         this.localizacion = localizacion;
     }
+
+    public int getUnidadesMaximas() {
+        return unidadesMaximas;
+    }
+
     
- /*   protected EstadoProducto estado;
+    public EstadoProducto getEstadoActual() {
+        return estadoActual;
+    }
+/*
+    public void setEstadoActual(EstadoProducto estadoActual) {
+        this.estadoActual = estadoActual;
+    }
+      public String getEstadoActualString() {
+        return getEstadoActual().toString();
+    }
+    */
+    
+    /*   protected EstadoProducto estado;
     
     public abstract void addProducto();
     public abstract Producto getProducto();
@@ -130,4 +194,6 @@ public class Producto {
         this.estado = e;
         // Almacenarlo en un fichero o en la BD
     }*/
+
+   
 }

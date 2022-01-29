@@ -5,6 +5,29 @@
  */
 package src.interfaces_graficas;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import src.fachada.FachadaSRP;
+import src.patron_factory_method_productos.Producto;
+import src.patron_proxy.ProxyGestorBD;
+import src.patron_strategy_empleados.ContextoEmpleados;
+import src.patron_strategy_empleados.ContextoProductos;
+import src.patron_strategy_empleados.EstrategiaOrdenarPorFechaCaducidad;
+import src.patron_strategy_empleados.EstrategiaOrdenarPorIdentificador;
+import src.patron_strategy_empleados.EstrategiaOrdenarPorNombreEmpleados;
+import src.users.Empleado;
+import src.patron_strategy_empleados.EstrategiaEmpleados;
+import src.patron_strategy_empleados.EstrategiaOrdenarPorNombreProductos;
+import src.patron_strategy_empleados.EstrategiaProductos;
+
 /**
  *
  * @author Carlos
@@ -14,8 +37,31 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
     /**
      * Creates new form BuscarEmpleado
      */
-    public BuscarProductoAdmin() {
+    private FachadaSRP fachada = new FachadaSRP();
+    private ProxyGestorBD sbd = ProxyGestorBD.getInstancia();
+
+    private HomeAdmin ha;
+
+    public BuscarProductoAdmin(HomeAdmin HA) {
         initComponents();
+        setTitle("Busqueda de Productos");
+        this.ha = HA;
+        setLocationRelativeTo(null);
+    }
+
+    public String getNombreBusqueda() {
+
+        return jTextFieldNombreProductoAdmin.getText();
+    }
+
+    public String getFechaCaducidad() {
+
+        return jTextFieldFechaCaducidadAdmin.getText();
+    }
+
+    public String getUnidadesProducto() {
+
+        return jTextFieldUnidadesProductoIntroducidasAdmin.getText();
     }
 
     /**
@@ -33,83 +79,86 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
         jTableMuestraProductosAdmin = new javax.swing.JTable();
         jLabel24 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButtonBusquedaDNI = new javax.swing.JButton();
+        jButtonBusquedaNombreProducto = new javax.swing.JButton();
         jTextFieldNombreProductoAdmin = new javax.swing.JTextField();
         jTextFieldUnidadesProductoIntroducidasAdmin = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButtonBusquedaCriterios = new javax.swing.JButton();
+        jButtonBusquedaFechaCaducidad = new javax.swing.JButton();
         jTextFieldFechaCaducidadAdmin = new javax.swing.JTextField();
-        jButtonEliminarElementoSeleccionado = new javax.swing.JButton();
-        jButtonModificacionDatosEmpleado = new javax.swing.JButton();
+        jButtonEliminaProductoSeleccionado = new javax.swing.JButton();
+        jButtonModificacionDatosProducto = new javax.swing.JButton();
         jButtonVolverAtrasBuscarProductoAdmin = new javax.swing.JButton();
+        jButtonBusquedaUnidades = new javax.swing.JButton();
+        jButtonOrdenarNombreProducto = new javax.swing.JButton();
+        jButtonOrdenarFechaCaducidad = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTableMuestraProductosAdmin.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTableMuestraProductosAdmin.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id_producto", "Categoria", "Subcategoria", "Nombre", "Marca", "Precio", "Unidades", "Procedencia", "Fecha de llegada", "Fecha de Caducidad", "Localizacion"
+                "Id_producto", "Categoria", "Nombre", "Marca", "Precio", "Unidades", "Procedencia", "Fecha de llegada", "Fecha de Caducidad", "Localizacion"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, true, true, true, true, true, true, true, true, false
+                true, true, true, true, true, true, true, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -132,9 +181,14 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel1.setText("Nombre");
 
-        jButtonBusquedaDNI.setBackground(new java.awt.Color(0, 102, 255));
-        jButtonBusquedaDNI.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        jButtonBusquedaDNI.setText("Buscar ");
+        jButtonBusquedaNombreProducto.setBackground(new java.awt.Color(0, 102, 255));
+        jButtonBusquedaNombreProducto.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jButtonBusquedaNombreProducto.setText("Buscar ");
+        jButtonBusquedaNombreProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBusquedaNombreProductoActionPerformed(evt);
+            }
+        });
 
         jTextFieldNombreProductoAdmin.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jTextFieldNombreProductoAdmin.addActionListener(new java.awt.event.ActionListener() {
@@ -156,23 +210,70 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel3.setText("Fecha de caducidad");
 
-        jButtonBusquedaCriterios.setBackground(new java.awt.Color(0, 102, 255));
-        jButtonBusquedaCriterios.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        jButtonBusquedaCriterios.setText("Buscar");
+        jButtonBusquedaFechaCaducidad.setBackground(new java.awt.Color(0, 102, 255));
+        jButtonBusquedaFechaCaducidad.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jButtonBusquedaFechaCaducidad.setText("Buscar");
+        jButtonBusquedaFechaCaducidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBusquedaFechaCaducidadActionPerformed(evt);
+            }
+        });
 
         jTextFieldFechaCaducidadAdmin.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
-        jButtonEliminarElementoSeleccionado.setBackground(new java.awt.Color(255, 0, 0));
-        jButtonEliminarElementoSeleccionado.setFont(new java.awt.Font("Verdana", 3, 14)); // NOI18N
-        jButtonEliminarElementoSeleccionado.setText("Eliminar");
+        jButtonEliminaProductoSeleccionado.setBackground(new java.awt.Color(255, 0, 0));
+        jButtonEliminaProductoSeleccionado.setFont(new java.awt.Font("Verdana", 3, 14)); // NOI18N
+        jButtonEliminaProductoSeleccionado.setText("Eliminar");
+        jButtonEliminaProductoSeleccionado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminaProductoSeleccionadoActionPerformed(evt);
+            }
+        });
 
-        jButtonModificacionDatosEmpleado.setBackground(new java.awt.Color(255, 153, 0));
-        jButtonModificacionDatosEmpleado.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        jButtonModificacionDatosEmpleado.setText("Modificar");
+        jButtonModificacionDatosProducto.setBackground(new java.awt.Color(255, 153, 0));
+        jButtonModificacionDatosProducto.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jButtonModificacionDatosProducto.setText("Modificar");
+        jButtonModificacionDatosProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificacionDatosProductoActionPerformed(evt);
+            }
+        });
 
         jButtonVolverAtrasBuscarProductoAdmin.setBackground(new java.awt.Color(255, 102, 102));
         jButtonVolverAtrasBuscarProductoAdmin.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jButtonVolverAtrasBuscarProductoAdmin.setText("Atrás");
+        jButtonVolverAtrasBuscarProductoAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVolverAtrasBuscarProductoAdminActionPerformed(evt);
+            }
+        });
+
+        jButtonBusquedaUnidades.setBackground(new java.awt.Color(0, 102, 255));
+        jButtonBusquedaUnidades.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jButtonBusquedaUnidades.setText("Buscar");
+        jButtonBusquedaUnidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBusquedaUnidadesActionPerformed(evt);
+            }
+        });
+
+        jButtonOrdenarNombreProducto.setBackground(new java.awt.Color(102, 102, 255));
+        jButtonOrdenarNombreProducto.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButtonOrdenarNombreProducto.setText("Busqueda global orden Nombre");
+        jButtonOrdenarNombreProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOrdenarNombreProductoActionPerformed(evt);
+            }
+        });
+
+        jButtonOrdenarFechaCaducidad.setBackground(new java.awt.Color(102, 102, 255));
+        jButtonOrdenarFechaCaducidad.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButtonOrdenarFechaCaducidad.setText("Busqueda global orden Caducidad");
+        jButtonOrdenarFechaCaducidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOrdenarFechaCaducidadActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -183,81 +284,84 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(96, 96, 96)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldNombreProductoAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(52, 52, 52)
-                                .addComponent(jButtonBusquedaDNI))
-                            .addComponent(jTextFieldNombreProductoAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jButtonBusquedaNombreProducto))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(166, 166, 166)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextFieldFechaCaducidadAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(120, 120, 120))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(151, 151, 151)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldUnidadesProductoIntroducidasAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(62, 62, 62)
-                                .addComponent(jLabel2)))
-                        .addGap(166, 166, 166))
+                        .addComponent(jLabel3)
+                        .addGap(153, 153, 153)
+                        .addComponent(jLabel2)
+                        .addGap(381, 381, 381))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonBusquedaCriterios, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(383, 383, 383))))
+                        .addComponent(jButtonBusquedaFechaCaducidad, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(168, 168, 168)
+                        .addComponent(jButtonBusquedaUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(362, 362, 362))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextFieldFechaCaducidadAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(75, 75, 75)
+                        .addComponent(jTextFieldUnidadesProductoIntroducidasAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(299, 299, 299))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1560, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 15, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(370, 370, 370)
-                        .addComponent(jButtonModificacionDatosEmpleado)
+                        .addComponent(jButtonModificacionDatosProducto)
                         .addGap(385, 385, 385)
-                        .addComponent(jButtonEliminarElementoSeleccionado))
+                        .addComponent(jButtonEliminaProductoSeleccionado))
+                    .addComponent(jButtonVolverAtrasBuscarProductoAdmin)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(471, 471, 471)
-                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButtonVolverAtrasBuscarProductoAdmin))
+                        .addGap(418, 418, 418)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jButtonOrdenarNombreProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonOrdenarFechaCaducidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addComponent(jLabel24)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldNombreProductoAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonBusquedaDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonBusquedaCriterios, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jButtonBusquedaFechaCaducidad, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonBusquedaNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldFechaCaducidadAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldUnidadesProductoIntroducidasAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(54, 54, 54)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonBusquedaUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonOrdenarNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonOrdenarFechaCaducidad, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonEliminarElementoSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonModificacionDatosEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonEliminaProductoSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonModificacionDatosProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jButtonVolverAtrasBuscarProductoAdmin))
         );
@@ -278,8 +382,9 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(7, 7, 7)
                 .addComponent(jLabel4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -293,58 +398,212 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldUnidadesProductoIntroducidasAdminActionPerformed
 
     private void jTextFieldNombreProductoAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreProductoAdminActionPerformed
-   
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNombreProductoAdminActionPerformed
 
+    private void jButtonOrdenarNombreProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdenarNombreProductoActionPerformed
+        ArrayList<Producto> aux = sbd.getProductos();
+        DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosAdmin.getModel();
+        tablaMuestra.setRowCount(0);
+
+        EstrategiaProductos est = new EstrategiaOrdenarPorNombreProductos();
+        ContextoProductos contexto = new ContextoProductos(est, aux);
+        contexto.ejecutaEstrategiaProductos();
+        tablaMuestra.setRowCount(0);
+        Object[] row = new Object[10];
+        for (int i = 0; i < aux.size(); i++) {
+            row[0] = aux.get(i).getId();
+            row[1] = aux.get(i).getCategoria();
+            row[2] = aux.get(i).getNombre();
+            row[3] = aux.get(i).getMarca();
+            row[4] = aux.get(i).getPrecio();
+            row[5] = aux.get(i).getUnidades();
+            row[6] = aux.get(i).getProcedencia();
+            row[7] = aux.get(i).getFechaLlegada();
+            row[8] = aux.get(i).getFechaCaducidad();
+
+            row[9] = aux.get(i).getLocalizacion();
+
+            tablaMuestra.addRow(row);
+        }
+    }//GEN-LAST:event_jButtonOrdenarNombreProductoActionPerformed
+
+    private void jButtonOrdenarFechaCaducidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdenarFechaCaducidadActionPerformed
+        ArrayList<Producto> aux = sbd.getProductos();
+        DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosAdmin.getModel();
+        tablaMuestra.setRowCount(0);
+
+        EstrategiaProductos est = new EstrategiaOrdenarPorFechaCaducidad();
+        ContextoProductos contexto = new ContextoProductos(est, aux);
+        contexto.ejecutaEstrategiaProductos();
+        tablaMuestra.setRowCount(0);
+        Object[] row = new Object[10];
+        for (int i = 0; i < aux.size(); i++) {
+            row[0] = aux.get(i).getId();
+            row[1] = aux.get(i).getCategoria();
+            row[2] = aux.get(i).getNombre();
+            row[3] = aux.get(i).getMarca();
+            row[4] = aux.get(i).getPrecio();
+            row[5] = aux.get(i).getUnidades();
+            row[6] = aux.get(i).getProcedencia();
+            row[7] = aux.get(i).getFechaLlegada();
+            row[8] = aux.get(i).getFechaCaducidad();
+            row[9] = aux.get(i).getLocalizacion();
+
+            tablaMuestra.addRow(row);
+        }
+
+    }//GEN-LAST:event_jButtonOrdenarFechaCaducidadActionPerformed
+
+    private void jButtonVolverAtrasBuscarProductoAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverAtrasBuscarProductoAdminActionPerformed
+        this.setVisible(false);
+        ha.setVisible(true);
+    }//GEN-LAST:event_jButtonVolverAtrasBuscarProductoAdminActionPerformed
+
+    private void jButtonBusquedaNombreProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaNombreProductoActionPerformed
+        ArrayList<Producto> list = sbd.consultagetProductoNombre(getNombreBusqueda());
+        DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosAdmin.getModel();
+        tablaMuestra.setRowCount(0);
+        Object[] row = new Object[10];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getId();
+            row[1] = list.get(i).getCategoria();
+            row[2] = list.get(i).getNombre();
+            row[3] = list.get(i).getMarca();
+            row[4] = list.get(i).getPrecio();
+            row[5] = list.get(i).getUnidades();
+            row[6] = list.get(i).getProcedencia();
+            row[7] = list.get(i).getFechaLlegada();
+            System.out.println(list.get(i).getFechaCaducidad().toString());
+            row[8] = list.get(i).getFechaCaducidad();
+            row[9] = list.get(i).getLocalizacion();
+
+            tablaMuestra.addRow(row);
+        }
+    }//GEN-LAST:event_jButtonBusquedaNombreProductoActionPerformed
+
+    private void jButtonBusquedaFechaCaducidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaFechaCaducidadActionPerformed
+
+        ArrayList<Producto> list = sbd.consultagetProductosFechaCaducidad(getFechaCaducidad());
+        DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosAdmin.getModel();
+        tablaMuestra.setRowCount(0);
+        Object[] row = new Object[10];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getId();
+            row[1] = list.get(i).getCategoria();
+            row[2] = list.get(i).getNombre();
+            row[3] = list.get(i).getMarca();
+            row[4] = list.get(i).getPrecio();
+            row[5] = list.get(i).getUnidades();
+            row[6] = list.get(i).getProcedencia();
+            row[7] = list.get(i).getFechaLlegada();
+            row[8] = list.get(i).getFechaCaducidad();
+            row[9] = list.get(i).getLocalizacion();
+
+            tablaMuestra.addRow(row);
+        }
+
+    }//GEN-LAST:event_jButtonBusquedaFechaCaducidadActionPerformed
+
+    private void jButtonBusquedaUnidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaUnidadesActionPerformed
+        ArrayList<Producto> list = sbd.consultagetProductosUnidades(Integer.parseInt(getUnidadesProducto()));
+        DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosAdmin.getModel();
+        tablaMuestra.setRowCount(0);
+        Object[] row = new Object[10];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getId();
+            row[1] = list.get(i).getCategoria();
+            row[2] = list.get(i).getNombre();
+            row[3] = list.get(i).getMarca();
+            row[4] = list.get(i).getPrecio();
+            row[5] = list.get(i).getUnidades();
+            row[6] = list.get(i).getProcedencia();
+            row[7] = list.get(i).getFechaLlegada();
+            row[8] = list.get(i).getFechaCaducidad();
+            row[9] = list.get(i).getLocalizacion();
+
+            tablaMuestra.addRow(row);
+        }
+    }//GEN-LAST:event_jButtonBusquedaUnidadesActionPerformed
+
+    private void jButtonModificacionDatosProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificacionDatosProductoActionPerformed
+        DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosAdmin.getModel();
+        int indiceFilaSeleccionada = jTableMuestraProductosAdmin.getSelectedRow();
+
+        ModificacionDatosProductoAdmin mde = new ModificacionDatosProductoAdmin(this);
+
+        if (indiceFilaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(null, "Selecciona una fila", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String nuevoIdProductoModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 0).toString();
+            String nuevoCategoriaProductoModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 1).toString();
+            String nuevoNombreProductoModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 2).toString();
+            String nuevaMarcaModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 3).toString();
+            String nuevoPrecioModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 4).toString();
+            String nuevaUnidadesModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 5).toString();
+            String nuevaProcedenciaModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 6).toString();
+            String nuevaFechaLlegadaModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 7).toString();
+            String nuevaFechaCaducidadModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 8).toString();
+            String nuevaCategoriaModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 9).toString();
+            // Establcemos los valores de la fila seleccioanda en la nueva 
+            if (indiceFilaSeleccionada != -1) {
+                mde.jTextFieldIdProductoAModificar.setText(nuevoIdProductoModificar);
+                mde.jTextFieldCategoriaProductoAModificar.setText(nuevoCategoriaProductoModificar);
+                mde.jTextFieldNombreProductoModificar.setText(nuevoNombreProductoModificar);
+                mde.jTextFieldMarcaAModificar.setText(nuevaMarcaModificar);
+                mde.jTextFieldPrecioAModificar.setText(nuevoPrecioModificar);
+                mde.jTextFieldUnidadesAModificarAdmin.setText(nuevaUnidadesModificar);
+                mde.jTextFieldProcedenciaAModificar.setText(nuevaProcedenciaModificar);
+                mde.jTextFieldFechaLlegadaAModificar.setText(nuevaFechaLlegadaModificar);
+                mde.jTextFieldFechaCaducidadAModificar.setText(nuevaFechaCaducidadModificar);
+                mde.jTextFieldFechaLocalizacionAModificar.setText(nuevaCategoriaModificar);
+
+                mde.setVisible(true);
+                this.setVisible(false);
+                mde.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+
+        }
+         
+
+    }//GEN-LAST:event_jButtonModificacionDatosProductoActionPerformed
+
+    private void jButtonEliminaProductoSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminaProductoSeleccionadoActionPerformed
+        
+        ArrayList<Producto> list = sbd.consultagetProductoNombre(getNombreBusqueda());
+        DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosAdmin.getModel();
+        int indiceFilaSeleccionada = jTableMuestraProductosAdmin.getSelectedRow();
+
+        if (indiceFilaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(null, "Selecciona una fila", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String idProductoEliminar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 0).toString();
+            String nombreProductoEliminado = tablaMuestra.getValueAt(indiceFilaSeleccionada, 1).toString();
+
+            fachada.eliminarProducto(idProductoEliminar);
+
+            tablaMuestra.removeRow(indiceFilaSeleccionada);
+
+            JOptionPane.showMessageDialog(null, "Eliminado el producto " + nombreProductoEliminado + " cuyo DNI es " + idProductoEliminar, "Eliminacion", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+
+        
+    }//GEN-LAST:event_jButtonEliminaProductoSeleccionadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BuscarProductoAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BuscarProductoAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BuscarProductoAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BuscarProductoAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BuscarProductoAdmin().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonBusquedaCriterios;
-    private javax.swing.JButton jButtonBusquedaDNI;
-    private javax.swing.JButton jButtonEliminarElementoSeleccionado;
-    private javax.swing.JButton jButtonModificacionDatosEmpleado;
+    private javax.swing.JButton jButtonBusquedaFechaCaducidad;
+    private javax.swing.JButton jButtonBusquedaNombreProducto;
+    private javax.swing.JButton jButtonBusquedaUnidades;
+    private javax.swing.JButton jButtonEliminaProductoSeleccionado;
+    private javax.swing.JButton jButtonModificacionDatosProducto;
+    private javax.swing.JButton jButtonOrdenarFechaCaducidad;
+    private javax.swing.JButton jButtonOrdenarNombreProducto;
     private javax.swing.JButton jButtonVolverAtrasBuscarProductoAdmin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

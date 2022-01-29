@@ -6,6 +6,9 @@
 package src.interfaces_graficas;
 
 import javax.swing.JOptionPane;
+import src.Validaciones;
+import src.fachada.FachadaSRP;
+import src.fachada.GestionEmpleados;
 import src.patron_proxy.ServidorBD;
 import src.users.Empleado;
 
@@ -18,14 +21,18 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
     /**
      * Creates new form ModificacionDatosEmpleado
      */
+    //Aplicacion del patrón facade para modificar el empleado
+    private FachadaSRP fachada = new FachadaSRP();
+    private BuscarEmpleado be;
 
-    public ModificacionDatosEmpleado() {
-
+    public ModificacionDatosEmpleado(BuscarEmpleado BE) {
+        this.be = BE;
         initComponents();
+        setTitle("Modificación de Datos del Empleado");
+        setLocationRelativeTo(null);
     }
 
     public String getDNImodificar() {
-
         return jTextFieldDniAModificar.getText();
     }
 
@@ -46,7 +53,7 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
     }
 
     public String getHorarioModificar() {
-        return jTextFieldHorarioAModificar.getText();
+        return (String) jComboBoxHorario.getSelectedItem();
     }
 
     public String getTelefonoModificar() {
@@ -54,7 +61,7 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
     }
 
     public String getCategoriaAModificar() {
-        return jTextFieldCategoriaAModificar.getText();
+        return (String) jComboBoxCategoria.getSelectedItem();
     }
 
     /**
@@ -69,7 +76,6 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jTextFieldTelefonoAModificar = new javax.swing.JTextField();
-        jTextFieldHorarioAModificar = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -86,13 +92,12 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
         jTextFieldCorreoAModificar = new javax.swing.JTextField();
         jButtonVolverAtrasModificarProductoEmpleado = new javax.swing.JButton();
         jLabel83 = new javax.swing.JLabel();
-        jTextFieldCategoriaAModificar = new javax.swing.JTextField();
+        jComboBoxHorario = new javax.swing.JComboBox<>();
+        jComboBoxCategoria = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTextFieldTelefonoAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-
-        jTextFieldHorarioAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
         jLabel24.setFont(new java.awt.Font("Verdana", 1, 22)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(0, 51, 255));
@@ -116,6 +121,11 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
         jLabel5.setText("Contraseña");
 
         jTextFieldDniAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextFieldDniAModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                none(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setText("Correo");
@@ -141,11 +151,30 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
         jButtonVolverAtrasModificarProductoEmpleado.setBackground(new java.awt.Color(255, 102, 102));
         jButtonVolverAtrasModificarProductoEmpleado.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jButtonVolverAtrasModificarProductoEmpleado.setText("Atrás");
+        jButtonVolverAtrasModificarProductoEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVolverAtrasModificarProductoEmpleadoActionPerformed(evt);
+            }
+        });
 
         jLabel83.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel83.setText("Categoria");
 
-        jTextFieldCategoriaAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jComboBoxHorario.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jComboBoxHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mañana", "Tarde" }));
+        jComboBoxHorario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxHorarioActionPerformed(evt);
+            }
+        });
+
+        jComboBoxCategoria.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Empleado" }));
+        jComboBoxCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCategoriaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -168,18 +197,17 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel83, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextFieldCorreoAModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                            .addComponent(jTextFieldTelefonoAModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                            .addComponent(jTextFieldDniAModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                            .addComponent(jTextFieldNombreAModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                            .addComponent(jTextFieldApellidosAModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                            .addComponent(jTextFieldContraseñaAModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                             .addComponent(jButtonActualizarDatosEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jTextFieldCorreoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextFieldHorarioAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextFieldTelefonoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextFieldDniAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextFieldNombreAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextFieldApellidosAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextFieldContraseñaAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextFieldCategoriaAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(59, 59, 59))))
+                            .addComponent(jComboBoxHorario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(66, 66, 66))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jButtonVolverAtrasModificarProductoEmpleado)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -209,17 +237,17 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
                     .addComponent(jTextFieldContraseñaAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldHorarioAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxHorario))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldTelefonoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldCategoriaAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel83, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel83, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonVolverAtrasModificarProductoEmpleado, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -227,6 +255,8 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
                         .addComponent(jButtonActualizarDatosEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
+
+        jTextFieldDniAModificar.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -242,7 +272,7 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -250,51 +280,51 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
 
     private void jButtonActualizarDatosEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarDatosEmpleadoActionPerformed
         // TODO add your handling code here:
-        ServidorBD sbd = new ServidorBD();
-        Empleado e = new Empleado(getDNImodificar(), getNombreModificar(), getApellidosModificar(), getCorreoModificar(), getContraseñaModificar(), getHorarioModificar(), getTelefonoModificar(), getCategoriaAModificar());
-        sbd.modificarEmpleado(e);
-            JOptionPane.showMessageDialog(null, "Empleado modificado", "Correcto!", JOptionPane.DEFAULT_OPTION);
-        
+        Empleado e = new Empleado(getDNImodificar(), getNombreModificar(), getApellidosModificar(), getCorreoModificar(), getContraseñaModificar(),
+                getHorarioModificar(), getTelefonoModificar(), getCategoriaAModificar());
+        if (getDNImodificar().isEmpty() || getNombreModificar().isEmpty() || getApellidosModificar().isEmpty() || getCorreoModificar().isEmpty() || getContraseñaModificar().isEmpty() || getHorarioModificar().isEmpty()
+                || getTelefonoModificar().isEmpty() || getCategoriaAModificar().isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Campos vacios, rellene todos", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (Validaciones.esValidoNumeroTelefono(getTelefonoModificar()) == false) {
+            JOptionPane.showMessageDialog(null, "Numero de telefono Incorrecto", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (Validaciones.validarCorreo(getCorreoModificar()) == false) {
+            JOptionPane.showMessageDialog(null, "El correo debe estar bien escrito", "Error Correo!", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+            fachada.modificarEmpleado(e);
+            JOptionPane.showMessageDialog(null, "Empleado modificado", "Correcto!", JOptionPane.INFORMATION_MESSAGE);
+            this.setVisible(false);
+            be.setVisible(true);
+        }
     }//GEN-LAST:event_jButtonActualizarDatosEmpleadoActionPerformed
+
+    private void jComboBoxHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxHorarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxHorarioActionPerformed
+
+    private void jComboBoxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxCategoriaActionPerformed
+
+    private void none(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_none
+        // TODO add your handling code here:
+    }//GEN-LAST:event_none
+
+    private void jButtonVolverAtrasModificarProductoEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverAtrasModificarProductoEmpleadoActionPerformed
+        this.setVisible(false);
+        be.setVisible(true);
+    }//GEN-LAST:event_jButtonVolverAtrasModificarProductoEmpleadoActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ModificacionDatosEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ModificacionDatosEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ModificacionDatosEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ModificacionDatosEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ModificacionDatosEmpleado().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActualizarDatosEmpleado;
     private javax.swing.JButton jButtonVolverAtrasModificarProductoEmpleado;
+    public javax.swing.JComboBox<String> jComboBoxCategoria;
+    public javax.swing.JComboBox<String> jComboBoxHorario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
@@ -307,11 +337,9 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel83;
     private javax.swing.JPanel jPanel1;
     public javax.swing.JTextField jTextFieldApellidosAModificar;
-    public javax.swing.JTextField jTextFieldCategoriaAModificar;
     public javax.swing.JTextField jTextFieldContraseñaAModificar;
     public javax.swing.JTextField jTextFieldCorreoAModificar;
     public javax.swing.JTextField jTextFieldDniAModificar;
-    public javax.swing.JTextField jTextFieldHorarioAModificar;
     public javax.swing.JTextField jTextFieldNombreAModificar;
     public javax.swing.JTextField jTextFieldTelefonoAModificar;
     // End of variables declaration//GEN-END:variables

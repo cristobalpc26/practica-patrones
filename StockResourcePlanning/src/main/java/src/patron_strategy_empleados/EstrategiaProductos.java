@@ -5,12 +5,13 @@
 package src.patron_strategy_empleados;
 
 import java.util.ArrayList;
-import src.users.Empleado;
+import src.patron_factory_method_productos.Producto;
 
 /**
  *
  * @author cris
  */
-public interface Estrategia {
-    public void ordena(ArrayList<Empleado> empleados);
+public interface EstrategiaProductos {
+    public void ordenaProductos(ArrayList<Producto> productos);
+
 }
