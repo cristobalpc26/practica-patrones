@@ -4,6 +4,7 @@
  */
 package src.patron_state_productos;
 
+import javax.swing.JOptionPane;
 import src.patron_factory_method_productos.Producto;
 
 /**
@@ -18,13 +19,13 @@ public class EstadoVacio implements EstadoProducto {
         EstadoProducto neutro = new EstadoNeutro();
 
         if (p.getUnidades() > 0 && p.getUnidades() < p.getUnidadesMaximas()) {
-            System.out.println("¡Estoy neutro!");
+            JOptionPane.showMessageDialog(null, "Stock actual del producto: "+p.getUnidades()+" unidades. Estado Neutro","Correcto!", JOptionPane.INFORMATION_MESSAGE);
             p.setEstadoActual(neutro);
         } else if (p.getUnidades() == p.getUnidadesMaximas()) {
-            System.out.println("¡Estoy lleno!");
+            JOptionPane.showMessageDialog(null, "Stock actual del producto: "+p.getUnidades()+" unidades. Estado Lleno","Correcto!", JOptionPane.INFORMATION_MESSAGE);
             p.setEstadoActual(lleno);
-        } else {
-            System.out.println("¡Estoy vacio!");
+        } else if(p.getUnidades()==0) {
+            JOptionPane.showMessageDialog(null, "Stock actual del producto: "+p.getUnidades()+" unidades. Estado Vacio","Correcto!", JOptionPane.INFORMATION_MESSAGE);
 
         }
 

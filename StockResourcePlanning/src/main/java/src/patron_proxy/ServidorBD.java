@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -432,13 +433,14 @@ public class ServidorBD implements ServicioBD {
         try {
 
             set = con.createStatement();
-            rs = set.executeQuery("SELECT * FROM EMPLEADO_PRODUCTOS");
+            rs = set.executeQuery("SELECT * FROM HISTORIAL_PRODUCTOS");
             while (rs.next()) {
-                aux = new Historial(rs.getString("ID_PRODUCTO"), rs.getString("DNI_EMPLEADO"), rs.getInt("UNIDADES"), rs.getTimestamp("HORA_MODIFICACION"));
+                aux = new Historial(rs.getString("ID_PRODUCTO"), rs.getInt("UNIDADES_REPUESTAS"), rs.getTimestamp("HORA_MODIFICACION"), rs.getInt("STOCK_FINAL"));
                 historiales.add(aux);
-                rs.close();
-                set.close();
+
             }
+            rs.close();
+            set.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("El método devolverHistorial no se ejecuta correctamente");
@@ -449,7 +451,7 @@ public class ServidorBD implements ServicioBD {
 
     @Override
     public ArrayList<Producto> consultagetProductoId(String id) {
-           ArrayList<Producto> productos = new ArrayList<>();
+        ArrayList<Producto> productos = new ArrayList<>();
         Producto aux;
         try {
             set = con.createStatement();
@@ -472,6 +474,23 @@ public class ServidorBD implements ServicioBD {
         }
         return productos;
 
-    }  
+    }
 
+    @Override
+    public void insertarHistorialProductos(Historial h) {
+
+        try {
+            set = con.createStatement();
+            int res = set.executeUpdate("INSERT INTO HISTORIAL_PRODUCTOS VALUES ('" + h.getId_producto() + "'," + h.getUnidadesRepuestas() + ",'" + h.getHora_modificacion() + "'," + h.getStockFinal() + ")");
+            if (res == -1) {
+                System.out.println("No se ha introducido el nuevo historial");
+            }
+
+            set.close();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("El método insertarProducto no se ejecuta correctamente");
+
+        }
+    }
 }

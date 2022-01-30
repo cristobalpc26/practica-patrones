@@ -12,26 +12,16 @@ import java.sql.Timestamp;
  * @author Carlos
  */
 public class Historial {
-    private String dni;
-    private String id_producto;
-    private int Unidades;
-    private Timestamp hora_modificacion;
+   private String id_producto;
+   private int unidadesRepuestas;
+   private Timestamp hora_modificacion;
+    private int stockFinal;
 
-    public Historial(String dni, String id_producto, int Unidades, Timestamp hora_modificacion) {
-        this.dni = dni;
+    public Historial(String id_producto, int unidadesRepuestas, Timestamp hora_modificacion, int stockFinal) {
         this.id_producto = id_producto;
-        this.Unidades = Unidades;
+        this.unidadesRepuestas = unidadesRepuestas;
         this.hora_modificacion = hora_modificacion;
-    }
-
-    
-    
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
+        this.stockFinal = stockFinal;
     }
 
     public String getId_producto() {
@@ -42,12 +32,12 @@ public class Historial {
         this.id_producto = id_producto;
     }
 
-    public int getUnidades() {
-        return Unidades;
+    public int getUnidadesRepuestas() {
+        return unidadesRepuestas;
     }
 
-    public void setUnidades(int Unidades) {
-        this.Unidades = Unidades;
+    public void setUnidadesRepuestas(int unidadesRepuestas) {
+        this.unidadesRepuestas = unidadesRepuestas;
     }
 
     public Timestamp getHora_modificacion() {
@@ -57,6 +47,14 @@ public class Historial {
     public void setHora_modificacion(Timestamp hora_modificacion) {
         this.hora_modificacion = hora_modificacion;
     }
-    
+
+    public int getStockFinal() {
+        return stockFinal;
+    }
+
+    public void setStockFinal(int stockFinal) {
+        this.stockFinal = stockFinal;
+    }
     
 }
+

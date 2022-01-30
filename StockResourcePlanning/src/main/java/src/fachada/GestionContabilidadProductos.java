@@ -7,6 +7,7 @@ package src.fachada;
 
 import src.patron_factory_method_productos.Producto;
 import src.patron_proxy.ProxyGestorBD;
+import src.users.Historial;
 
 /**
  *
@@ -20,5 +21,8 @@ public class GestionContabilidadProductos {
 
     public void modificarProducto(Producto p){
        pbd.modificarProducto(p);
+    }
+    public void insertarHistorialProductos(Historial h) {
+       pbd.insertarHistorialProductos(h);
     }
 }

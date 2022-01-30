@@ -5,6 +5,7 @@
  */
 package src.interfaces_graficas;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,6 +20,7 @@ import src.patron_factory_method_productos.Categoria;
 import src.patron_factory_method_productos.Producto;
 import src.patron_proxy.ProxyGestorBD;
 import src.users.Empleado;
+import src.users.Historial;
 
 /**
  *
@@ -32,6 +34,8 @@ public class ModificacionDatosProductoEmpleado extends javax.swing.JFrame {
     private FachadaEmpleadoSRP fachada = new FachadaEmpleadoSRP();
     private BuscarProductoEmpleado bpe;
     private ProxyGestorBD sbd = ProxyGestorBD.getInstancia();
+
+    private Timestamp timestamp = new Timestamp(System.currentTimeMillis()); //Obetneemos fecha actual en formato timestamp
 
     public ModificacionDatosProductoEmpleado(BuscarProductoEmpleado BPE) {
         this.bpe = BPE;
@@ -110,6 +114,11 @@ public class ModificacionDatosProductoEmpleado extends javax.swing.JFrame {
         jButtonQuitarUnidades.setBackground(new java.awt.Color(255, 102, 102));
         jButtonQuitarUnidades.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jButtonQuitarUnidades.setText("Quitar");
+        jButtonQuitarUnidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonQuitarUnidadesActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setText("Unidades a modificar");
@@ -190,7 +199,7 @@ public class ModificacionDatosProductoEmpleado extends javax.swing.JFrame {
         );
 
         jTextFieldIdProductoModificable.setEnabled(false);
-        jTextFieldIdProductoModificable.setEnabled(false);
+        jTextFieldUnidadesEnStockActuales.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -218,52 +227,111 @@ public class ModificacionDatosProductoEmpleado extends javax.swing.JFrame {
 
     private void jButtonAñadirUnidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAñadirUnidadesActionPerformed
 
-         String id_modificar="",categoria="",nombre="",marca="",procedencia="",fechaLleg="",fecha_Cad="",localizacion="";
-         int unidades=0;
-         double precio=0;
-      
-        int unidadesstockActualesParseadas = Integer.parseInt(getStockAcual());
-        int unidadesModificadasporEmpleadoParseadas = Integer.parseInt(getUnidadesAModificarEmpleado());
-        ArrayList<Producto> list = sbd.consultagetProductoId(getIdProductoAcual());
-        //  int unidadesFinales=unidadesstockActualesParseadas+unidadesModificadasporEmpleadoParseadas;
+        String id_modificar = "", categoria = "", nombre = "", marca = "", procedencia = "", fechaLleg = "", fecha_Cad = "", localizacion = "";
+        int unidades = 0;
+        double precio = 0;
+        System.out.println("getUnidadesAModificarEmpleado() = " + getUnidadesAModificarEmpleado());
 
         if (getUnidadesAModificarEmpleado().isEmpty()) {
-
             JOptionPane.showMessageDialog(null, "Campo vacio, rellenelo", "Error!", JOptionPane.ERROR_MESSAGE);
 
         } else if (Validaciones.validarSoloNumerosUnidades(getUnidadesAModificarEmpleado()) == false) {
             JOptionPane.showMessageDialog(null, "Solo escriba numeros enteros", "Unidades!", JOptionPane.ERROR_MESSAGE);
 
-        } else if (unidadesModificadasporEmpleadoParseadas < 0 || unidadesModificadasporEmpleadoParseadas > 100) {
-            JOptionPane.showMessageDialog(null, "El número de unidades tiene que estar entre 0 y 100", "Unidades!", JOptionPane.ERROR_MESSAGE);
-
         } else {
 
-            for (int i = 0; i < list.size(); i++) {
-                id_modificar = list.get(i).getId();
-                 categoria = list.get(i).getCategoria();
-                 nombre = list.get(i).getNombre();
-                marca = list.get(i).getMarca();
-                precio = list.get(i).getPrecio();
-                unidades = list.get(i).getUnidades();
-                 procedencia = list.get(i).getProcedencia();
-                 fechaLleg = list.get(i).getFechaLlegada();
-                 fecha_Cad = list.get(i).getFechaCaducidad();
+            int unidadesModificadasporEmpleadoParseadas = Integer.parseInt(getUnidadesAModificarEmpleado());
+            System.out.println("unidadesModificadasporEmpleadoParseadas " + unidadesModificadasporEmpleadoParseadas);
+            System.out.println("getUnidadesAModificarEmpleado() = " + getUnidadesAModificarEmpleado());
+            ArrayList<Producto> list = sbd.consultagetProductoId(getIdProductoAcual());
 
+            if (unidadesModificadasporEmpleadoParseadas < 0 || unidadesModificadasporEmpleadoParseadas > 100) {
+                JOptionPane.showMessageDialog(null, "El número de unidades tiene que estar entre 0 y 100", "Unidades!", JOptionPane.ERROR_MESSAGE);
+            } else {
+                for (int i = 0; i < list.size(); i++) {
+                    id_modificar = list.get(i).getId();
+                    categoria = list.get(i).getCategoria();
+                    nombre = list.get(i).getNombre();
+                    marca = list.get(i).getMarca();
+                    precio = list.get(i).getPrecio();
+                    unidades = list.get(i).getUnidades();
+                    procedencia = list.get(i).getProcedencia();
+                    fechaLleg = list.get(i).getFechaLlegada();
+                    fecha_Cad = list.get(i).getFechaCaducidad();
 
+                }
+                Producto p = new Producto(id_modificar, categoria, nombre, marca, precio, unidades, procedencia, fechaLleg, fecha_Cad, localizacion);
+                JOptionPane.showMessageDialog(null, "Unidades Repuestas " + unidadesModificadasporEmpleadoParseadas);
+
+                p.añadirUnidades(unidadesModificadasporEmpleadoParseadas);
+
+                fachada.modificarProducto(p);
+                JOptionPane.showMessageDialog(null, "Producto actualizado", "Correcto!", JOptionPane.INFORMATION_MESSAGE);
+
+                Historial h = new Historial(p.getId(), unidadesModificadasporEmpleadoParseadas, timestamp, p.getUnidades());
+                fachada.insertarHistorialProductos(h);
+                
+                this.setVisible(false);
+                bpe.setVisible(true);
             }
-            Producto p = new Producto(id_modificar,categoria,nombre,marca,precio,unidades,procedencia,fechaLleg,fecha_Cad,localizacion);
-
-            p.añadirUnidades(unidadesModificadasporEmpleadoParseadas);
-
-            fachada.modificarProducto(p);
-            JOptionPane.showMessageDialog(null, "Producto actualizado", "Correcto!", JOptionPane.INFORMATION_MESSAGE);
-            this.setVisible(false);
-            bpe.setVisible(true);
         }
 
 
     }//GEN-LAST:event_jButtonAñadirUnidadesActionPerformed
+
+    private void jButtonQuitarUnidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQuitarUnidadesActionPerformed
+
+        String id_modificar = "", categoria = "", nombre = "", marca = "", procedencia = "", fechaLleg = "", fecha_Cad = "", localizacion = "";
+        int unidades = 0;
+        double precio = 0;
+        System.out.println("getUnidadesAModificarEmpleado() = " + getUnidadesAModificarEmpleado());
+
+        if (getUnidadesAModificarEmpleado().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo vacio, rellenelo", "Error!", JOptionPane.ERROR_MESSAGE);
+
+        } else if (Validaciones.validarSoloNumerosUnidades(getUnidadesAModificarEmpleado()) == false) {
+            JOptionPane.showMessageDialog(null, "Solo escriba numeros enteros", "Unidades!", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+
+            int unidadesModificadasporEmpleadoParseadas = Integer.parseInt(getUnidadesAModificarEmpleado());
+            System.out.println("unidadesModificadasporEmpleadoParseadas " + unidadesModificadasporEmpleadoParseadas);
+            System.out.println("getUnidadesAModificarEmpleado() = " + getUnidadesAModificarEmpleado());
+            ArrayList<Producto> list = sbd.consultagetProductoId(getIdProductoAcual());
+
+            if (unidadesModificadasporEmpleadoParseadas < 0 || unidadesModificadasporEmpleadoParseadas > 100) {
+                JOptionPane.showMessageDialog(null, "El número de unidades tiene que estar entre 0 y 100", "Unidades!", JOptionPane.ERROR_MESSAGE);
+            } else {
+                for (int i = 0; i < list.size(); i++) {
+                    id_modificar = list.get(i).getId();
+                    categoria = list.get(i).getCategoria();
+                    nombre = list.get(i).getNombre();
+                    marca = list.get(i).getMarca();
+                    precio = list.get(i).getPrecio();
+                    unidades = list.get(i).getUnidades();
+                    procedencia = list.get(i).getProcedencia();
+                    fechaLleg = list.get(i).getFechaLlegada();
+                    fecha_Cad = list.get(i).getFechaCaducidad();
+
+                }
+                Producto p = new Producto(id_modificar, categoria, nombre, marca, precio, unidades, procedencia, fechaLleg, fecha_Cad, localizacion);
+
+                JOptionPane.showMessageDialog(null, "Unidades Repuestas " + unidadesModificadasporEmpleadoParseadas);
+
+                p.quitarUnidades(unidadesModificadasporEmpleadoParseadas);
+
+                fachada.modificarProducto(p);
+                JOptionPane.showMessageDialog(null, "Producto actualizado", "Correcto!", JOptionPane.INFORMATION_MESSAGE);
+                
+                Historial h = new Historial(p.getId(), unidadesModificadasporEmpleadoParseadas, timestamp, p.getUnidades());
+                fachada.insertarHistorialProductos(h);
+                
+                this.setVisible(false);
+                bpe.setVisible(true);
+            }
+        }
+
+    }//GEN-LAST:event_jButtonQuitarUnidadesActionPerformed
 
     /**
      * @param args the command line arguments

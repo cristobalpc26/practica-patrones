@@ -52,7 +52,6 @@ public class Producto {
 
         }
         estadoActual.ejecutarModificacionUnidades(this);
-        resultado();
     }
 
     public void quitarUnidades(int unidadesRepuestas) {
@@ -67,15 +66,10 @@ public class Producto {
         }
 
         estadoActual.ejecutarModificacionUnidades(this);
-        resultado();
     }
 
     
     
-    public void resultado() {
-        estadoActual.ejecutarModificacionUnidades(this); //comprobamos el estado final
-    }
-
     
     public Producto(String id, String categoria, String nombre, String marca, double precio, int unidades, String procedencia, String fechaLlegada, String fechaCaducidad, String localizacion) {
         this.id = id;
@@ -183,7 +177,7 @@ public class Producto {
         this.estadoActual = estadoActual;
     }
       public String getEstadoActualString() {
-        return getEstadoActual().toString();
+        return (String) getEstadoActual().toString();
     }
     
     

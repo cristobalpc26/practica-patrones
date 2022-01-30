@@ -66,4 +66,5 @@ public interface ServicioBD {
     
     public ArrayList<Historial>devolverHistorial();
 
+   public void insertarHistorialProductos(Historial h);
 }

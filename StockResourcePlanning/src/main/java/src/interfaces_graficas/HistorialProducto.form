@@ -27,11 +27,11 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="557" max="32767" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="271" max="-2" attributes="0"/>
           </Group>
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
@@ -59,23 +59,23 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane1" min="-2" pref="670" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                                  <Component id="jButtonVolverAtrasHistorialProductos" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="185" max="-2" attributes="0"/>
-                                  <Component id="jButtonBusquedaHistorial" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="jButtonVolverAtrasHistorialProductos" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="210" max="-2" attributes="0"/>
+                          <Component id="jButtonBusquedaHistorial" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="198" max="-2" attributes="0"/>
-                          <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="20" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="0" pref="267" max="32767" attributes="0"/>
+                  <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="252" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -112,10 +112,10 @@
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="51">
-                    <Column editable="false" title="DNI Empleado" type="java.lang.String"/>
                     <Column editable="false" title="Id Producto" type="java.lang.String"/>
-                    <Column editable="false" title="Unidades" type="java.lang.Integer"/>
+                    <Column editable="false" title="Unidades Repuestas" type="java.lang.Integer"/>
                     <Column editable="false" title="Hora reposicion" type="java.lang.String"/>
+                    <Column editable="true" title="Unidades Finales" type="java.lang.Integer"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

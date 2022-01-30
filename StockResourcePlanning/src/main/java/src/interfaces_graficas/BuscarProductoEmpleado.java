@@ -462,7 +462,7 @@ public class BuscarProductoEmpleado extends javax.swing.JFrame {
         if (indiceFilaSeleccionada == -1) {
             JOptionPane.showMessageDialog(null, "Selecciona una fila", "Error!", JOptionPane.ERROR_MESSAGE);
         } else {
-            String idProductoArepostar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 5).toString();
+            String idProductoArepostar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 0).toString();
 
             String nuevaUnidadesModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 5).toString();
 
@@ -520,7 +520,6 @@ public class BuscarProductoEmpleado extends javax.swing.JFrame {
             row[5] = list.get(i).getUnidades();
             row[6] = list.get(i).getProcedencia();
             row[7] = list.get(i).getFechaLlegada();
-            System.out.println(list.get(i).getFechaCaducidad().toString());
             row[8] = list.get(i).getFechaCaducidad();
             row[9] = list.get(i).getLocalizacion();
 

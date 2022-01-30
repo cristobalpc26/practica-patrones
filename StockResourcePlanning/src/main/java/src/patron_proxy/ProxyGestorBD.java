@@ -122,5 +122,10 @@ public class ProxyGestorBD implements ServicioBD{
        
         return this.serv.consultagetProductoId(id);
     }
+
+    @Override
+    public void insertarHistorialProductos(Historial h) {
+        this.serv.insertarHistorialProductos(h);
+    }
    
 }
