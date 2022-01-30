@@ -8,7 +8,7 @@ package src.interfaces_graficas;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import src.Validaciones;
-import src.fachada.FachadaSRP;
+import src.fachada.FachadaAdminSRP;
 import src.patron_proxy.ProxyGestorBD;
 import src.users.Empleado;
 
@@ -21,7 +21,7 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
     /**
      * Creates new form RegistrarProducto
      */
-    private FachadaSRP fachada = new FachadaSRP();
+    private FachadaAdminSRP fachada = new FachadaAdminSRP();
         private ProxyGestorBD sbd = ProxyGestorBD.getInstancia();
 
     private HomeAdmin ha;
@@ -167,7 +167,7 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
         jLabel9.setText("Teléfono");
 
         jComboBoxCategoriaRegistro.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jComboBoxCategoriaRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Empleado" }));
+        jComboBoxCategoriaRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Empleado" }));
         jComboBoxCategoriaRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxCategoriaRegistroActionPerformed(evt);

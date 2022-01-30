@@ -25,4 +25,8 @@ public class GestionEmpleados {
         pbd.eliminarEmpleado(dni);
         
     }
+      public void consultarHistorial(){
+        pbd.devolverHistorial();
+        
+    }
 }

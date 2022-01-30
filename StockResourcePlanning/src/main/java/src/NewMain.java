@@ -20,9 +20,9 @@ public class NewMain {
     public static void main(String[] args) {
 
       
-        String correo = "cris@market.com";
+        String fecha = "235.43";
         
-        System.out.println(Validaciones.validarCorreo(correo));
+        System.out.println(Validaciones.validarSoloNumerosUnidades(fecha));
 
         
         

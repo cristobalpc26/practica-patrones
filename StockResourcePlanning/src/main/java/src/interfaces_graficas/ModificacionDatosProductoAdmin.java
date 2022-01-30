@@ -5,7 +5,21 @@
  */
 package src.interfaces_graficas;
 
-import src.fachada.FachadaSRP;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import src.Validaciones;
+import src.fachada.FachadaAdminSRP;
+import src.patron_factory_method_productos.Categoria;
+import src.patron_factory_method_productos.FabricaCategoria;
+import src.patron_factory_method_productos.Producto;
+import src.patron_proxy.ProxyGestorBD;
 
 /**
  *
@@ -13,11 +27,13 @@ import src.fachada.FachadaSRP;
  */
 public class ModificacionDatosProductoAdmin extends javax.swing.JFrame {
 
-   
- /**
+    /**
      * Creates new form ModificacionDatosEmpleado
      */
-    private FachadaSRP fachada = new FachadaSRP();
+    private FachadaAdminSRP fachada = new FachadaAdminSRP();
+    private ProxyGestorBD sbd = ProxyGestorBD.getInstancia();
+
+    private FabricaCategoria fcat = new FabricaCategoria();
     private BuscarProductoAdmin bp;
 
     public ModificacionDatosProductoAdmin(BuscarProductoAdmin BP) {
@@ -32,7 +48,8 @@ public class ModificacionDatosProductoAdmin extends javax.swing.JFrame {
     }
 
     public String getCategoriaModificar() {
-        return jTextFieldCategoriaProductoAModificar.getText();
+        return (String) jComboBoxCategoriaAmodificarProducto.getSelectedItem();
+       
     }
 
     public String getNombreModificar() {
@@ -40,34 +57,33 @@ public class ModificacionDatosProductoAdmin extends javax.swing.JFrame {
     }
 
     public String getMarcaModificar() {
-        return jTextFieldMarcaAModificar.getText();
+        return jTextFieldMarcaProductoAModificar.getText();
     }
 
     public String getPrecioModificar() {
-        return jTextFieldPrecioAModificar.getText();
+        return jTextFieldPrecioProductoAModificar.getText();
     }
 
     public String getUnidadesModificar() {
-        return jTextFieldUnidadesAModificarAdmin.getText();
+        return jTextFieldUnidadesAModificarProductoAdmin.getText();
     }
 
     public String getProcedenciaModificar() {
-        return jTextFieldProcedenciaAModificar.getText();
+        return jTextFieldProcedenciaProductoAModificar.getText();
     }
 
     public String getFechaLlegadaModificar() {
-        return jTextFieldFechaLlegadaAModificar.getText();
+        return jTextFieldFechaLlegadaProductoAModificar.getText();
     }
 
     public String getFechaCaducidadModificar() {
-        return jTextFieldFechaCaducidadAModificar.getText();
+        return jTextFieldFechaCaducidadProductoAModificar.getText();
     }
 
     public String getLocalizacionModificar() {
-        return jTextFieldFechaLocalizacionAModificar.getText();
+        return jTextFieldFechaLocalizacionProductoAModificar.getText();
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,11 +94,11 @@ public class ModificacionDatosProductoAdmin extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTextFieldMarcaAModificar = new javax.swing.JTextField();
+        jTextFieldMarcaProductoAModificar = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         jTextFieldNombreProductoModificar = new javax.swing.JTextField();
-        jTextFieldUnidadesAModificarAdmin = new javax.swing.JTextField();
-        jTextFieldPrecioAModificar = new javax.swing.JTextField();
+        jTextFieldUnidadesAModificarProductoAdmin = new javax.swing.JTextField();
+        jTextFieldPrecioProductoAModificar = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -90,21 +106,21 @@ public class ModificacionDatosProductoAdmin extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jButtonActualizarDatosEmpleado = new javax.swing.JButton();
-        jTextFieldFechaCaducidadAModificar = new javax.swing.JTextField();
-        jTextFieldFechaLlegadaAModificar = new javax.swing.JTextField();
+        jTextFieldFechaCaducidadProductoAModificar = new javax.swing.JTextField();
+        jTextFieldFechaLlegadaProductoAModificar = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextFieldProcedenciaAModificar = new javax.swing.JTextField();
+        jTextFieldProcedenciaProductoAModificar = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextFieldCategoriaProductoAModificar = new javax.swing.JTextField();
-        jTextFieldFechaLocalizacionAModificar = new javax.swing.JTextField();
+        jTextFieldFechaLocalizacionProductoAModificar = new javax.swing.JTextField();
         jTextFieldIdProductoAModificar = new javax.swing.JTextField();
         jButtonVolverAtrasModificarProductoAdmin = new javax.swing.JButton();
+        jComboBoxCategoriaAmodificarProducto = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextFieldMarcaAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextFieldMarcaProductoAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
         jLabel24.setFont(new java.awt.Font("Verdana", 1, 22)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(0, 51, 255));
@@ -112,9 +128,9 @@ public class ModificacionDatosProductoAdmin extends javax.swing.JFrame {
 
         jTextFieldNombreProductoModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
-        jTextFieldUnidadesAModificarAdmin.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextFieldUnidadesAModificarProductoAdmin.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
-        jTextFieldPrecioAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextFieldPrecioProductoAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Precio");
@@ -137,10 +153,15 @@ public class ModificacionDatosProductoAdmin extends javax.swing.JFrame {
         jButtonActualizarDatosEmpleado.setBackground(new java.awt.Color(255, 153, 0));
         jButtonActualizarDatosEmpleado.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jButtonActualizarDatosEmpleado.setText("Actualizar");
+        jButtonActualizarDatosEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualizarDatosEmpleadoActionPerformed(evt);
+            }
+        });
 
-        jTextFieldFechaCaducidadAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextFieldFechaCaducidadProductoAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
-        jTextFieldFechaLlegadaAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextFieldFechaLlegadaProductoAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setText("Fecha de llegada");
@@ -151,14 +172,12 @@ public class ModificacionDatosProductoAdmin extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setText("Fecha de caducidad");
 
-        jTextFieldProcedenciaAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextFieldProcedenciaProductoAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setText("Localizacion");
 
-        jTextFieldCategoriaProductoAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-
-        jTextFieldFechaLocalizacionAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextFieldFechaLocalizacionProductoAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
         jTextFieldIdProductoAModificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
@@ -171,6 +190,9 @@ public class ModificacionDatosProductoAdmin extends javax.swing.JFrame {
             }
         });
 
+        jComboBoxCategoriaAmodificarProducto.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jComboBoxCategoriaAmodificarProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Verduras", "Frutas", "Pescado", "Carne", "Pollo", "Embutidos", "Lacteos", "Dulces", "Bebidas", "Especias", "Salsas ", "Pasta ", "Snacks ", "Postres", "Otros ", " " }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -182,7 +204,7 @@ public class ModificacionDatosProductoAdmin extends javax.swing.JFrame {
                         .addComponent(jButtonVolverAtrasModificarProductoAdmin))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(105, 105, 105)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -202,16 +224,16 @@ public class ModificacionDatosProductoAdmin extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jTextFieldNombreProductoModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextFieldPrecioAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextFieldUnidadesAModificarAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextFieldCategoriaProductoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextFieldMarcaAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jTextFieldPrecioProductoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextFieldUnidadesAModificarProductoAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextFieldMarcaProductoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jTextFieldFechaLlegadaAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextFieldFechaCaducidadAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextFieldProcedenciaAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jTextFieldFechaLocalizacionAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jTextFieldFechaLlegadaProductoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextFieldFechaCaducidadProductoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextFieldProcedenciaProductoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextFieldFechaLocalizacionProductoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBoxCategoriaAmodificarProducto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,41 +254,43 @@ public class ModificacionDatosProductoAdmin extends javax.swing.JFrame {
                     .addComponent(jTextFieldIdProductoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldCategoriaProductoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jComboBoxCategoriaAmodificarProducto)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldNombreProductoModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldMarcaAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldMarcaProductoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldPrecioAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldPrecioProductoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldUnidadesAModificarAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldUnidadesAModificarProductoAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldProcedenciaAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldProcedenciaProductoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldFechaLlegadaAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldFechaLlegadaProductoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldFechaCaducidadAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldFechaCaducidadProductoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldFechaLocalizacionAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldFechaLocalizacionProductoAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonActualizarDatosEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -300,10 +324,78 @@ public class ModificacionDatosProductoAdmin extends javax.swing.JFrame {
         bp.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonVolverAtrasModificarProductoAdminActionPerformed
 
-  
+    private void jButtonActualizarDatosEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarDatosEmpleadoActionPerformed
+        DateFormat forma = new SimpleDateFormat("yyyy" + '-' + "MM" + '-' + "dd");
+        Date fechaCaducidadParseada, fechaLlegadaParseada, fechaActualParseada;
+
+
+        if (getIDaModificar().isEmpty() || getCategoriaModificar().isEmpty() || getNombreModificar().isEmpty() || getMarcaModificar().isEmpty()
+                || getPrecioModificar().isEmpty() || getUnidadesModificar().isEmpty() || getProcedenciaModificar().isEmpty()
+                || getFechaLlegadaModificar().isEmpty() || getFechaCaducidadModificar().isEmpty() || getLocalizacionModificar().isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Campos vacios, rellene todos", "Error!", JOptionPane.ERROR_MESSAGE);
+        }  else if (Validaciones.validarFecha(getFechaLlegadaModificar()) == false) {
+            JOptionPane.showMessageDialog(null, "Formato Fecha llegada incorrecto", "Fecha llegada!", JOptionPane.ERROR_MESSAGE);
+        } else if (Validaciones.validarFecha(getFechaCaducidadModificar()) == false) {
+            JOptionPane.showMessageDialog(null, "Formato Fecha caducidad incorrecto", "Fecha caducidad!", JOptionPane.ERROR_MESSAGE);
+
+        } else if (Validaciones.validarSoloNumerosPrecios(getPrecioModificar()) == false) {
+            JOptionPane.showMessageDialog(null, "Solo escriba numeros decimales separado con un punto", "Precio!", JOptionPane.ERROR_MESSAGE);
+        } else if (Validaciones.validarSoloNumerosUnidades(getUnidadesModificar()) == false) {
+            JOptionPane.showMessageDialog(null, "Solo escriba numeros enteros", "Unidades!", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+            //Aplicacion del FactoryMethod donde se crea el objteo categoria y se inserta el empleado obteniendo el nombre de la categoria del objeto creado.
+
+            try {
+                fechaCaducidadParseada = (Date) forma.parse(getFechaCaducidadModificar());
+                fechaLlegadaParseada = (Date) forma.parse(getFechaLlegadaModificar());
+                Date fecha = new Date(Calendar.getInstance().getTimeInMillis());
+                String fechaActual = forma.format(fecha);
+                int unidadesParseadas = Integer.parseInt(getUnidadesModificar());
+                fechaActualParseada = (Date) forma.parse(fechaActual);
+
+                if (fechaLlegadaParseada.compareTo(fechaCaducidadParseada) > 0) {
+
+                    JOptionPane.showMessageDialog(null, "La fecha de llegada tiene que ser menor O o igual que la de caducidad", "Fechas!", JOptionPane.ERROR_MESSAGE);
+                } else if (fechaLlegadaParseada.compareTo(fechaActualParseada) < 0 || fechaCaducidadParseada.compareTo(fechaActualParseada) < 0) {
+                    JOptionPane.showMessageDialog(null, "Las fechas tienen que ser mayores o iguales que la actual", "Fechas!", JOptionPane.ERROR_MESSAGE);
+
+                } else if (unidadesParseadas < 0 || unidadesParseadas > 100) {
+
+                    JOptionPane.showMessageDialog(null, "El número de unidades tiene que estar entre 0 y 100", "Unidades!", JOptionPane.ERROR_MESSAGE);
+
+                } else {
+                    Double precioDouble = Double.parseDouble(getPrecioModificar());
+                    int unidadesInt = Integer.parseInt(getUnidadesModificar());
+
+                    Categoria categoriaCreada = fcat.crearCategoria(getCategoriaModificar().trim());
+
+                    // Si la categoria concreta concuerda con la puesta se crea el objeto categoria y posteriormente el objeto producto
+                    if (categoriaCreada.getNombre().equals(getCategoriaModificar())) {
+                        Producto p = new Producto(getIDaModificar(), categoriaCreada.getNombre(), getNombreModificar(), getMarcaModificar(),
+                                precioDouble, unidadesInt, getProcedenciaModificar(),
+                                getFechaLlegadaModificar(), getFechaCaducidadModificar(), getLocalizacionModificar());
+
+                        fachada.modificarProducto(p);
+                        JOptionPane.showMessageDialog(null, "Producto actualizado", "Correcto!", JOptionPane.INFORMATION_MESSAGE);
+                        this.setVisible(false);
+                        bp.setVisible(true);
+                    }
+                }
+            } catch (ParseException ex) {
+                Logger.getLogger(RegistrarProducto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+    }//GEN-LAST:event_jButtonActualizarDatosEmpleadoActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActualizarDatosEmpleado;
     private javax.swing.JButton jButtonVolverAtrasModificarProductoAdmin;
+    public javax.swing.JComboBox<String> jComboBoxCategoriaAmodificarProducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -316,15 +408,14 @@ public class ModificacionDatosProductoAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    public javax.swing.JTextField jTextFieldCategoriaProductoAModificar;
-    public javax.swing.JTextField jTextFieldFechaCaducidadAModificar;
-    public javax.swing.JTextField jTextFieldFechaLlegadaAModificar;
-    public javax.swing.JTextField jTextFieldFechaLocalizacionAModificar;
+    public javax.swing.JTextField jTextFieldFechaCaducidadProductoAModificar;
+    public javax.swing.JTextField jTextFieldFechaLlegadaProductoAModificar;
+    public javax.swing.JTextField jTextFieldFechaLocalizacionProductoAModificar;
     public javax.swing.JTextField jTextFieldIdProductoAModificar;
-    public javax.swing.JTextField jTextFieldMarcaAModificar;
+    public javax.swing.JTextField jTextFieldMarcaProductoAModificar;
     public javax.swing.JTextField jTextFieldNombreProductoModificar;
-    public javax.swing.JTextField jTextFieldPrecioAModificar;
-    public javax.swing.JTextField jTextFieldProcedenciaAModificar;
-    public javax.swing.JTextField jTextFieldUnidadesAModificarAdmin;
+    public javax.swing.JTextField jTextFieldPrecioProductoAModificar;
+    public javax.swing.JTextField jTextFieldProcedenciaProductoAModificar;
+    public javax.swing.JTextField jTextFieldUnidadesAModificarProductoAdmin;
     // End of variables declaration//GEN-END:variables
 }

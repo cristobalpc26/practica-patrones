@@ -5,6 +5,7 @@
 package src.users;
 
 import java.util.ArrayList;
+import src.fachada.FachadaAdminSRP;
 import src.fachada.GestionEmpleados;
 import src.fachada.GestionAdminProductos;
 import src.patron_iterator.AgregadoEmpleados;
@@ -17,19 +18,15 @@ import src.patron_proxy.ProxyGestorBD;
  */
 public class Administrador extends Persona {
 
-    // Patron Singleton
-    private static Administrador instancia = new Administrador();
-    private GestionEmpleados gemp;
-    private GestionAdminProductos gprod;
-
+   
+    private FachadaAdminSRP fachada;
+    
     public ArrayList<Empleado> empleados;
     private String login;
     private String password;
 
     public Administrador() {
-        this.gemp = new GestionEmpleados();
-        this.gprod = new GestionAdminProductos();
-
+        this.fachada =  new FachadaAdminSRP();
     }
 
     public String getLogin() {
@@ -50,10 +47,7 @@ public class Administrador extends Persona {
         this.password = password;
     }
 
-    public static Administrador getInstancia() {
-        return instancia;
-    }
-
+ 
     public ArrayList<Empleado> getEmpleados() {
         return empleados;
     }

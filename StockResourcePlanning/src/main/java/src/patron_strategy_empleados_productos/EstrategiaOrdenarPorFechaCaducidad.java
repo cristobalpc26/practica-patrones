@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src.patron_strategy_empleados;
+package src.patron_strategy_empleados_productos;
 
 import java.util.ArrayList;
 import java.util.Collections;

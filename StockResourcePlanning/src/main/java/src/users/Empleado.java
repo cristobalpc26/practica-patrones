@@ -4,16 +4,13 @@
  */
 package src.users;
 
-import src.fachada.GestionEmpleados;
-import src.fachada.GestionContabilidadProductos;
 /**
  *
  * @author cris
  */
 public class Empleado extends Persona{
     
-     private GestionEmpleados gemp;
-    private GestionContabilidadProductos gprod;
+   
     
     public Empleado(String dni, String nombre, String apellidos, String correo, String password, String horario, String telefono, String categoria) {
         super(dni, nombre, apellidos, correo, password, horario, telefono, categoria);

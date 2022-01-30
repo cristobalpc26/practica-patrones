@@ -15,18 +15,20 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import src.fachada.FachadaSRP;
+import src.Validaciones;
+import src.fachada.FachadaAdminSRP;
 import src.patron_factory_method_productos.Producto;
 import src.patron_proxy.ProxyGestorBD;
-import src.patron_strategy_empleados.ContextoEmpleados;
-import src.patron_strategy_empleados.ContextoProductos;
-import src.patron_strategy_empleados.EstrategiaOrdenarPorFechaCaducidad;
-import src.patron_strategy_empleados.EstrategiaOrdenarPorIdentificador;
-import src.patron_strategy_empleados.EstrategiaOrdenarPorNombreEmpleados;
+import src.patron_strategy_empleados_productos.ContextoEmpleados;
+import src.patron_strategy_empleados_productos.ContextoProductos;
+import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorFechaCaducidad;
+import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorIdentificador;
+import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorNombreEmpleados;
 import src.users.Empleado;
-import src.patron_strategy_empleados.EstrategiaEmpleados;
-import src.patron_strategy_empleados.EstrategiaOrdenarPorNombreProductos;
-import src.patron_strategy_empleados.EstrategiaProductos;
+import src.patron_strategy_empleados_productos.EstrategiaEmpleados;
+import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorNombreProductos;
+import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorUnidadesProductos;
+import src.patron_strategy_empleados_productos.EstrategiaProductos;
 
 /**
  *
@@ -37,7 +39,7 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
     /**
      * Creates new form BuscarEmpleado
      */
-    private FachadaSRP fachada = new FachadaSRP();
+    private FachadaAdminSRP fachada = new FachadaAdminSRP();
     private ProxyGestorBD sbd = ProxyGestorBD.getInstancia();
 
     private HomeAdmin ha;
@@ -92,6 +94,7 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
         jButtonBusquedaUnidades = new javax.swing.JButton();
         jButtonOrdenarNombreProducto = new javax.swing.JButton();
         jButtonOrdenarFechaCaducidad = new javax.swing.JButton();
+        jButtonOrdenarUnidadesProducto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -155,10 +158,10 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, true, true, true, true, true, true, true, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -275,6 +278,15 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
             }
         });
 
+        jButtonOrdenarUnidadesProducto.setBackground(new java.awt.Color(102, 102, 255));
+        jButtonOrdenarUnidadesProducto.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButtonOrdenarUnidadesProducto.setText("Busqueda global orden Unidades");
+        jButtonOrdenarUnidadesProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOrdenarUnidadesProductoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -324,7 +336,8 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jButtonOrdenarNombreProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonOrdenarFechaCaducidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jButtonOrdenarFechaCaducidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonOrdenarUnidadesProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -332,7 +345,7 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel24)
-                .addGap(31, 31, 31)
+                .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -353,6 +366,8 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jButtonBusquedaUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonOrdenarUnidadesProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonOrdenarNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonOrdenarFechaCaducidad, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -489,20 +504,26 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosAdmin.getModel();
         tablaMuestra.setRowCount(0);
         Object[] row = new Object[10];
-        for (int i = 0; i < list.size(); i++) {
-            row[0] = list.get(i).getId();
-            row[1] = list.get(i).getCategoria();
-            row[2] = list.get(i).getNombre();
-            row[3] = list.get(i).getMarca();
-            row[4] = list.get(i).getPrecio();
-            row[5] = list.get(i).getUnidades();
-            row[6] = list.get(i).getProcedencia();
-            row[7] = list.get(i).getFechaLlegada();
-            row[8] = list.get(i).getFechaCaducidad();
-            row[9] = list.get(i).getLocalizacion();
+        if (Validaciones.validarFecha(getFechaCaducidad()) == true) {
+            for (int i = 0; i < list.size(); i++) {
+                row[0] = list.get(i).getId();
+                row[1] = list.get(i).getCategoria();
+                row[2] = list.get(i).getNombre();
+                row[3] = list.get(i).getMarca();
+                row[4] = list.get(i).getPrecio();
+                row[5] = list.get(i).getUnidades();
+                row[6] = list.get(i).getProcedencia();
+                row[7] = list.get(i).getFechaLlegada();
+                row[8] = list.get(i).getFechaCaducidad();
+                row[9] = list.get(i).getLocalizacion();
 
-            tablaMuestra.addRow(row);
+                tablaMuestra.addRow(row);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Formato fecha incorrecta o fecha no valida", "Error!", JOptionPane.ERROR_MESSAGE);
+
         }
+
 
     }//GEN-LAST:event_jButtonBusquedaFechaCaducidadActionPerformed
 
@@ -549,15 +570,15 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
             // Establcemos los valores de la fila seleccioanda en la nueva 
             if (indiceFilaSeleccionada != -1) {
                 mde.jTextFieldIdProductoAModificar.setText(nuevoIdProductoModificar);
-                mde.jTextFieldCategoriaProductoAModificar.setText(nuevoCategoriaProductoModificar);
+                mde.jComboBoxCategoriaAmodificarProducto.setSelectedItem(nuevoCategoriaProductoModificar);
                 mde.jTextFieldNombreProductoModificar.setText(nuevoNombreProductoModificar);
-                mde.jTextFieldMarcaAModificar.setText(nuevaMarcaModificar);
-                mde.jTextFieldPrecioAModificar.setText(nuevoPrecioModificar);
-                mde.jTextFieldUnidadesAModificarAdmin.setText(nuevaUnidadesModificar);
-                mde.jTextFieldProcedenciaAModificar.setText(nuevaProcedenciaModificar);
-                mde.jTextFieldFechaLlegadaAModificar.setText(nuevaFechaLlegadaModificar);
-                mde.jTextFieldFechaCaducidadAModificar.setText(nuevaFechaCaducidadModificar);
-                mde.jTextFieldFechaLocalizacionAModificar.setText(nuevaCategoriaModificar);
+                mde.jTextFieldMarcaProductoAModificar.setText(nuevaMarcaModificar);
+                mde.jTextFieldPrecioProductoAModificar.setText(nuevoPrecioModificar);
+                mde.jTextFieldUnidadesAModificarProductoAdmin.setText(nuevaUnidadesModificar);
+                mde.jTextFieldProcedenciaProductoAModificar.setText(nuevaProcedenciaModificar);
+                mde.jTextFieldFechaLlegadaProductoAModificar.setText(nuevaFechaLlegadaModificar);
+                mde.jTextFieldFechaCaducidadProductoAModificar.setText(nuevaFechaCaducidadModificar);
+                mde.jTextFieldFechaLocalizacionProductoAModificar.setText(nuevaCategoriaModificar);
 
                 mde.setVisible(true);
                 this.setVisible(false);
@@ -565,12 +586,12 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
             }
 
         }
-         
+
 
     }//GEN-LAST:event_jButtonModificacionDatosProductoActionPerformed
 
     private void jButtonEliminaProductoSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminaProductoSeleccionadoActionPerformed
-        
+
         ArrayList<Producto> list = sbd.consultagetProductoNombre(getNombreBusqueda());
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosAdmin.getModel();
         int indiceFilaSeleccionada = jTableMuestraProductosAdmin.getSelectedRow();
@@ -585,12 +606,39 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
 
             tablaMuestra.removeRow(indiceFilaSeleccionada);
 
-            JOptionPane.showMessageDialog(null, "Eliminado el producto " + nombreProductoEliminado + " cuyo DNI es " + idProductoEliminar, "Eliminacion", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Eliminado el producto " + nombreProductoEliminado + " cuyo ID es " + idProductoEliminar, "Eliminacion", JOptionPane.INFORMATION_MESSAGE);
 
         }
 
-        
+
     }//GEN-LAST:event_jButtonEliminaProductoSeleccionadoActionPerformed
+
+    private void jButtonOrdenarUnidadesProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdenarUnidadesProductoActionPerformed
+        ArrayList<Producto> aux = sbd.getProductos();
+        DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosAdmin.getModel();
+        tablaMuestra.setRowCount(0);
+
+        EstrategiaProductos est = new EstrategiaOrdenarPorUnidadesProductos();
+        ContextoProductos contexto = new ContextoProductos(est, aux);
+        contexto.ejecutaEstrategiaProductos();
+        tablaMuestra.setRowCount(0);
+        Object[] row = new Object[10];
+        for (int i = 0; i < aux.size(); i++) {
+            row[0] = aux.get(i).getId();
+            row[1] = aux.get(i).getCategoria();
+            row[2] = aux.get(i).getNombre();
+            row[3] = aux.get(i).getMarca();
+            row[4] = aux.get(i).getPrecio();
+            row[5] = aux.get(i).getUnidades();
+            row[6] = aux.get(i).getProcedencia();
+            row[7] = aux.get(i).getFechaLlegada();
+            row[8] = aux.get(i).getFechaCaducidad();
+            row[9] = aux.get(i).getLocalizacion();
+
+            tablaMuestra.addRow(row);
+        }
+
+    }//GEN-LAST:event_jButtonOrdenarUnidadesProductoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -604,6 +652,7 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
     private javax.swing.JButton jButtonModificacionDatosProducto;
     private javax.swing.JButton jButtonOrdenarFechaCaducidad;
     private javax.swing.JButton jButtonOrdenarNombreProducto;
+    private javax.swing.JButton jButtonOrdenarUnidadesProducto;
     private javax.swing.JButton jButtonVolverAtrasBuscarProductoAdmin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -5,7 +5,12 @@
  */
 package src;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,5 +42,30 @@ public class Validaciones {
 
         return (m.matches());
 
+    }
+
+    public static boolean validarFecha(String fechaIntroducida) {
+        
+        boolean correcto;
+        if (fechaIntroducida.matches("^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$")) {
+            correcto = true;
+        } else {
+            correcto = false;
+        }
+        return correcto;
+
+    }
+   public static boolean validarSoloNumerosPrecios(String numeroIntroducido) {
+        Pattern p = Pattern.compile("[0-9]+\\.[0-9]+");
+         Matcher m = p.matcher(numeroIntroducido);
+
+        return (m.matches());
+    }
+
+    public static boolean validarSoloNumerosUnidades(String numeroIntroducido) {
+        Pattern p = Pattern.compile("[0-9]+");
+         Matcher m = p.matcher(numeroIntroducido);
+
+        return (m.matches());
     }
 }

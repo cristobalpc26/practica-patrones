@@ -7,7 +7,7 @@ package src.interfaces_graficas;
 
 import javax.swing.JOptionPane;
 import src.Validaciones;
-import src.fachada.FachadaSRP;
+import src.fachada.FachadaAdminSRP;
 import src.fachada.GestionEmpleados;
 import src.patron_proxy.ServidorBD;
 import src.users.Empleado;
@@ -22,7 +22,7 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
      * Creates new form ModificacionDatosEmpleado
      */
     //Aplicacion del patrón facade para modificar el empleado
-    private FachadaSRP fachada = new FachadaSRP();
+    private FachadaAdminSRP fachada = new FachadaAdminSRP();
     private BuscarEmpleado be;
 
     public ModificacionDatosEmpleado(BuscarEmpleado BE) {
@@ -169,12 +169,13 @@ public class ModificacionDatosEmpleado extends javax.swing.JFrame {
         });
 
         jComboBoxCategoria.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Empleado" }));
+        jComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Empleado" }));
         jComboBoxCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxCategoriaActionPerformed(evt);
             }
         });
+        jComboBoxCategoria.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package src.patron_strategy_empleados;
+package src.patron_strategy_empleados_productos;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,21 +14,23 @@ import src.users.Empleado;
  *
  * @author cris
  */
-public class EstrategiaOrdenarPorIdentificador implements EstrategiaEmpleados {
+public class EstrategiaOrdenarPorNombreProductos implements EstrategiaProductos {
 
-    @Override
-    public void ordenaEmpleados(ArrayList<Empleado> empleados) {
+    public void ordenaProductos(ArrayList<Producto> productos) {
         //Comparador para ordenar los alumnos por su nombre
-        Comparator dni = (Comparator) (Object o1, Object o2) -> {
-            Empleado e1 = (Empleado) o1;
-            Empleado e2 = (Empleado) o2;
+        Comparator nombre = (Comparator) (Object o1, Object o2) -> {
+            Producto p1 = (Producto) o1;
+            Producto p2 = (Producto) o2;
 
-            return e1.getDni().compareTo(e2.getDni());
+            return p1.getNombre().compareTo(p2.getNombre());
         };
 
         //Ordenamos los objetos del array por el atributo nombre
-        Collections.sort(empleados, dni);
+        Collections.sort(productos, nombre);
     }
 
-  }
+  
 
+   
+
+}

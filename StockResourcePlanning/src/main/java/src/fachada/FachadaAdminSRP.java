@@ -6,13 +6,12 @@ import src.users.Empleado;
 /**
  *
  */
-public class FachadaSRP {
+public class FachadaAdminSRP {
 
     GestionEmpleados ge = new GestionEmpleados();
 
     GestionAdminProductos gp = new GestionAdminProductos();
 
-    GestionContabilidadProductos gcp = new GestionContabilidadProductos();
 
     //Acceso al subsistema de las acciones que realiza el administrador con os empleados
     public void modificarEmpleado(Empleado e) {
@@ -39,10 +38,8 @@ public class FachadaSRP {
     public void modificarProducto(Producto p) {
         gp.modificarProducto(p);
     }
-    //Acceso al subsistema de las acciones que realiza el empleado (modificar unidades producto)
-
-    public void modificarUnidadesProducto(int unidades, Producto p) {
-        gcp.modificarUnidadesProducto(unidades, p);
+    public void verHistorialdeActividad() {
+        ge.consultarHistorial();
     }
 
 }

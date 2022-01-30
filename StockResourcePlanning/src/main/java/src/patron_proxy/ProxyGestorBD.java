@@ -5,16 +5,17 @@
 package src.patron_proxy;
 
 import java.util.ArrayList;
-import java.util.Date;
 import src.patron_factory_method_productos.Producto;
-import src.patron_iterator.IteradorEmpleados;
 import src.users.Empleado;
+import src.users.Historial;
 
 /**
  *
  * @author cris
  */
 public class ProxyGestorBD implements ServicioBD{
+    // Uso del patrrón Singleton en el proxy.
+    
     private static ProxyGestorBD instancia = new ProxyGestorBD();
     private ServicioBD serv;
     
@@ -109,6 +110,17 @@ public class ProxyGestorBD implements ServicioBD{
     @Override
     public ArrayList<String> getIDSproductos() {
         return this.serv.getIDSproductos();
+    }
+
+    @Override
+    public ArrayList<Historial>devolverHistorial() {
+        return this.serv.devolverHistorial();
+    }
+
+    @Override
+    public ArrayList<Producto> consultagetProductoId(String id) {
+       
+        return this.serv.consultagetProductoId(id);
     }
    
 }

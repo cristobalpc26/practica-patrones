@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package src.patron_strategy_empleados;
+package src.patron_strategy_empleados_productos;
 
 import java.util.ArrayList;
 import src.patron_factory_method_productos.Producto;
@@ -12,13 +12,13 @@ import src.users.Empleado;
  *
  * @author cris
  */
-public class ContextoProductos {
-    private EstrategiaProductos estrategia;
-    private ArrayList<Producto> productos; // Lista de empleados.
+public class ContextoEmpleados {
+    private EstrategiaEmpleados estrategia;
+    private ArrayList<Empleado> empleados; // Lista de empleados.
 
-    public ContextoProductos(EstrategiaProductos e, ArrayList<Producto> productos) {
+    public ContextoEmpleados(EstrategiaEmpleados e, ArrayList<Empleado> empleados) {
         this.estrategia = e;
-        this.productos = productos;
+        this.empleados = empleados;
     }
 
    
@@ -29,17 +29,17 @@ public class ContextoProductos {
      *
      * @param e Estrategia a usar.
      */
-    public void setEstrategia(EstrategiaProductos e) {
+    public void setEstrategia(EstrategiaEmpleados e) {
         this.estrategia = e;
     }
 
     /**
      * Ejecuta la estrategia.
      */
-    public void ejecutaEstrategiaProductos() {
-        estrategia.ordenaProductos(productos);
-        for (Producto producto : productos) {
-            System.out.println(producto.toString());
+    public void ejecutaEstrategiaEmpleados() {
+        estrategia.ordenaEmpleados(empleados);
+        for (Empleado empleado : empleados) {
+            System.out.println(empleado.toString());
         }
     }
       

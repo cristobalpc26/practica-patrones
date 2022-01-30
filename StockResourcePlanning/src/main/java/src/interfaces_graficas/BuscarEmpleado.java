@@ -11,16 +11,16 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import src.fachada.FachadaSRP;
+import src.fachada.FachadaAdminSRP;
 import src.fachada.GestionEmpleados;
 import src.patron_proxy.ProxyGestorBD;
 import src.patron_proxy.ServidorBD;
-import src.patron_strategy_empleados.ContextoEmpleados;
-import src.patron_strategy_empleados.EstrategiaOrdenarPorIdentificador;
-import src.patron_strategy_empleados.EstrategiaOrdenarPorNombreEmpleados;
+import src.patron_strategy_empleados_productos.ContextoEmpleados;
+import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorIdentificador;
+import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorNombreEmpleados;
 import src.users.Administrador;
 import src.users.Empleado;
-import src.patron_strategy_empleados.EstrategiaEmpleados;
+import src.patron_strategy_empleados_productos.EstrategiaEmpleados;
 
 /**
  *
@@ -33,7 +33,9 @@ public class BuscarEmpleado extends javax.swing.JFrame {
      */
     private ProxyGestorBD sbd = ProxyGestorBD.getInstancia();
 
-    private FachadaSRP fachada = new FachadaSRP();
+   // private Administrador admin = Administrador.getInstancia();
+    
+    private FachadaAdminSRP fachada = new FachadaAdminSRP();
 
     // private Administrador admin = Administrador.getInstancia();
     private HomeAdmin ha;
@@ -127,7 +129,7 @@ public class BuscarEmpleado extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false
@@ -440,6 +442,7 @@ public class BuscarEmpleado extends javax.swing.JFrame {
         EstrategiaEmpleados est = new EstrategiaOrdenarPorNombreEmpleados();
         ContextoEmpleados contexto = new ContextoEmpleados(est, aux);
         contexto.ejecutaEstrategiaEmpleados();
+        
             Object[] row = new Object[8];
         for (int i = 0; i < aux.size(); i++) {
             row[0] = aux.get(i).getDni();

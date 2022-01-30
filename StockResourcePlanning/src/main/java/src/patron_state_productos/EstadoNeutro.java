@@ -19,12 +19,16 @@ public class EstadoNeutro implements EstadoProducto {
         EstadoProducto vacio = new EstadoVacio();
 
         if (p.getUnidades() == 0) {
-           // System.out.println("¡Estoy vacio!");
+           System.out.println("¡Estoy vacio!");
             p.setEstadoActual(vacio);
         } else if (p.getUnidades() == p.getUnidadesMaximas()) {
-          //  System.out.println("¡Estoy lleno!");
+            System.out.println("¡Estoy lleno!");
             p.setEstadoActual(lleno);
+        }else{
+            System.out.println("Estado neutro");
         }
+        
+      
 
     }
 }

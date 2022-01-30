@@ -53,13 +53,13 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="jLabel2" min="-2" pref="124" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="jTextFieldIdProductoAModificar" min="-2" pref="155" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="jLabel6" alignment="0" min="-2" pref="64" max="-2" attributes="0"/>
                                       <Component id="jLabel1" alignment="0" min="-2" pref="64" max="-2" attributes="0"/>
@@ -75,23 +75,23 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                                           <Component id="jTextFieldNombreProductoModificar" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
-                                          <Component id="jTextFieldPrecioAModificar" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
-                                          <Component id="jTextFieldUnidadesAModificarAdmin" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
-                                          <Component id="jTextFieldCategoriaProductoAModificar" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
-                                          <Component id="jTextFieldMarcaAModificar" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
+                                          <Component id="jTextFieldPrecioProductoAModificar" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
+                                          <Component id="jTextFieldUnidadesAModificarProductoAdmin" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
+                                          <Component id="jTextFieldMarcaProductoAModificar" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                          <Component id="jTextFieldFechaLlegadaAModificar" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
-                                          <Component id="jTextFieldFechaCaducidadAModificar" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
-                                          <Component id="jTextFieldProcedenciaAModificar" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
+                                          <Component id="jTextFieldFechaLlegadaProductoAModificar" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
+                                          <Component id="jTextFieldFechaCaducidadProductoAModificar" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
+                                          <Component id="jTextFieldProcedenciaProductoAModificar" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="jTextFieldFechaLocalizacionAModificar" min="-2" pref="155" max="-2" attributes="0"/>
+                                      <Component id="jTextFieldFechaLocalizacionProductoAModificar" min="-2" pref="155" max="-2" attributes="0"/>
+                                      <Component id="jComboBoxCategoriaAmodificarProducto" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -119,9 +119,12 @@
                       <Component id="jLabel2" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel3" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="jTextFieldCategoriaProductoAModificar" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jLabel3" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                          <Component id="jComboBoxCategoriaAmodificarProducto" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -130,38 +133,38 @@
                   </Group>
                   <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextFieldMarcaAModificar" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="jTextFieldMarcaProductoAModificar" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="jLabel5" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextFieldPrecioAModificar" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="jTextFieldPrecioProductoAModificar" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextFieldUnidadesAModificarAdmin" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="jTextFieldUnidadesAModificarProductoAdmin" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="jLabel7" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextFieldProcedenciaAModificar" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="jTextFieldProcedenciaProductoAModificar" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="jLabel9" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextFieldFechaLlegadaAModificar" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="jTextFieldFechaLlegadaProductoAModificar" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="jLabel8" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextFieldFechaCaducidadAModificar" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="jTextFieldFechaCaducidadProductoAModificar" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="jLabel10" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel11" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="jTextFieldFechaLocalizacionAModificar" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="jTextFieldFechaLocalizacionProductoAModificar" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButtonActualizarDatosEmpleado" min="-2" pref="36" max="-2" attributes="0"/>
@@ -173,7 +176,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="jTextFieldMarcaAModificar">
+        <Component class="javax.swing.JTextField" name="jTextFieldMarcaProductoAModificar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Verdana" size="14" style="0"/>
@@ -204,7 +207,7 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldUnidadesAModificarAdmin">
+        <Component class="javax.swing.JTextField" name="jTextFieldUnidadesAModificarProductoAdmin">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Verdana" size="14" style="0"/>
@@ -214,7 +217,7 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldPrecioAModificar">
+        <Component class="javax.swing.JTextField" name="jTextFieldPrecioProductoAModificar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Verdana" size="14" style="0"/>
@@ -282,8 +285,11 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Actualizar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonActualizarDatosEmpleadoActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldFechaCaducidadAModificar">
+        <Component class="javax.swing.JTextField" name="jTextFieldFechaCaducidadProductoAModificar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Verdana" size="14" style="0"/>
@@ -293,7 +299,7 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldFechaLlegadaAModificar">
+        <Component class="javax.swing.JTextField" name="jTextFieldFechaLlegadaProductoAModificar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Verdana" size="14" style="0"/>
@@ -327,7 +333,7 @@
             <Property name="text" type="java.lang.String" value="Fecha de caducidad"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldProcedenciaAModificar">
+        <Component class="javax.swing.JTextField" name="jTextFieldProcedenciaProductoAModificar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Verdana" size="14" style="0"/>
@@ -345,17 +351,7 @@
             <Property name="text" type="java.lang.String" value="Localizacion"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldCategoriaProductoAModificar">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Verdana" size="14" style="0"/>
-            </Property>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-          </AuxValues>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldFechaLocalizacionAModificar">
+        <Component class="javax.swing.JTextField" name="jTextFieldFechaLocalizacionProductoAModificar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Verdana" size="14" style="0"/>
@@ -389,6 +385,37 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonVolverAtrasModificarProductoAdminActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBoxCategoriaAmodificarProducto">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Verdana" size="14" style="0"/>
+            </Property>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="16">
+                <StringItem index="0" value="Verduras"/>
+                <StringItem index="1" value="Frutas"/>
+                <StringItem index="2" value="Pescado"/>
+                <StringItem index="3" value="Carne"/>
+                <StringItem index="4" value="Pollo"/>
+                <StringItem index="5" value="Embutidos"/>
+                <StringItem index="6" value="Lacteos"/>
+                <StringItem index="7" value="Dulces"/>
+                <StringItem index="8" value="Bebidas"/>
+                <StringItem index="9" value="Especias"/>
+                <StringItem index="10" value="Salsas "/>
+                <StringItem index="11" value="Pasta "/>
+                <StringItem index="12" value="Snacks "/>
+                <StringItem index="13" value="Postres"/>
+                <StringItem index="14" value="Otros "/>
+                <StringItem index="15" value=" "/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

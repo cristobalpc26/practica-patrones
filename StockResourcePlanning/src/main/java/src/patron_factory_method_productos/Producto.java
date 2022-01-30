@@ -23,14 +23,17 @@ public class Producto {
     public double precio;
     public int unidades;
     public String procedencia;
-    public Date fechaLlegada;
-    public Date fechaCaducidad;
+    public String fechaLlegada;
+    public String fechaCaducidad;
     public String localizacion;
     public EstadoProducto estadoActual;
 
     private final int unidadesMaximas=100;
-
+    private Categoria c;
+    
+    
     public Producto(int unidades) {
+       
         this.unidades = unidades;
     }
 
@@ -67,11 +70,14 @@ public class Producto {
         resultado();
     }
 
+    
+    
     public void resultado() {
         estadoActual.ejecutarModificacionUnidades(this); //comprobamos el estado final
     }
 
-    public Producto(String id, String categoria, String nombre, String marca, double precio, int unidades, String procedencia, Date fechaLlegada, Date fechaCaducidad, String localizacion) {
+    
+    public Producto(String id, String categoria, String nombre, String marca, double precio, int unidades, String procedencia, String fechaLlegada, String fechaCaducidad, String localizacion) {
         this.id = id;
         this.categoria = categoria;
         this.nombre = nombre;
@@ -140,19 +146,19 @@ public class Producto {
         this.procedencia = procedencia;
     }
 
-    public Date getFechaLlegada() {
+    public String getFechaLlegada() {
         return fechaLlegada;
     }
 
-    public void setFechaLlegada(Date fechaLlegada) {
+    public void setFechaLlegada(String fechaLlegada) {
         this.fechaLlegada = fechaLlegada;
     }
 
-    public Date getFechaCaducidad() {
+    public String getFechaCaducidad() {
         return fechaCaducidad;
     }
 
-    public void setFechaCaducidad(Date fechaCaducidad) {
+    public void setFechaCaducidad(String fechaCaducidad) {
         this.fechaCaducidad = fechaCaducidad;
     }
 
@@ -172,14 +178,14 @@ public class Producto {
     public EstadoProducto getEstadoActual() {
         return estadoActual;
     }
-/*
+
     public void setEstadoActual(EstadoProducto estadoActual) {
         this.estadoActual = estadoActual;
     }
       public String getEstadoActualString() {
         return getEstadoActual().toString();
     }
-    */
+    
     
     /*   protected EstadoProducto estado;
     

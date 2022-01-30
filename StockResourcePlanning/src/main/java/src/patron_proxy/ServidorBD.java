@@ -8,15 +8,19 @@ import src.users.Empleado;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import src.patron_factory_method_productos.Categoria;
 import src.patron_factory_method_productos.Producto;
 import src.patron_iterator.AgregadoEmpleados;
 import src.patron_iterator.IteradorEmpleados;
 import src.patron_state_productos.EstadoProducto;
+import src.users.Historial;
 
 /**
  *
@@ -222,7 +226,7 @@ public class ServidorBD implements ServicioBD {
         try {
             set = con.createStatement();
             int res = set.executeUpdate("INSERT INTO PRODUCTO VALUES ('" + p.getId() + "','" + p.getCategoria() + "','"
-                    + p.getNombre() + "','" + p.getMarca() + "','" + p.getPrecio() + "','" + p.getUnidades() + "','" + p.getProcedencia() + "','"
+                    + p.getNombre() + "','" + p.getMarca() + "'," + p.getPrecio() + "," + p.getUnidades() + ",'" + p.getProcedencia() + "','"
                     + p.getFechaLlegada() + "','" + p.getFechaCaducidad() + "','" + p.getLocalizacion() + "')");
             if (res == -1) {
                 System.out.println("No se ha introducido el nuevo producto");
@@ -259,8 +263,8 @@ public class ServidorBD implements ServicioBD {
         try {
             set = con.createStatement();
             int res = set.executeUpdate("UPDATE PRODUCTO SET CATEGORIA='" + p.getCategoria()
-                    + "',NOMBRE='" + p.getNombre() + "',MARCA='" + p.getMarca() + "',PRECIO='" + p.getPrecio() + "',UNIDADES='" + p.getUnidades()
-                    + "',PROCEDENCIA='" + p.getProcedencia() + "',FECHA_LLEGADA='" + p.getFechaLlegada() + "',FECHA_CADUCIDAD='" + p.getFechaCaducidad()
+                    + "',NOMBRE='" + p.getNombre() + "',MARCA='" + p.getMarca() + "',PRECIO=" + p.getPrecio() + ",UNIDADES=" + p.getUnidades()
+                    + ",PROCEDENCIA='" + p.getProcedencia() + "',FECHA_LLEGADA='" + p.getFechaLlegada() + "',FECHA_CADUCIDAD='" + p.getFechaCaducidad()
                     + "'where ID_PRODUCTO='" + p.getId() + "'");
             if (res == -1) {
                 System.out.println("No se ha podido modificar el PRODUCTO");
@@ -296,11 +300,13 @@ public class ServidorBD implements ServicioBD {
     }
 
     //Posible modificacion posterior
+    @Override
     public void modificarUnidadesProducto(int unidades, Producto p) {
 
+        //modifica unidades totales del producto
         try {
             set = con.createStatement();
-            int res = set.executeUpdate("UPDATE PRODUCTO SET UNIDADES='" + unidades + "'where ID_PRODUCTO='" + p.getId() + "'");
+            int res = set.executeUpdate("UPDATE PRODUCTO SET UNIDADES=" + unidades + "where ID_PRODUCTO='" + p.getId() + "'");
             if (res == -1) {
                 System.out.println("No se ha podido modificar unidades del PRODUCTO");
             }
@@ -323,8 +329,8 @@ public class ServidorBD implements ServicioBD {
             while (rs.next()) {
                 aux = new Producto(rs.getString("ID_PRODUCTO"), rs.getString("CATEGORIA"),
                         rs.getString("NOMBRE"), rs.getString("MARCA"), rs.getDouble("PRECIO"),
-                        rs.getInt("UNIDADES"), rs.getString("PROCEDENCIA"), rs.getDate("FECHA_LLEGADA"),
-                        rs.getDate("FECHA_CADUCIDAD"),
+                        rs.getInt("UNIDADES"), rs.getString("PROCEDENCIA"), rs.getString("FECHA_LLEGADA"),
+                        rs.getString("FECHA_CADUCIDAD"),
                         rs.getString("LOCALIZACION"));
                 productos.add(aux);
             }
@@ -350,8 +356,8 @@ public class ServidorBD implements ServicioBD {
             while (rs.next()) {
                 aux = new Producto(rs.getString("ID_PRODUCTO"), rs.getString("CATEGORIA"),
                         rs.getString("NOMBRE"), rs.getString("MARCA"), rs.getDouble("PRECIO"),
-                        rs.getInt("UNIDADES"), rs.getString("PROCEDENCIA"), rs.getDate("FECHA_LLEGADA"),
-                        rs.getDate("FECHA_CADUCIDAD"),
+                        rs.getInt("UNIDADES"), rs.getString("PROCEDENCIA"), rs.getString("FECHA_LLEGADA"),
+                        rs.getString("FECHA_CADUCIDAD"),
                         rs.getString("LOCALIZACION"));
                 productos.add(aux);
             }
@@ -377,8 +383,8 @@ public class ServidorBD implements ServicioBD {
             while (rs.next()) {
                 aux = new Producto(rs.getString("ID_PRODUCTO"), rs.getString("CATEGORIA"),
                         rs.getString("NOMBRE"), rs.getString("MARCA"), rs.getDouble("PRECIO"),
-                        rs.getInt("UNIDADES"), rs.getString("PROCEDENCIA"), rs.getDate("FECHA_LLEGADA"),
-                        rs.getDate("FECHA_CADUCIDAD"),
+                        rs.getInt("UNIDADES"), rs.getString("PROCEDENCIA"), rs.getString("FECHA_LLEGADA"),
+                        rs.getString("FECHA_CADUCIDAD"),
                         rs.getString("LOCALIZACION"));
                 productos.add(aux);
             }
@@ -400,11 +406,11 @@ public class ServidorBD implements ServicioBD {
             set = con.createStatement();
             rs = set.executeQuery("SELECT * FROM PRODUCTO");
 
-           while (rs.next()) {
+            while (rs.next()) {
                 aux = new Producto(rs.getString("ID_PRODUCTO"), rs.getString("CATEGORIA"),
                         rs.getString("NOMBRE"), rs.getString("MARCA"), rs.getDouble("PRECIO"),
-                        rs.getInt("UNIDADES"), rs.getString("PROCEDENCIA"), rs.getDate("FECHA_LLEGADA"),
-                        rs.getDate("FECHA_CADUCIDAD"),
+                        rs.getInt("UNIDADES"), rs.getString("PROCEDENCIA"), rs.getString("FECHA_LLEGADA"),
+                        rs.getString("FECHA_CADUCIDAD"),
                         rs.getString("LOCALIZACION"));
                 productos.add(aux);
             }
@@ -418,5 +424,54 @@ public class ServidorBD implements ServicioBD {
         return productos;
 
     }
+
+    @Override
+    public ArrayList<Historial> devolverHistorial() {
+        ArrayList<Historial> historiales = new ArrayList<>();
+        Historial aux;
+        try {
+
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT * FROM EMPLEADO_PRODUCTOS");
+            while (rs.next()) {
+                aux = new Historial(rs.getString("ID_PRODUCTO"), rs.getString("DNI_EMPLEADO"), rs.getInt("UNIDADES"), rs.getTimestamp("HORA_MODIFICACION"));
+                historiales.add(aux);
+                rs.close();
+                set.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("El método devolverHistorial no se ejecuta correctamente");
+
+        }
+        return historiales;
+    }
+
+    @Override
+    public ArrayList<Producto> consultagetProductoId(String id) {
+           ArrayList<Producto> productos = new ArrayList<>();
+        Producto aux;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT * FROM PRODUCTO where ID_PRODUCTO='" + id + "'");
+
+            while (rs.next()) {
+                aux = new Producto(rs.getString("ID_PRODUCTO"), rs.getString("CATEGORIA"),
+                        rs.getString("NOMBRE"), rs.getString("MARCA"), rs.getDouble("PRECIO"),
+                        rs.getInt("UNIDADES"), rs.getString("PROCEDENCIA"), rs.getString("FECHA_LLEGADA"),
+                        rs.getString("FECHA_CADUCIDAD"),
+                        rs.getString("LOCALIZACION"));
+                productos.add(aux);
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("El método consultagetProductoNombre no se ejecuta correctamente");
+
+        }
+        return productos;
+
+    }  
 
 }

@@ -5,7 +5,20 @@
  */
 package src.interfaces_graficas;
 
-import src.fachada.FachadaSRP;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import src.Validaciones;
+import src.fachada.FachadaAdminSRP;
+import src.fachada.FachadaEmpleadoSRP;
+import src.patron_factory_method_productos.Categoria;
+import src.patron_factory_method_productos.Producto;
+import src.patron_proxy.ProxyGestorBD;
+import src.users.Empleado;
 
 /**
  *
@@ -16,14 +29,27 @@ public class ModificacionDatosProductoEmpleado extends javax.swing.JFrame {
     /**
      * Creates new form ModificacionDatosEmpleado
      */
-    private FachadaSRP fachada = new FachadaSRP();
+    private FachadaEmpleadoSRP fachada = new FachadaEmpleadoSRP();
     private BuscarProductoEmpleado bpe;
+    private ProxyGestorBD sbd = ProxyGestorBD.getInstancia();
 
     public ModificacionDatosProductoEmpleado(BuscarProductoEmpleado BPE) {
         this.bpe = BPE;
         initComponents();
         setTitle("Modificación de Datos del Empleado");
         setLocationRelativeTo(null);
+    }
+
+    public String getIdProductoAcual() {
+        return jTextFieldIdProductoModificable.getText();
+    }
+
+    public String getStockAcual() {
+        return jTextFieldIdProductoModificable.getText();
+    }
+
+    public String getUnidadesAModificarEmpleado() {
+        return jTextFieldUnidadesRepuestas.getText();
     }
 
     /**
@@ -35,69 +61,136 @@ public class ModificacionDatosProductoEmpleado extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButtonActualizarDatosEmpleado1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jButtonVolverAtrasModificaDatosrProductoEmpleado = new javax.swing.JButton();
         jLabel24 = new javax.swing.JLabel();
-        jTextFieldUnidadesAModificarEmpleado = new javax.swing.JTextField();
+        jTextFieldIdProductoModificable = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jButtonActualizarDatosEmpleado = new javax.swing.JButton();
+        jButtonAñadirUnidades = new javax.swing.JButton();
+        jButtonQuitarUnidades = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jTextFieldUnidadesRepuestas = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jTextFieldUnidadesEnStockActuales = new javax.swing.JTextField();
+
+        jButtonActualizarDatosEmpleado1.setBackground(new java.awt.Color(255, 153, 0));
+        jButtonActualizarDatosEmpleado1.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jButtonActualizarDatosEmpleado1.setText("Actualizar");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButtonVolverAtrasModificaDatosrProductoEmpleado.setBackground(new java.awt.Color(255, 102, 102));
         jButtonVolverAtrasModificaDatosrProductoEmpleado.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jButtonVolverAtrasModificaDatosrProductoEmpleado.setText("Atrás");
+        jButtonVolverAtrasModificaDatosrProductoEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVolverAtrasModificaDatosrProductoEmpleadoActionPerformed(evt);
+            }
+        });
 
         jLabel24.setFont(new java.awt.Font("Verdana", 1, 22)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(0, 51, 255));
         jLabel24.setText("Modificación de unidades");
 
-        jTextFieldUnidadesAModificarEmpleado.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTextFieldIdProductoModificable.setFont(new java.awt.Font("Verdana", 3, 14)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setText("Unidades");
+        jLabel7.setText("Id del producto");
 
-        jButtonActualizarDatosEmpleado.setBackground(new java.awt.Color(255, 153, 0));
-        jButtonActualizarDatosEmpleado.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        jButtonActualizarDatosEmpleado.setText("Actualizar");
+        jButtonAñadirUnidades.setBackground(new java.awt.Color(255, 153, 0));
+        jButtonAñadirUnidades.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jButtonAñadirUnidades.setText("Añadir");
+        jButtonAñadirUnidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAñadirUnidadesActionPerformed(evt);
+            }
+        });
+
+        jButtonQuitarUnidades.setBackground(new java.awt.Color(255, 102, 102));
+        jButtonQuitarUnidades.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jButtonQuitarUnidades.setText("Quitar");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setText("Unidades a modificar");
+
+        jTextFieldUnidadesRepuestas.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setText("Unidades en stock actuales");
+
+        jTextFieldUnidadesEnStockActuales.setFont(new java.awt.Font("Verdana", 3, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jButtonVolverAtrasModificaDatosrProductoEmpleado)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(68, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonVolverAtrasModificaDatosrProductoEmpleado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonAñadirUnidades)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextFieldUnidadesAModificarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(93, 93, 93))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(158, 158, 158)
-                .addComponent(jButtonActualizarDatosEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jButtonQuitarUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldUnidadesRepuestas)
+                                    .addComponent(jTextFieldUnidadesEnStockActuales)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(81, 81, 81)
+                                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 16, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldIdProductoModificable)))))
+                .addGap(15, 15, 15))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldUnidadesAModificarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButtonActualizarDatosEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
-                .addComponent(jButtonVolverAtrasModificaDatosrProductoEmpleado))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldIdProductoModificable, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addComponent(jTextFieldUnidadesEnStockActuales, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextFieldUnidadesRepuestas, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonVolverAtrasModificaDatosrProductoEmpleado)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonAñadirUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonQuitarUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21))))
         );
+
+        jTextFieldIdProductoModificable.setEnabled(false);
+        jTextFieldIdProductoModificable.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,13 +198,12 @@ public class ModificacionDatosProductoEmpleado extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -119,17 +211,76 @@ public class ModificacionDatosProductoEmpleado extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonVolverAtrasModificaDatosrProductoEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverAtrasModificaDatosrProductoEmpleadoActionPerformed
+        this.setVisible(false);
+        this.bpe.setVisible(true);
+    }//GEN-LAST:event_jButtonVolverAtrasModificaDatosrProductoEmpleadoActionPerformed
+
+    private void jButtonAñadirUnidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAñadirUnidadesActionPerformed
+
+         String id_modificar="",categoria="",nombre="",marca="",procedencia="",fechaLleg="",fecha_Cad="",localizacion="";
+         int unidades=0;
+         double precio=0;
+      
+        int unidadesstockActualesParseadas = Integer.parseInt(getStockAcual());
+        int unidadesModificadasporEmpleadoParseadas = Integer.parseInt(getUnidadesAModificarEmpleado());
+        ArrayList<Producto> list = sbd.consultagetProductoId(getIdProductoAcual());
+        //  int unidadesFinales=unidadesstockActualesParseadas+unidadesModificadasporEmpleadoParseadas;
+
+        if (getUnidadesAModificarEmpleado().isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Campo vacio, rellenelo", "Error!", JOptionPane.ERROR_MESSAGE);
+
+        } else if (Validaciones.validarSoloNumerosUnidades(getUnidadesAModificarEmpleado()) == false) {
+            JOptionPane.showMessageDialog(null, "Solo escriba numeros enteros", "Unidades!", JOptionPane.ERROR_MESSAGE);
+
+        } else if (unidadesModificadasporEmpleadoParseadas < 0 || unidadesModificadasporEmpleadoParseadas > 100) {
+            JOptionPane.showMessageDialog(null, "El número de unidades tiene que estar entre 0 y 100", "Unidades!", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+
+            for (int i = 0; i < list.size(); i++) {
+                id_modificar = list.get(i).getId();
+                 categoria = list.get(i).getCategoria();
+                 nombre = list.get(i).getNombre();
+                marca = list.get(i).getMarca();
+                precio = list.get(i).getPrecio();
+                unidades = list.get(i).getUnidades();
+                 procedencia = list.get(i).getProcedencia();
+                 fechaLleg = list.get(i).getFechaLlegada();
+                 fecha_Cad = list.get(i).getFechaCaducidad();
+
+
+            }
+            Producto p = new Producto(id_modificar,categoria,nombre,marca,precio,unidades,procedencia,fechaLleg,fecha_Cad,localizacion);
+
+            p.añadirUnidades(unidadesModificadasporEmpleadoParseadas);
+
+            fachada.modificarProducto(p);
+            JOptionPane.showMessageDialog(null, "Producto actualizado", "Correcto!", JOptionPane.INFORMATION_MESSAGE);
+            this.setVisible(false);
+            bpe.setVisible(true);
+        }
+
+
+    }//GEN-LAST:event_jButtonAñadirUnidadesActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonActualizarDatosEmpleado;
+    private javax.swing.JButton jButtonActualizarDatosEmpleado1;
+    private javax.swing.JButton jButtonAñadirUnidades;
+    private javax.swing.JButton jButtonQuitarUnidades;
     private javax.swing.JButton jButtonVolverAtrasModificaDatosrProductoEmpleado;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    public javax.swing.JTextField jTextFieldUnidadesAModificarEmpleado;
+    public javax.swing.JTextField jTextFieldIdProductoModificable;
+    public javax.swing.JTextField jTextFieldUnidadesEnStockActuales;
+    public javax.swing.JTextField jTextFieldUnidadesRepuestas;
     // End of variables declaration//GEN-END:variables
 }

@@ -18,7 +18,7 @@ import src.patron_proxy.ProxyGestorBD;
 public class GestionContabilidadProductos {
          private ProxyGestorBD pbd = ProxyGestorBD.getInstancia();
 
-    public void modificarUnidadesProducto(int unidades, Producto p){
-       pbd.modificarUnidadesProducto(unidades, p);
+    public void modificarProducto(Producto p){
+       pbd.modificarProducto(p);
     }
 }

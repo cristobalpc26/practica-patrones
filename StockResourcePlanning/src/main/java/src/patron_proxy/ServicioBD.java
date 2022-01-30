@@ -5,9 +5,9 @@
 package src.patron_proxy;
 
 import java.util.ArrayList;
-import java.util.Date;
 import src.patron_factory_method_productos.Producto;
 import src.users.Empleado;
+import src.users.Historial;
 
 /**
  *
@@ -36,6 +36,9 @@ public interface ServicioBD {
     public ArrayList<Empleado> getEmpleados();
 
     public ArrayList<String> getDNIEmpleados();
+    
+    
+
 
     // Productos
     public void insertarProducto(Producto p);
@@ -47,6 +50,9 @@ public interface ServicioBD {
     public void modificarUnidadesProducto(int unidades, Producto p);
 
     public ArrayList<Producto> consultagetProductoNombre(String nombre);
+    
+     public ArrayList<Producto> consultagetProductoId(String id);
+
 
     public ArrayList<Producto> consultagetProductosFechaCaducidad(String Fecha);
 
@@ -55,5 +61,9 @@ public interface ServicioBD {
     public ArrayList<Producto> getProductos();
 
     public ArrayList<String> getIDSproductos();
+    
+    //Historial de actividad
+    
+    public ArrayList<Historial>devolverHistorial();
 
 }

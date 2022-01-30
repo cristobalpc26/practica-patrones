@@ -17,10 +17,10 @@ public class NewMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Producto t = new Producto(56);
+      Producto t = new Producto(56);
         t.añadirUnidades(59);
         System.out.println(t.toString());
-        
+       
     }
 }
 

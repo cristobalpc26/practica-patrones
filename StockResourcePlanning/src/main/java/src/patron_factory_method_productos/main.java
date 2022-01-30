@@ -23,7 +23,9 @@ public class main {
         System.out.println("Soy una pipsa de la categoria " +h3.getNombre());
         Categoria h2 = hf.crearCategoria("Pescado");
         System.out.println("Soy una merluzaa de la categoria " +h2.getNombre());
-     
+        
+        Categoria h9 = hf.crearCategoria("Carne");
+        System.out.println(h9.getNombre());
     }
 
 }
