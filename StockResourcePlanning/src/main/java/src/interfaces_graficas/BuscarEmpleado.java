@@ -9,16 +9,12 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import src.fachada.FachadaAdminSRP;
-import src.fachada.GestionEmpleados;
 import src.patron_proxy.ProxyGestorBD;
-import src.patron_proxy.ServidorBD;
 import src.patron_strategy_empleados_productos.ContextoEmpleados;
 import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorIdentificador;
 import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorNombreEmpleados;
-import src.users.Administrador;
 import src.users.Empleado;
 import src.patron_strategy_empleados_productos.EstrategiaEmpleados;
 
@@ -31,13 +27,13 @@ public class BuscarEmpleado extends javax.swing.JFrame {
     /**
      * Creates new form BuscarEmpleado
      */
+    
+    //Proxy actua de singleton
     private ProxyGestorBD sbd = ProxyGestorBD.getInstancia();
 
-   // private Administrador admin = Administrador.getInstancia();
     
     private FachadaAdminSRP fachada = new FachadaAdminSRP();
 
-    // private Administrador admin = Administrador.getInstancia();
     private HomeAdmin ha;
 
     public BuscarEmpleado(HomeAdmin HA) {
@@ -48,6 +44,7 @@ public class BuscarEmpleado extends javax.swing.JFrame {
 
     }
 
+    //Obtenemos los valores de los jTextField
     public String getDNIBusqueda() {
 
         return jTextFieldDniIntroducido.getText();
@@ -293,16 +290,16 @@ public class BuscarEmpleado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonBusquedaDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaDNIActionPerformed
-        //jTableMuestraEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+        //Uso de proxy para obtener los empleados dado un dni
         ArrayList<Empleado> list = sbd.consultagetEmpleadosDNI(getDNIBusqueda());
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraEmpleados.getModel();
-        tablaMuestra.setRowCount(0); // para que no se repita los resultados al pulsar al buscar
+        tablaMuestra.setRowCount(0); // Se sobreescriben los resultados cada vez que se pulsa el boton
 
-        jTableMuestraEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTableMuestraEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); //hacemos que se seleccione una unica casilla
 
         Object[] row = new Object[8];
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) { //Recorremos el array de empleados y obtenemos sus atributos para meterlos en la tabla
             row[0] = list.get(i).getDni();
             row[1] = list.get(i).getNombre();
             row[2] = list.get(i).getApellidos();
@@ -319,7 +316,6 @@ public class BuscarEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBusquedaDNIActionPerformed
 
     private void jButtonModificacionDatosEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificacionDatosEmpleadoActionPerformed
-        //   jTableMuestraEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraEmpleados.getModel();
         int indiceFilaSeleccionada = jTableMuestraEmpleados.getSelectedRow();
@@ -338,7 +334,7 @@ public class BuscarEmpleado extends javax.swing.JFrame {
             String nuevoTelefonoModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 6).toString();
             String nuevaCategoriaModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 7).toString();
 
-            // Establcemos los valores de la fila seleccioanda en la nueva 
+            // Establecemos los valores de la fila seleccionada en cada uno de los inputs de la nueva pantalla de modificación
             if (indiceFilaSeleccionada != -1) {
                 mde.jTextFieldDniAModificar.setText(nuevoDniModificar);
                 mde.jTextFieldNombreAModificar.setText(nuevoNombreModificar);
@@ -360,9 +356,8 @@ public class BuscarEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonModificacionDatosEmpleadoActionPerformed
 
     private void jButtonBusquedaNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaNombreActionPerformed
-        // TODO add your handling code here:
-        // jTableMuestraEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+        //Uso de proxy para obtener los empleados dado un nombre
         ArrayList<Empleado> list = sbd.consultagetEmpleadosNombre(getNombreBusqueda());
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraEmpleados.getModel();
         tablaMuestra.setRowCount(0);
@@ -382,7 +377,8 @@ public class BuscarEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBusquedaNombreActionPerformed
 
     private void jButtonEliminarElementoSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarElementoSeleccionadoActionPerformed
-        //jTableMuestraEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+                //Uso de proxy para obtener los empleados dado un nombre
 
         ArrayList<Empleado> list = sbd.consultagetEmpleadosNombre(getNombreBusqueda());
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraEmpleados.getModel();
@@ -411,14 +407,17 @@ public class BuscarEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonVolverAtrasBuscarEmpleadoActionPerformed
 
     private void jButtonOrdenarDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdenarDniActionPerformed
+                //Uso de proxy para obtener todos los empleados 
+
         ArrayList<Empleado> aux = sbd.getEmpleados();
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraEmpleados.getModel();
         tablaMuestra.setRowCount(0);
 
+        //Aplicamos Strategy para ordenar los empleados por DNI con la estrategia concreta
         EstrategiaEmpleados est = new EstrategiaOrdenarPorIdentificador();
         ContextoEmpleados contexto = new ContextoEmpleados(est, aux);
         contexto.ejecutaEstrategiaEmpleados();
-            Object[] row = new Object[8];
+        Object[] row = new Object[8];
         for (int i = 0; i < aux.size(); i++) {
             row[0] = aux.get(i).getDni();
             row[1] = aux.get(i).getNombre();
@@ -431,7 +430,7 @@ public class BuscarEmpleado extends javax.swing.JFrame {
 
             tablaMuestra.addRow(row);
         }
-        
+
     }//GEN-LAST:event_jButtonOrdenarDniActionPerformed
 
     private void jButtonOrdenarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdenarNombreActionPerformed
@@ -439,11 +438,13 @@ public class BuscarEmpleado extends javax.swing.JFrame {
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraEmpleados.getModel();
         tablaMuestra.setRowCount(0);
 
+                //Aplicamos Strategy para ordenar los empleados por nombre con la estrategia concreta
+
         EstrategiaEmpleados est = new EstrategiaOrdenarPorNombreEmpleados();
         ContextoEmpleados contexto = new ContextoEmpleados(est, aux);
         contexto.ejecutaEstrategiaEmpleados();
-        
-            Object[] row = new Object[8];
+
+        Object[] row = new Object[8];
         for (int i = 0; i < aux.size(); i++) {
             row[0] = aux.get(i).getDni();
             row[1] = aux.get(i).getNombre();
@@ -456,7 +457,7 @@ public class BuscarEmpleado extends javax.swing.JFrame {
 
             tablaMuestra.addRow(row);
         }
-        
+
     }//GEN-LAST:event_jButtonOrdenarNombreActionPerformed
 
     /**

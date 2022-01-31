@@ -13,6 +13,9 @@ import src.patron_proxy.ProxyGestorBD;
  * @author Carlos
  */
 public class GestionAdminProductos {
+    
+    //Subsistema de la fachada que realiza las operaciones del administrador relacionadas ccon los productos por medio del proxy
+    
      private ProxyGestorBD pbd = ProxyGestorBD.getInstancia();
     
     public void insertarProducto(Producto p){

@@ -14,7 +14,7 @@ public interface Agregado {
        /**
      * Método de fabricación para crear un iterador.
      *
-     * @return Iterador concreto.
+     * @return 
      */
         Iterador crearIterador();
 

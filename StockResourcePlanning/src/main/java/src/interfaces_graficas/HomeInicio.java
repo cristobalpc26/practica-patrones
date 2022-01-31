@@ -181,6 +181,7 @@ public class HomeInicio extends javax.swing.JFrame {
         Iterador ie = new IteradorEmpleados(ae);
         boolean registrado = false;
 
+        //Mientras haya empleados va a hacer la validacion de la cuenta de usuario, si es correcto se mostrara una pantalla u otra
         while (ie.hayMas()) {
             Empleado e = (Empleado) ie.elementoActual();
 

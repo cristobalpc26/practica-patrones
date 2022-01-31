@@ -25,6 +25,7 @@ public class Home {
     
     public static void main(String[] args) throws IOException, InterruptedException {
         
+        //Ejecución del programa
         ejecucion.setVisible(true);
       
     }

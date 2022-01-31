@@ -18,7 +18,7 @@ public class EstrategiaOrdenarPorUnidadesProductos implements EstrategiaProducto
 
     @Override
     public void ordenaProductos(ArrayList<Producto> productos) {
-        //Comparador para ordenar los alumnos por su nombre
+        //Comparador para ordenar los alumnos por sus unidades en stock
         Comparator nombre = (Comparator) (Object o1, Object o2) -> {
             Producto p1 = (Producto) o1;
             Producto p2 = (Producto) o2;
@@ -30,7 +30,7 @@ public class EstrategiaOrdenarPorUnidadesProductos implements EstrategiaProducto
             return unidadesP1.compareTo(unidadesP2);
         };
 
-        //Ordenamos los objetos del array por el atributo nombre
+        //Ordenamos los objetos del array por el atributo unidades
         Collections.sort(productos, nombre);
     }
 

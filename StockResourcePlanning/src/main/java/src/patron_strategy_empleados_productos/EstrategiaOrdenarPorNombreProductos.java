@@ -16,8 +16,9 @@ import src.users.Empleado;
  */
 public class EstrategiaOrdenarPorNombreProductos implements EstrategiaProductos {
 
+    @Override
     public void ordenaProductos(ArrayList<Producto> productos) {
-        //Comparador para ordenar los alumnos por su nombre
+        //Comparador para ordenar los productos por su nombre
         Comparator nombre = (Comparator) (Object o1, Object o2) -> {
             Producto p1 = (Producto) o1;
             Producto p2 = (Producto) o2;

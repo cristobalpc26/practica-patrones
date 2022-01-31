@@ -14,7 +14,9 @@ import src.users.Historial;
  * @author Carlos
  */
 
-//Solo lo usa el empleado para modificar la cantidad de unidades disponibles de un producto
+//Subsistema que Solo lo usa el empleado para modificar la cantidad de unidades disponibles de un producto.
+//A la hora de hacer la reposicion de unidades, se llama a insertar historial para que de forma una vez hecha la modificacion se guarde en el historial
+// sin que el usuario tenga que hacer nada.
 
 public class GestionContabilidadProductos {
          private ProxyGestorBD pbd = ProxyGestorBD.getInstancia();

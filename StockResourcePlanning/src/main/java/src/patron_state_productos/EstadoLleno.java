@@ -12,7 +12,9 @@ import src.patron_factory_method_productos.Producto;
  * @author cris
  */
 public class EstadoLleno implements EstadoProducto {
-
+    //Se ejecuta cuando en el metodo quitar o añadir unidades de producto, el estado se establece lleno. Luego hace las modificaciones correspondientes de las unidades,
+    //indicando al empleado el stock final y el estado del producto
+    
     @Override
     public void ejecutarModificacionUnidades(Producto p) {
         EstadoProducto neutro = new EstadoNeutro();

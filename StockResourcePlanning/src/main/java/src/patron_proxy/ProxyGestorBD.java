@@ -14,6 +14,7 @@ import src.users.Historial;
  * @author cris
  */
 public class ProxyGestorBD implements ServicioBD{
+   
     // Uso del patrrón Singleton en el proxy.
     
     private static ProxyGestorBD instancia = new ProxyGestorBD();

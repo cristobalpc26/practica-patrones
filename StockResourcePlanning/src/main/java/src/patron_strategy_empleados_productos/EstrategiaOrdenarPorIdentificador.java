@@ -18,7 +18,7 @@ public class EstrategiaOrdenarPorIdentificador implements EstrategiaEmpleados {
 
     @Override
     public void ordenaEmpleados(ArrayList<Empleado> empleados) {
-        //Comparador para ordenar los alumnos por su nombre
+        //Comparador para ordenar los empleados por su dni
         Comparator dni = (Comparator) (Object o1, Object o2) -> {
             Empleado e1 = (Empleado) o1;
             Empleado e2 = (Empleado) o2;
@@ -26,7 +26,7 @@ public class EstrategiaOrdenarPorIdentificador implements EstrategiaEmpleados {
             return e1.getDni().compareTo(e2.getDni());
         };
 
-        //Ordenamos los objetos del array por el atributo nombre
+        //Ordenamos los objetos del array por el atributo dni
         Collections.sort(empleados, dni);
     }
 

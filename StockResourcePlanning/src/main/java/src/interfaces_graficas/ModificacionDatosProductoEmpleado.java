@@ -6,20 +6,12 @@
 package src.interfaces_graficas;
 
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import src.Validaciones;
-import src.fachada.FachadaAdminSRP;
 import src.fachada.FachadaEmpleadoSRP;
-import src.patron_factory_method_productos.Categoria;
 import src.patron_factory_method_productos.Producto;
 import src.patron_proxy.ProxyGestorBD;
-import src.users.Empleado;
 import src.users.Historial;
 
 /**
@@ -265,6 +257,8 @@ public class ModificacionDatosProductoEmpleado extends javax.swing.JFrame {
 
                 p.añadirUnidades(unidadesModificadasporEmpleadoParseadas);
 
+                                //Uso de la fachada para modificar el producto y para insertar historial una vez actualizado el producto
+
                 fachada.modificarProducto(p);
                 JOptionPane.showMessageDialog(null, "Producto actualizado", "Correcto!", JOptionPane.INFORMATION_MESSAGE);
 
@@ -297,6 +291,7 @@ public class ModificacionDatosProductoEmpleado extends javax.swing.JFrame {
             int unidadesModificadasporEmpleadoParseadas = Integer.parseInt(getUnidadesAModificarEmpleado());
             System.out.println("unidadesModificadasporEmpleadoParseadas " + unidadesModificadasporEmpleadoParseadas);
             System.out.println("getUnidadesAModificarEmpleado() = " + getUnidadesAModificarEmpleado());
+            //Uso de proxy para obtener un producto por su id
             ArrayList<Producto> list = sbd.consultagetProductoId(getIdProductoAcual());
 
             if (unidadesModificadasporEmpleadoParseadas < 0 || unidadesModificadasporEmpleadoParseadas > 100) {
@@ -320,6 +315,7 @@ public class ModificacionDatosProductoEmpleado extends javax.swing.JFrame {
 
                 p.quitarUnidades(unidadesModificadasporEmpleadoParseadas);
 
+                //Uso de la fachada para modificar el producto y para insertar historial una vez actualizado el producto
                 fachada.modificarProducto(p);
                 JOptionPane.showMessageDialog(null, "Producto actualizado", "Correcto!", JOptionPane.INFORMATION_MESSAGE);
                 

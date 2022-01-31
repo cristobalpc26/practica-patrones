@@ -218,9 +218,11 @@ public class HistorialProducto extends javax.swing.JFrame {
 
     private void jButtonBusquedaHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaHistorialActionPerformed
 
+        //Uso de proxy para obtener en un rray todos los historiales
         ArrayList<Historial> list = sbd.devolverHistorial();
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraHistorialDeProductos.getModel();
 
+        
         sbd.devolverHistorial();
         tablaMuestra.setRowCount(0);
         Object[] row = new Object[4];
@@ -233,6 +235,7 @@ public class HistorialProducto extends javax.swing.JFrame {
             tablaMuestra.addRow(row);
         }
 
+        //uso de fachada para ver el historial de actividad
         fachada.verHistorialdeActividad();
 
 

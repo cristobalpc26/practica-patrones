@@ -38,7 +38,10 @@ public class Producto {
     }
 
    
-
+    
+    //Metodo que se usa para añadir unidades a la hora de modificar el empleado un producto. Este metodo se utiliza al usar el patron state,
+    //donde en función del estado en el que se encuentre se creará un objeto de ese estado y hará las consecuentes modificaciones.
+    
     public void añadirUnidades(int unidadesRepuestas) {
         unidades += unidadesRepuestas;
 
@@ -53,7 +56,9 @@ public class Producto {
         }
         estadoActual.ejecutarModificacionUnidades(this);
     }
-
+    //Metodo que se usa para quitar unidades a la hora de modificar el empleado un producto. Este metodo se utiliza al usar el patron state,
+    //donde en función del estado en el que se encuentre se creará un objeto de ese estado y hará las consecuentes modificaciones.
+    
     public void quitarUnidades(int unidadesRepuestas) {
         unidades -= unidadesRepuestas;
 
@@ -180,20 +185,5 @@ public class Producto {
         return (String) getEstadoActual().toString();
     }
     
-    
-    /*   protected EstadoProducto estado;
-    
-    public abstract void addProducto();
-    public abstract Producto getProducto();
-    
-    public EstadoProducto getEstado() {
-        return this.estado;
-    }
-    
-    public void setEstado(EstadoProducto e) {
-        this.estado = e;
-        // Almacenarlo en un fichero o en la BD
-    }*/
 
-   
 }

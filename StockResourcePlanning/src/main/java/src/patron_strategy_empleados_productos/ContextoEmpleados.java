@@ -5,7 +5,6 @@
 package src.patron_strategy_empleados_productos;
 
 import java.util.ArrayList;
-import src.patron_factory_method_productos.Producto;
 import src.users.Empleado;
 
 /**

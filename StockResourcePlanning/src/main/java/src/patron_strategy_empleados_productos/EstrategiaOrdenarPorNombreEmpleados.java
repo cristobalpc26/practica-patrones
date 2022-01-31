@@ -18,7 +18,7 @@ public class EstrategiaOrdenarPorNombreEmpleados implements EstrategiaEmpleados 
 
     @Override
     public void ordenaEmpleados(ArrayList<Empleado> empleados) {
-        //Comparador para ordenar los alumnos por su nombre
+        //Comparador para ordenar los empleados por su nombre
         Comparator nombre = (Comparator) (Object o1, Object o2) -> {
             Empleado e1 = (Empleado) o1;
             Empleado e2 = (Empleado) o2;

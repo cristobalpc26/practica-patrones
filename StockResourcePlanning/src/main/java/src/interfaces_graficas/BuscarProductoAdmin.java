@@ -5,27 +5,19 @@
  */
 package src.interfaces_graficas;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import src.Validaciones;
+import src.adapter.AdaptadorFechaDate;
+import src.adapter.FechaSpain;
 import src.fachada.FachadaAdminSRP;
 import src.patron_factory_method_productos.Producto;
 import src.patron_proxy.ProxyGestorBD;
-import src.patron_strategy_empleados_productos.ContextoEmpleados;
 import src.patron_strategy_empleados_productos.ContextoProductos;
 import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorFechaCaducidad;
-import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorIdentificador;
-import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorNombreEmpleados;
-import src.users.Empleado;
-import src.patron_strategy_empleados_productos.EstrategiaEmpleados;
 import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorNombreProductos;
 import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorUnidadesProductos;
 import src.patron_strategy_empleados_productos.EstrategiaProductos;
@@ -303,7 +295,7 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(166, 166, 166)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 525, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -317,7 +309,7 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
                         .addGap(362, 362, 362))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jTextFieldFechaCaducidadAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75)
+                        .addGap(55, 55, 55)
                         .addComponent(jTextFieldUnidadesProductoIntroducidasAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(299, 299, 299))))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -360,10 +352,10 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldFechaCaducidadAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldUnidadesProductoIntroducidasAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldUnidadesProductoIntroducidasAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldFechaCaducidadAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19)
                         .addComponent(jButtonBusquedaUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButtonOrdenarUnidadesProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -418,10 +410,12 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldNombreProductoAdminActionPerformed
 
     private void jButtonOrdenarNombreProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdenarNombreProductoActionPerformed
+        //Aplicamos proxy para obtener todos los producto en un array
         ArrayList<Producto> aux = sbd.getProductos();
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosAdmin.getModel();
         tablaMuestra.setRowCount(0);
 
+        //Aplicamos Strategy para ordenar los productos por nombre con la estrategia concreta
         EstrategiaProductos est = new EstrategiaOrdenarPorNombreProductos();
         ContextoProductos contexto = new ContextoProductos(est, aux);
         contexto.ejecutaEstrategiaProductos();
@@ -445,10 +439,13 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonOrdenarNombreProductoActionPerformed
 
     private void jButtonOrdenarFechaCaducidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdenarFechaCaducidadActionPerformed
+        //Aplicamos proxy para obtener todos los producto en un array
+
         ArrayList<Producto> aux = sbd.getProductos();
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosAdmin.getModel();
         tablaMuestra.setRowCount(0);
 
+        //Aplicamos Strategy para ordenar los productos por fecha de caducidad con la estrategia concreta
         EstrategiaProductos est = new EstrategiaOrdenarPorFechaCaducidad();
         ContextoProductos contexto = new ContextoProductos(est, aux);
         contexto.ejecutaEstrategiaProductos();
@@ -477,6 +474,8 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonVolverAtrasBuscarProductoAdminActionPerformed
 
     private void jButtonBusquedaNombreProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaNombreProductoActionPerformed
+        //Aplicamos proxy para obtener todos los producto dado el nombre insertado en el campo de texto
+
         ArrayList<Producto> list = sbd.consultagetProductoNombre(getNombreBusqueda());
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosAdmin.getModel();
         tablaMuestra.setRowCount(0);
@@ -499,11 +498,19 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
 
     private void jButtonBusquedaFechaCaducidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaFechaCaducidadActionPerformed
 
-        ArrayList<Producto> list = sbd.consultagetProductosFechaCaducidad(getFechaCaducidad());
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosAdmin.getModel();
         tablaMuestra.setRowCount(0);
         Object[] row = new Object[10];
-        if (Validaciones.validarFecha(getFechaCaducidad()) == true) {
+
+        //Uso del patron Adapter donde primero comprobamos que la feha introducida tenga el formato dd/mm/yyyy
+        if (getFechaCaducidad().isEmpty() || Validaciones.validarFechaEsp(getFechaCaducidad()) == false) {
+            JOptionPane.showMessageDialog(null, "Formato fecha incorrecta o fecha no valida. (dd/mm/yyyy)", "Error!", JOptionPane.ERROR_MESSAGE);
+            
+         //Una vez comprobado valida que la adaptacion de la fecha española cumple el formato date de java y el proxy busca los productos dada la fecha adaptada   
+        } else if (Validaciones.validarFechaDateJava(new AdaptadorFechaDate(new FechaSpain(getFechaCaducidad())).toString())) {
+
+            ArrayList<Producto> list = sbd.consultagetProductosFechaCaducidad(new AdaptadorFechaDate(new FechaSpain(getFechaCaducidad())).toString());
+
             for (int i = 0; i < list.size(); i++) {
                 row[0] = list.get(i).getId();
                 row[1] = list.get(i).getCategoria();
@@ -518,12 +525,7 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
 
                 tablaMuestra.addRow(row);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Formato fecha incorrecta o fecha no valida. (yyyy/mm/dd)", "Error!", JOptionPane.ERROR_MESSAGE);
-
         }
-
-
     }//GEN-LAST:event_jButtonBusquedaFechaCaducidadActionPerformed
 
     private void jButtonBusquedaUnidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaUnidadesActionPerformed
@@ -531,12 +533,12 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosAdmin.getModel();
         tablaMuestra.setRowCount(0);
         Object[] row = new Object[10];
-      
+
         if (Validaciones.validarSoloNumerosUnidades(getUnidadesProducto()) == false) {
             JOptionPane.showMessageDialog(null, "Formato incorrecto en las unidades", "Error!", JOptionPane.ERROR_MESSAGE);
         } else {
-              int unidadesParseadas = Integer.parseInt(getUnidadesProducto());
-        System.out.println(unidadesParseadas);
+            int unidadesParseadas = Integer.parseInt(getUnidadesProducto());
+            System.out.println(unidadesParseadas);
             ArrayList<Producto> list = sbd.consultagetProductosUnidades(Integer.parseInt(getUnidadesProducto()));
 
             for (int i = 0; i < list.size(); i++) {
@@ -623,9 +625,12 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEliminaProductoSeleccionadoActionPerformed
 
     private void jButtonOrdenarUnidadesProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdenarUnidadesProductoActionPerformed
+               //Aplicamos proxy para obtener todos los producto 
+
         ArrayList<Producto> aux = sbd.getProductos();
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosAdmin.getModel();
         tablaMuestra.setRowCount(0);
+        //Aplicamos Strategy para ordenar los productos por unidades con la estrategia concreta
 
         EstrategiaProductos est = new EstrategiaOrdenarPorUnidadesProductos();
         ContextoProductos contexto = new ContextoProductos(est, aux);

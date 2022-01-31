@@ -6,9 +6,7 @@
 package src.users;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import src.patron_factory_method_productos.Producto;
-import src.patron_proxy.ProxyGestorBD;
 
 /**
  *
@@ -36,7 +34,6 @@ public abstract class Persona {
         this.horario = horario;
         this.telefono = telefono;
         this.categoria = categoria;
-        //this.productos = ProxyGestorBD.getInstancia().getProductos();
     }
     
     public Persona () {

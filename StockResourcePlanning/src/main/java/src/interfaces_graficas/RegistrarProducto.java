@@ -445,6 +445,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
                     Double precioDouble = Double.parseDouble(getPrecioProductoRegistrar());
                     int unidadesInt = Integer.parseInt(getUnidadesProductoRegistrar());
 
+                    // Creamos un objeto categoria donde le pasamos como parametro el texto recogido del jcombobox de categoria
                     Categoria categoriaCreada = fcat.crearCategoria(getCategoriaProductoARegistrar().trim());
 
                     // Si la categoria concreta concuerda con la puesta se crea el objeto categoria y posteriormente el objeto producto
@@ -453,6 +454,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
                                 precioDouble, unidadesInt, getProcedenciaProductoRegistrar(),
                                 getFechaLlegadaProductoRegistrar(), getFechaCaducidadProductoRegistrar(), getLocalizacionProductoRegistrar());
 
+                        //Uso de fachada para crear el producto
                         fachada.insertarProducto(p);
                         JOptionPane.showMessageDialog(null, "Producto registrado", "Correcto!", JOptionPane.INFORMATION_MESSAGE);
                         this.setVisible(false);

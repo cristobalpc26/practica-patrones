@@ -5,27 +5,20 @@
  */
 package src.interfaces_graficas;
 
-import com.sun.org.apache.xpath.internal.patterns.NodeTest;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.DateFormatter;
 import src.Validaciones;
+import src.adapter.AdaptadorFechaDate;
+import src.adapter.FechaSpain;
 import src.patron_factory_method_productos.Producto;
 import src.patron_proxy.ProxyGestorBD;
-import src.patron_strategy_empleados_productos.ContextoEmpleados;
 import src.patron_strategy_empleados_productos.ContextoProductos;
-import src.patron_strategy_empleados_productos.EstrategiaEmpleados;
 import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorFechaCaducidad;
-import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorIdentificador;
 import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorNombreProductos;
 import src.patron_strategy_empleados_productos.EstrategiaOrdenarPorUnidadesProductos;
 import src.patron_strategy_empleados_productos.EstrategiaProductos;
-import src.users.Empleado;
 
 /**
  *
@@ -400,10 +393,13 @@ public class BuscarProductoEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonVolverAtrasBuscarProductoEmpleadoActionPerformed
 
     private void jButtonOrdenarFechaCaducidadEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdenarFechaCaducidadEmpleadoActionPerformed
+        //Aplicamos proxy para obtener todos los productos
+
         ArrayList<Producto> aux = sbd.getProductos();
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosEmpleados.getModel();
         tablaMuestra.setRowCount(0);
 
+        //Aplicamos Strategy para ordenar los productos por fecha de caducidad con la estrategia concreta
         EstrategiaProductos est = new EstrategiaOrdenarPorFechaCaducidad();
         ContextoProductos contexto = new ContextoProductos(est, aux);
         contexto.ejecutaEstrategiaProductos();
@@ -428,10 +424,13 @@ public class BuscarProductoEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonOrdenarFechaCaducidadEmpleadoActionPerformed
 
     private void jButtonOrdenarNombreProductoEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdenarNombreProductoEmpleadoActionPerformed
+        //Aplicamos proxy para obtener todos los productos
+
         ArrayList<Producto> aux = sbd.getProductos();
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosEmpleados.getModel();
         tablaMuestra.setRowCount(0);
 
+        //Aplicamos Strategy para ordenar los productos por nombre con la estrategia concreta
         EstrategiaProductos est = new EstrategiaOrdenarPorNombreProductos();
         ContextoProductos contexto = new ContextoProductos(est, aux);
         contexto.ejecutaEstrategiaProductos();
@@ -466,7 +465,7 @@ public class BuscarProductoEmpleado extends javax.swing.JFrame {
 
             String nuevaUnidadesModificar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 5).toString();
 
-            // Establcemos los valores de la fila seleccioanda en la nueva 
+            // Establcemos los valores de la fila seleccioanda en la nueva pantalla 
             if (indiceFilaSeleccionada != -1) {
 
                 mde.jTextFieldUnidadesEnStockActuales.setText(nuevaUnidadesModificar);
@@ -485,6 +484,7 @@ public class BuscarProductoEmpleado extends javax.swing.JFrame {
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosEmpleados.getModel();
         tablaMuestra.setRowCount(0);
 
+        //Aplicamos Strategy para ordenar los productos por unidades con la estrategia concreta
         EstrategiaProductos est = new EstrategiaOrdenarPorUnidadesProductos();
         ContextoProductos contexto = new ContextoProductos(est, aux);
         contexto.ejecutaEstrategiaProductos();
@@ -530,11 +530,17 @@ public class BuscarProductoEmpleado extends javax.swing.JFrame {
 
     private void jButtonBusquedaFechaCaducidadEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaFechaCaducidadEmpleadosActionPerformed
 
-        ArrayList<Producto> list = sbd.consultagetProductosFechaCaducidad(getFechaCaducidad());
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosEmpleados.getModel();
         tablaMuestra.setRowCount(0);
         Object[] row = new Object[10];
-        if (Validaciones.validarFecha(getFechaCaducidad()) == true) {
+        //Uso del patron Adapter donde primero comprobamos que la feha introducida tenga el formato dd/mm/yyyy
+
+        if (getFechaCaducidad().isEmpty() || Validaciones.validarFechaEsp(getFechaCaducidad()) == false) {
+            JOptionPane.showMessageDialog(null, "Formato fecha incorrecta o fecha no valida. (dd/mm/yyyy)", "Error!", JOptionPane.ERROR_MESSAGE);
+            //Una vez comprobado valida que la adaptacion de la fecha española cumple el formato date de java y el proxy busca los productos dada la fecha adaptada   
+
+        } else if (Validaciones.validarFechaDateJava(new AdaptadorFechaDate(new FechaSpain(getFechaCaducidad())).toString())) {
+            ArrayList<Producto> list = sbd.consultagetProductosFechaCaducidad(new AdaptadorFechaDate(new FechaSpain(getFechaCaducidad())).toString());
 
             for (int i = 0; i < list.size(); i++) {
                 row[0] = list.get(i).getId();
@@ -550,9 +556,6 @@ public class BuscarProductoEmpleado extends javax.swing.JFrame {
 
                 tablaMuestra.addRow(row);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Formato fecha incorrecta o fecha no valida. (yyyy/mm/dd)", "Error!", JOptionPane.ERROR_MESSAGE);
-
         }
 
     }//GEN-LAST:event_jButtonBusquedaFechaCaducidadEmpleadosActionPerformed

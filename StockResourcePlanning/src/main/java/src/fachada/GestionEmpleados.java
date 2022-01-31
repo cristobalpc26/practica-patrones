@@ -13,6 +13,9 @@ import src.users.Empleado;
  * @author Carlos
  */
 public class GestionEmpleados {
+ 
+    //Subsistema de la fachada que realiza las operaciones del administrador relacionadas con los empleados por medio del proxy
+
     private ProxyGestorBD pbd = ProxyGestorBD.getInstancia();
     
     public void insertarEmpleado(Empleado e){

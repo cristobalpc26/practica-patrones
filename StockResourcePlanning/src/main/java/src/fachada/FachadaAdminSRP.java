@@ -8,12 +8,14 @@ import src.users.Empleado;
  */
 public class FachadaAdminSRP {
 
+    //Subsistemas de Fachada 
+    
     GestionEmpleados ge = new GestionEmpleados();
 
     GestionAdminProductos gp = new GestionAdminProductos();
 
 
-    //Acceso al subsistema de las acciones que realiza el administrador con os empleados
+    //Acceso al subsistema a las acciones que realiza el administrador con los empleados
     public void modificarEmpleado(Empleado e) {
         ge.modificarEmpleado(e);
     }

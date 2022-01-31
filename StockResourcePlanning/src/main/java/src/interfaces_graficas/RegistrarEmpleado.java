@@ -22,10 +22,9 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
      * Creates new form RegistrarProducto
      */
     private FachadaAdminSRP fachada = new FachadaAdminSRP();
-        private ProxyGestorBD sbd = ProxyGestorBD.getInstancia();
+    private ProxyGestorBD sbd = ProxyGestorBD.getInstancia();
 
     private HomeAdmin ha;
-
 
     public RegistrarEmpleado(HomeAdmin HA) {
         initComponents();
@@ -34,7 +33,8 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
     }
-        public String getDNIregistrar() {
+
+    public String getDNIregistrar() {
         return jTextFieldDniARegistrar.getText();
     }
 
@@ -46,7 +46,7 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
         return jTextFieldApellidosARegistrar.getText();
     }
 
-    public String getCorreoRegistrar(){
+    public String getCorreoRegistrar() {
         return jTextFieldCorreoARegistrar.getText();
     }
 
@@ -294,39 +294,38 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxHorarioRegistroActionPerformed
 
     private void jButtonVolverAtrasRegistrarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverAtrasRegistrarProductoActionPerformed
-     this.setVisible(false);
-       ha.setVisible(true);
+        this.setVisible(false);
+        ha.setVisible(true);
     }//GEN-LAST:event_jButtonVolverAtrasRegistrarProductoActionPerformed
 
     private void jButtonRegistrarDatosEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarDatosEmpleadoActionPerformed
         ArrayList<String> listaDNI = sbd.getDNIEmpleados();
-         Empleado e = new Empleado(getDNIregistrar(), getNombreRegistrar(), getApellidosRegistrar(), getCorreoRegistrar(), getContraseñaRegistrar(),
+        Empleado e = new Empleado(getDNIregistrar(), getNombreRegistrar(), getApellidosRegistrar(), getCorreoRegistrar(), getContraseñaRegistrar(),
                 getHorarioRegistrar(), getTelefonoRegistrar(), getCategoriaARegistrar());
-         
-         
-        if (getDNIregistrar().isEmpty() || getNombreRegistrar().isEmpty() || getApellidosRegistrar().isEmpty() ||  getCorreoRegistrar().isEmpty() ||getContraseñaRegistrar().isEmpty() 
+
+        if (getDNIregistrar().isEmpty() || getNombreRegistrar().isEmpty() || getApellidosRegistrar().isEmpty() || getCorreoRegistrar().isEmpty() || getContraseñaRegistrar().isEmpty()
                 || getHorarioRegistrar().isEmpty() || getTelefonoRegistrar().isEmpty() || getCategoriaARegistrar().isEmpty()) {
 
             JOptionPane.showMessageDialog(null, "Campos vacios, rellene todos", "Error!", JOptionPane.ERROR_MESSAGE);
-        }else if(Validaciones.validarCorreo(getCorreoRegistrar()) == false){
+        } else if (Validaciones.validarCorreo(getCorreoRegistrar()) == false) {
             JOptionPane.showMessageDialog(null, "El correo debe estar bien escrito", "Error Correo!", JOptionPane.ERROR_MESSAGE);
-        } 
-        else if (Validaciones.esValidoNumeroTelefono(getTelefonoRegistrar()) == false) {
+        } else if (Validaciones.esValidoNumeroTelefono(getTelefonoRegistrar()) == false) {
             JOptionPane.showMessageDialog(null, "Numero de telefono Incorrecto", "Error Telefono!", JOptionPane.ERROR_MESSAGE);
-        }else if(Validaciones.validarDNI(getDNIregistrar()) == false){
+        } else if (Validaciones.validarDNI(getDNIregistrar()) == false) {
             JOptionPane.showMessageDialog(null, "Numero de DNI Incorrecto", "Error DNI!", JOptionPane.ERROR_MESSAGE);
-        }else if(listaDNI.contains(getDNIregistrar())){
+        } else if (listaDNI.contains(getDNIregistrar())) {
             JOptionPane.showMessageDialog(null, "DNI'S duplicados", "Error DNI!", JOptionPane.ERROR_MESSAGE);
-        }
-        else{
+        } else {
+            //Uso de la fachada para insertar el empleado, una vez chequeadas las validaciones
+
             fachada.insertarEmpleado(e);
             JOptionPane.showMessageDialog(null, "Empleado registrado", "Correcto!", JOptionPane.INFORMATION_MESSAGE);
             this.setVisible(false);
             ha.setVisible(true);
 
         }
-        
-        
+
+
     }//GEN-LAST:event_jButtonRegistrarDatosEmpleadoActionPerformed
 
     /**

@@ -8,19 +8,12 @@ import src.users.Empleado;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
+
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import src.patron_factory_method_productos.Categoria;
+
 import src.patron_factory_method_productos.Producto;
-import src.patron_iterator.AgregadoEmpleados;
-import src.patron_iterator.IteradorEmpleados;
-import src.patron_state_productos.EstadoProducto;
+
 import src.users.Historial;
 
 /**
@@ -29,6 +22,9 @@ import src.users.Historial;
  */
 public class ServidorBD implements ServicioBD {
 
+    /*
+    En esta clase se realizan todos los métodos necesarios para obtener datos o consultar datos que se hayan insertado en la base de datos
+    */
     private Connection con;
     private Statement set;
     private ResultSet rs;
@@ -38,7 +34,7 @@ public class ServidorBD implements ServicioBD {
     }
 
     public void abrirConexion() {
-        //String sURL = "jdbc:odbc:mvc";
+
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             con = DriverManager.getConnection("jdbc:derby://localhost:1527/stockManager", "app", "app");
@@ -106,7 +102,6 @@ public class ServidorBD implements ServicioBD {
         }
     }
 
-    // SI no se usa, quitar , dejsrlo de moemento
     @Override
     public String getDniEmpleado(String login, String passwd) {
         String dni = "";

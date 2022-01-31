@@ -6,11 +6,6 @@ package src.users;
 
 import java.util.ArrayList;
 import src.fachada.FachadaAdminSRP;
-import src.fachada.GestionEmpleados;
-import src.fachada.GestionAdminProductos;
-import src.patron_iterator.AgregadoEmpleados;
-import src.patron_iterator.IteradorEmpleados;
-import src.patron_proxy.ProxyGestorBD;
 
 /**
  *
