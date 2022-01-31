@@ -357,7 +357,7 @@ public class ModificacionDatosProductoAdmin extends javax.swing.JFrame {
 
                 if (fechaLlegadaParseada.compareTo(fechaCaducidadParseada) > 0) {
 
-                    JOptionPane.showMessageDialog(null, "La fecha de llegada tiene que ser menor O o igual que la de caducidad", "Fechas!", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "La fecha de llegada tiene que ser menor o igual que la de caducidad", "Fechas!", JOptionPane.ERROR_MESSAGE);
                 } else if (fechaLlegadaParseada.compareTo(fechaActualParseada) < 0 || fechaCaducidadParseada.compareTo(fechaActualParseada) < 0) {
                     JOptionPane.showMessageDialog(null, "Las fechas tienen que ser mayores o iguales que la actual", "Fechas!", JOptionPane.ERROR_MESSAGE);
 

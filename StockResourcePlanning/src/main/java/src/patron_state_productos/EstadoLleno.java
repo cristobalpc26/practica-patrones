@@ -26,6 +26,7 @@ public class EstadoLleno implements EstadoProducto {
             p.setEstadoActual(neutro);
         } else {
             JOptionPane.showMessageDialog(null, "Stock actual del producto: "+p.getUnidades()+" unidades. Estado Lleno","Correcto!", JOptionPane.INFORMATION_MESSAGE);
+            p.setEstadoActual(this);
 
         }
 

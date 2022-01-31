@@ -46,7 +46,7 @@ public class Producto {
             estadoActual = new EstadoNeutro();
 
         }
-        if (unidades > unidadesMaximas) {
+        if (unidades >= unidadesMaximas) {
             unidades = unidadesMaximas;
             estadoActual = new EstadoLleno();
 
@@ -60,7 +60,7 @@ public class Producto {
         if (unidades < unidadesMaximas && unidades >= 0) {
             estadoActual = new EstadoNeutro();
         }
-        if (unidades < 0) {
+        if (unidades <= 0) {
             unidades = 0;
             estadoActual = new EstadoVacio();
         }

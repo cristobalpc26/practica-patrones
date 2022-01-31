@@ -271,7 +271,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
         });
 
         jComboBoxCategoriaARegistrarProducto.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jComboBoxCategoriaARegistrarProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Verduras", "Frutas", "Pescado", "Carne", "Pollo", "Embutidos", "Lacteos", "Dulces", "Bebidas", "Especias", "Salsas ", "Pasta ", "Snacks ", "Postres", "Otros ", " " }));
+        jComboBoxCategoriaARegistrarProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Verduras", "Frutas", "Pescado", "Carne", "Pollo", "Embutidos", "Lacteos", "Dulces", "Bebidas", "Especias", "Salsas ", "Pasta ", "Snacks ", "Postres", "Otros" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

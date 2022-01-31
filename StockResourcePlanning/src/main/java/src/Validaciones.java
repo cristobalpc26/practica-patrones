@@ -47,7 +47,7 @@ public class Validaciones {
     public static boolean validarFecha(String fechaIntroducida) {
         
         boolean correcto;
-        if (fechaIntroducida.matches("^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$")) {
+        if (fechaIntroducida.matches("^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$")) {
             correcto = true;
         } else {
             correcto = false;

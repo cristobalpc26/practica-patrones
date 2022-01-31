@@ -521,7 +521,7 @@
               <Font name="Verdana" size="14" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="16">
+              <StringArray count="15">
                 <StringItem index="0" value="Verduras"/>
                 <StringItem index="1" value="Frutas"/>
                 <StringItem index="2" value="Pescado"/>
@@ -536,8 +536,7 @@
                 <StringItem index="11" value="Pasta "/>
                 <StringItem index="12" value="Snacks "/>
                 <StringItem index="13" value="Postres"/>
-                <StringItem index="14" value="Otros "/>
-                <StringItem index="15" value=" "/>
+                <StringItem index="14" value="Otros"/>
               </StringArray>
             </Property>
           </Properties>

@@ -490,7 +490,6 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
             row[5] = list.get(i).getUnidades();
             row[6] = list.get(i).getProcedencia();
             row[7] = list.get(i).getFechaLlegada();
-            System.out.println(list.get(i).getFechaCaducidad().toString());
             row[8] = list.get(i).getFechaCaducidad();
             row[9] = list.get(i).getLocalizacion();
 
@@ -520,7 +519,7 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
                 tablaMuestra.addRow(row);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Formato fecha incorrecta o fecha no valida", "Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Formato fecha incorrecta o fecha no valida. (yyyy/mm/dd)", "Error!", JOptionPane.ERROR_MESSAGE);
 
         }
 
@@ -528,24 +527,34 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBusquedaFechaCaducidadActionPerformed
 
     private void jButtonBusquedaUnidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusquedaUnidadesActionPerformed
-        ArrayList<Producto> list = sbd.consultagetProductosUnidades(Integer.parseInt(getUnidadesProducto()));
+
         DefaultTableModel tablaMuestra = (DefaultTableModel) jTableMuestraProductosAdmin.getModel();
         tablaMuestra.setRowCount(0);
         Object[] row = new Object[10];
-        for (int i = 0; i < list.size(); i++) {
-            row[0] = list.get(i).getId();
-            row[1] = list.get(i).getCategoria();
-            row[2] = list.get(i).getNombre();
-            row[3] = list.get(i).getMarca();
-            row[4] = list.get(i).getPrecio();
-            row[5] = list.get(i).getUnidades();
-            row[6] = list.get(i).getProcedencia();
-            row[7] = list.get(i).getFechaLlegada();
-            row[8] = list.get(i).getFechaCaducidad();
-            row[9] = list.get(i).getLocalizacion();
+      
+        if (Validaciones.validarSoloNumerosUnidades(getUnidadesProducto()) == false) {
+            JOptionPane.showMessageDialog(null, "Formato incorrecto en las unidades", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else {
+              int unidadesParseadas = Integer.parseInt(getUnidadesProducto());
+        System.out.println(unidadesParseadas);
+            ArrayList<Producto> list = sbd.consultagetProductosUnidades(Integer.parseInt(getUnidadesProducto()));
 
-            tablaMuestra.addRow(row);
+            for (int i = 0; i < list.size(); i++) {
+                row[0] = list.get(i).getId();
+                row[1] = list.get(i).getCategoria();
+                row[2] = list.get(i).getNombre();
+                row[3] = list.get(i).getMarca();
+                row[4] = list.get(i).getPrecio();
+                row[5] = list.get(i).getUnidades();
+                row[6] = list.get(i).getProcedencia();
+                row[7] = list.get(i).getFechaLlegada();
+                row[8] = list.get(i).getFechaCaducidad();
+                row[9] = list.get(i).getLocalizacion();
+
+                tablaMuestra.addRow(row);
+            }
         }
+
     }//GEN-LAST:event_jButtonBusquedaUnidadesActionPerformed
 
     private void jButtonModificacionDatosProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificacionDatosProductoActionPerformed
@@ -600,7 +609,7 @@ public class BuscarProductoAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecciona una fila", "Error!", JOptionPane.ERROR_MESSAGE);
         } else {
             String idProductoEliminar = tablaMuestra.getValueAt(indiceFilaSeleccionada, 0).toString();
-            String nombreProductoEliminado = tablaMuestra.getValueAt(indiceFilaSeleccionada, 1).toString();
+            String nombreProductoEliminado = tablaMuestra.getValueAt(indiceFilaSeleccionada, 2).toString();
 
             fachada.eliminarProducto(idProductoEliminar);
 

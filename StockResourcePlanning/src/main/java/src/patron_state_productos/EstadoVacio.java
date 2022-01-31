@@ -26,6 +26,7 @@ public class EstadoVacio implements EstadoProducto {
             p.setEstadoActual(lleno);
         } else if(p.getUnidades()==0) {
             JOptionPane.showMessageDialog(null, "Stock actual del producto: "+p.getUnidades()+" unidades. Estado Vacio","Correcto!", JOptionPane.INFORMATION_MESSAGE);
+            p.setEstadoActual(this);
 
         }
 

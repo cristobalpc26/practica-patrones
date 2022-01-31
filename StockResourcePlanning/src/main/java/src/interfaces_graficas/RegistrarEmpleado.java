@@ -308,14 +308,15 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
                 || getHorarioRegistrar().isEmpty() || getTelefonoRegistrar().isEmpty() || getCategoriaARegistrar().isEmpty()) {
 
             JOptionPane.showMessageDialog(null, "Campos vacios, rellene todos", "Error!", JOptionPane.ERROR_MESSAGE);
-        } else if (Validaciones.esValidoNumeroTelefono(getTelefonoRegistrar()) == false) {
+        }else if(Validaciones.validarCorreo(getCorreoRegistrar()) == false){
+            JOptionPane.showMessageDialog(null, "El correo debe estar bien escrito", "Error Correo!", JOptionPane.ERROR_MESSAGE);
+        } 
+        else if (Validaciones.esValidoNumeroTelefono(getTelefonoRegistrar()) == false) {
             JOptionPane.showMessageDialog(null, "Numero de telefono Incorrecto", "Error Telefono!", JOptionPane.ERROR_MESSAGE);
         }else if(Validaciones.validarDNI(getDNIregistrar()) == false){
             JOptionPane.showMessageDialog(null, "Numero de DNI Incorrecto", "Error DNI!", JOptionPane.ERROR_MESSAGE);
         }else if(listaDNI.contains(getDNIregistrar())){
             JOptionPane.showMessageDialog(null, "DNI'S duplicados", "Error DNI!", JOptionPane.ERROR_MESSAGE);
-        }else if(Validaciones.validarCorreo(getCorreoRegistrar()) == false){
-            JOptionPane.showMessageDialog(null, "El correo debe estar bien escrito", "Error Correo!", JOptionPane.ERROR_MESSAGE);
         }
         else{
             fachada.insertarEmpleado(e);

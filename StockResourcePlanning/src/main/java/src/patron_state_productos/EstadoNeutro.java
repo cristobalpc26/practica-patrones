@@ -33,7 +33,9 @@ public class EstadoNeutro implements EstadoProducto {
             p.setEstadoActual(lleno);
         }else{
             JOptionPane.showMessageDialog(null, "Stock actual del producto: "+p.getUnidades()+" unidades. Estado Neutro","Correcto!", JOptionPane.INFORMATION_MESSAGE);
+            p.setEstadoActual(this);
         }
+        
         
       
 
